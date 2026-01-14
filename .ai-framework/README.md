@@ -15,8 +15,11 @@ Framework for maintaining architectural coherence across AI-assisted development
 │   └── tracker.md        # Global task registry
 │
 ├── session/              # Session execution (updated each session)
-│   ├── todo.md          # Current session plan
-│   └── handoff.md       # State transfer between sessions
+│   ├── current/          # Active session files
+│   │   ├── todo.md      # Current session plan
+│   │   └── handoff.md   # State transfer
+│   └── archive/          # Historical sessions
+│       └── session-XXX_YYYY-MM-DD.md
 │
 └── _setup/               # Reusable framework components
     ├── templates/        # Empty templates for each document
@@ -103,15 +106,48 @@ AI TRANSFERS:
 - ✅ Works with any AI model or platform
 - ✅ Complete functional context for task generation
 
-## Source
+## Source & Enhancements
+
+### Original Framework
 
 Based on: [From Fast Code to Reliable Software: A Framework for AI-Assisted Development](https://dev.to/stanislav_komarovsky_b478/from-fast-code-to-reliable-software-a-framework-for-ai-assisted-development-2dle)
 
-## Enhancements
+The original framework uses:
+- Design.md + Scope.md → Tracker.md
 
-This implementation extends the original framework by:
-- Adding Requirements.md as a separate strategy document
-- Separating functional requirements from scope boundaries
-- Supporting multiple project types (frontend, backend, fullstack, integrations)
-- Including business rules and data entities
-- Supporting monorepo and polyrepo strategies
+### Key Enhancement: Requirements.md
+
+**Why we added Requirements.md as a third strategy document:**
+
+The original framework implies functional requirements within Scope.md (e.g., "In Scope: Payments, refunds, dispute handling"). Our analysis showed this approach doesn't scale for real-world projects:
+
+**Challenges with requirements in Scope.md:**
+- 📄 Document size: Scope + detailed requirements = 40+ pages
+- 🔄 Update frequency mismatch: Scope changes rarely (months), requirements evolve frequently (weeks)
+- 🧠 Context efficiency: AI must read entire document to find boundaries
+- 🗂️ Maintainability: Every requirement change touches the "strategic" Scope document
+
+**Solution: Separate Requirements.md:**
+- ✅ **Scope.md stays concise** (~8 pages): Vision, goals, boundaries, metrics
+- ✅ **Requirements.md contains details** (~30 pages): User stories, business rules, flows, UI/UX
+- ✅ **Proper separation of concerns**: Strategic boundaries vs. operational specifications
+- ✅ **Scalability**: Works for both MVPs and enterprise projects
+- ✅ **Clear update patterns**: Scope = rare, Requirements = iterative
+
+**Updated generation equation:**
+```
+Design.md (how) + Scope.md (why/boundaries) + Requirements.md (what) → Tracker.md
+```
+
+This maintains the framework's core principle of "Stateless AI, Stateful Documents" while providing the detail needed to generate comprehensive, accurate task lists.
+
+### Other Enhancements
+
+- **Session archiving**: Automated commands to archive completed sessions
+- **Development workflows**: Environment strategy (dev/test/staging/prod)
+- **Project type support**: Frontend, backend, fullstack, integrations
+- **Repository strategies**: Monorepo and polyrepo configurations
+- **Business rules**: Explicit section for business logic constraints
+- **Data entities**: Domain model from functional perspective
+
+All enhancements maintain coherence with the original framework's principles while extending its applicability to real-world software projects.
