@@ -1,255 +1,161 @@
 # PRODUCT REQUIREMENTS DOCUMENT (PRD)
 
-> **Purpose:** Lightweight discovery document to get stakeholder alignment and kickstart framework strategy documents.
-> **Time to complete:** 2-4 hours
-> **Next step:** Use this PRD to create Scope.md → Requirements.md → Design.md (in that order)
+> **Purpose:** Lightweight discovery document to kickstart framework strategy documents.  
+> **Time to complete:** 2-4 hours  
+> **Next step:** Create Scope.md → Requirements.md → Design.md (in that order)
 
 ---
 
-## DOCUMENT METADATA
+## METADATA
 
-- **Product/Project Name:** [Name]
+- **Project Name:** [Name]
 - **Author:** [Name, Role]
-- **Created:** [YYYY-MM-DD]
-- **Last Updated:** [YYYY-MM-DD]
-- **Status:** [Draft / In Review / Approved]
-- **Approved By:** [Name, Date]
+- **Date:** [YYYY-MM-DD]
+- **Status:** [Draft / Approved]
 
 ---
 
 ## 1. EXECUTIVE SUMMARY
 
-**Problem in One Sentence:**
+**Problem:**  
 [What problem are we solving?]
 
-**Solution in One Sentence:**
+**Solution:**  
 [What are we building?]
 
-**Target Users:**
+**Users:**  
 [Who will use this?]
 
-**Business Goal:**
+**Goal:**  
 [Why are we building this?]
 
-**Success Metric:**
+**Success Metric:**  
 [How will we measure success?]
 
-**Timeline:**
+**Timeline:**  
 [When will this launch?]
 
-**Budget:**
-[What will this cost?]
+**Budget:**  
+[$X total]
 
 ---
 
-## 2. PROBLEM STATEMENT
+## 2. PROBLEM
 
 ### Current Situation
+[Describe current state in 2-3 paragraphs]
 
-[Describe the current state in 2-3 paragraphs. What's broken? Who's affected? What's the impact?]
+### Impact
 
-**Example:**
-"Operations teams spend 15+ hours per week manually tracking service requests across email, spreadsheets, and phone calls. This leads to missed deadlines, duplicate work, and frustrated stakeholders. Last quarter, 23% of requests missed their SLA due to tracking errors."
-
----
-
-### Quantified Impact
-
-| Impact Type | Current State | Annual Cost |
-|-------------|---------------|-------------|
+| Type | Current State | Annual Cost |
+|------|---------------|-------------|
 | Time wasted | [X hours/week] | [$Y] |
 | Revenue lost | [N opportunities] | [$Z] |
-| Customer complaints | [M per month] | [$A] |
-| Error rate | [X% errors] | [$B] |
+| Complaints | [M/month] | [$A] |
+| Errors | [X%] | [$B] |
+
+### If We Don't Act
+- **3-6 months:** [What happens]
+- **6-12 months:** [Escalation]
+- **1-2 years:** [Critical impact]
 
 ---
 
-### Consequences of Inaction
+## 3. USERS
 
-- **3-6 months:** [What happens if we don't solve this]
-- **6-12 months:** [Escalating problems]
-- **1-2 years:** [Critical business impact]
+### Primary User 1: [Name]
+- **Role:** [Title]
+- **Current workflow:** [How they work today]
+- **Pain points:** [Top 3]
+- **Goals:** [What they want]
 
----
-
-## 3. TARGET USERS
-
-### Primary Users
-
-**User Type 1: [Persona Name]**
-- **Role:** [Job title, department]
-- **Current Workflow:** [How they work today]
-- **Pain Points:** [Top 3 frustrations]
-- **Goals:** [What they want to accomplish]
-
-**User Type 2: [Persona Name]**
+### Primary User 2: [Name]
 - **Role:**
-- **Current Workflow:**
-- **Pain Points:**
+- **Current workflow:**
+- **Pain points:**
 - **Goals:**
 
----
-
 ### Secondary Users
-- [Brief description of other user types]
+- [Brief list]
 
 ---
 
 ## 4. BUSINESS GOALS
 
-### Primary Objective
-[One sentence: The main business reason for this project]
+**Primary Objective:**  
+[One sentence]
+
+**Success Metrics:**
+- Launch: [Metric]: [Target]
+- 3 months: [Metric]: [Target]
+- 12 months: [Metric]: [Target]
+
+**ROI:**
+- Benefit: [$X/year]
+- Cost: [$Y one-time + $Z/year]
+- Payback: [N months]
 
 ---
 
-### Success Metrics
-
-**Launch (Day 1):**
-- [Metric]: [Target]
-
-**Adoption (3 months):**
-- [Metric]: [Target]
-
-**Business Impact (6-12 months):**
-- [Metric]: [Target]
-
----
-
-### ROI
-
-| Item | Amount |
-|------|--------|
-| Expected benefit | [$X/year] |
-| Development cost | [$Y] |
-| Operational cost | [$Z/year] |
-| **Payback period** | [N months] |
-
----
-
-## 5. HIGH-LEVEL FEATURES
+## 5. FEATURES
 
 ### Must-Have (MVP)
 
-**F-001: [Feature Name]**
-- Description: [1-2 sentences]
-- User benefit: [Why users need this]
+**F-001: [Name]**  
+[1 sentence description] → [User benefit]
 
-**F-002: [Feature Name]**
-- Description:
-- User benefit:
+**F-002: [Name]**  
+[1 sentence description] → [User benefit]
 
-**F-003: [Feature Name]**
-- Description:
-- User benefit:
+**F-003: [Name]**  
+[1 sentence description] → [User benefit]
 
----
+### Future
+- [Feature A]
+- [Feature B]
 
-### Nice-to-Have (Future)
-
-- [Feature A]: [Brief description]
-- [Feature B]: [Brief description]
-
----
-
-### Explicitly Out of Scope
-
-- [Feature X]: [Why excluded]
-- [Feature Y]: [Why excluded]
+### Out of Scope
+- [Feature X]: [Why]
+- [Feature Y]: [Why]
 
 ---
 
 ## 6. CONSTRAINTS
 
-### Budget
-- Total budget: [$X]
-- Development: [$Y]
-- Operations (Year 1): [$Z]
+**Budget:** [$X total = $Y dev + $Z ops/year]
 
-### Timeline
-- Target launch: [YYYY-MM-DD]
-- Key milestones:
-  - MVP: [Date]
-  - Beta: [Date]
-  - GA: [Date]
+**Timeline:**  
+MVP: [Date] | Beta: [Date] | GA: [Date]
 
-### Team
-- Team size: [N developers, M designers, etc.]
-- Skills available: [List]
-- Skills needed: [Hiring/training required]
+**Team:**  
+[N developers, M designers] | Skills: [List] | Need: [Gaps]
 
-### Technical
-- Must integrate with: [Existing systems]
-- Must run on: [Platform/infrastructure]
-- Must comply with: [Regulations, standards]
-- Cannot use: [Prohibited technologies]
+**Technical:**  
+Must use: [List] | Must integrate: [Systems] | Cannot use: [List] | Must comply: [Standards]
 
 ---
 
 ## 7. NEXT STEPS
 
-### Validation Checklist
-
-- [ ] Stakeholder approval
-- [ ] User research validates problem/solution
+### Approval Checklist
+- [ ] Stakeholders approved
+- [ ] Users validated problem/solution
 - [ ] Technical feasibility confirmed
 - [ ] Budget approved
 - [ ] Timeline agreed
 
----
+### Create Strategy Documents
 
-### Transition to Framework
-
-**Once this PRD is approved, create strategy documents in sequence:**
-
-**Step 1: Create Scope.md** (4-6 hours)
-- Read this PRD completely
-- Expand sections 1-4 with more detail
-- Add: detailed success metrics, stakeholders, constraints, risks, compliance requirements
-- Define clear scope boundaries (in/out/future)
-
-**Step 2: Create Requirements.md** (6-10 hours)
-- Read Scope.md completely
-- Use PRD section 5 (features) as starting point
-- Add: detailed user stories, acceptance criteria, business rules, data entities, integrations, UI/UX requirements
-- Expand each feature with full specifications
-
-**Step 3: Create Design.md** (6-10 hours)
-- Read Requirements.md completely
-- Use PRD section 6 (constraints) to inform technical decisions
-- Add: architecture patterns, tech stack, ADRs, non-functional requirements, security guidelines, performance standards
-
-**Each document builds on the previous with more detail.**
+1. **Scope.md** (4-6h): Read PRD → Expand with metrics, stakeholders, risks, boundaries
+2. **Requirements.md** (6-10h): Read Scope → Expand features into stories, rules, data, integrations
+3. **Design.md** (6-10h): Read Requirements → Add architecture, tech stack, ADRs, non-functionals
 
 ---
 
-### Approval
+## APPROVAL
 
-| Role | Name | Signature | Date |
-|------|------|-----------|------|
-| Product Manager | | | |
-| Engineering Lead | | | |
-| Business Owner | | | |
-
----
-
-## OPTIONAL SECTIONS
-
-> **Note:** The sections above are the minimum required. Add any of these optional sections if your project needs them:
-
-### Additional Sections You Might Add:
-
-- **Competitive Analysis:** How this compares to alternatives
-- **User Research Summary:** Detailed findings from interviews/surveys
-- **Detailed User Journeys:** Step-by-step workflows
-- **Business Rules:** Specific logic and validation rules
-- **Data Requirements:** Entity relationships and attributes
-- **Integration Requirements:** External systems and APIs
-- **Non-Functional Requirements:** Performance, security, scalability targets
-- **Compliance & Regulations:** GDPR, HIPAA, SOC 2, etc.
-- **Stakeholder Matrix:** RACI, communication plan
-- **Risk Register:** Risks, impacts, mitigation plans
-- **Dependencies:** External blockers and owners
-- **Assumptions:** What needs validation
-- **Alternatives Considered:** Why not other approaches
-
-**Add these sections as appendices if needed for your specific project.**
+| Role | Name | Date |
+|------|------|------|
+| Product Manager | | |
+| Engineering Lead | | |
+| Business Owner | | |
