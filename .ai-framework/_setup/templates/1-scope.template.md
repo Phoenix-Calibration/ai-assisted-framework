@@ -23,8 +23,8 @@
 ### Product Vision
 [2-3 paragraphs: What is this product/project? What problem does it solve? What value does it deliver?]
 
-**Example:**
-"CalSystem is a calibration management platform that eliminates manual tracking and human error in ISO/IEC 17025 laboratory operations. It transforms fragmented email/spreadsheet workflows into a centralized, automated system. The result: 95% SLA compliance, 50% reduction in administrative time, and full audit trail for regulatory compliance."
+**Example format:**
+"[ProjectName] is a [type of solution] that eliminates [primary pain point] in [target industry/domain]. It transforms [current fragmented workflow] into a [desired state]. The result: [quantified benefit 1], [quantified benefit 2], and [key strategic advantage]."
 
 ---
 
