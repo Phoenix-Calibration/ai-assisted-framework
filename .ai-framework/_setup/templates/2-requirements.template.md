@@ -387,7 +387,7 @@ graph TD
 ## 6. UI/UX CONSIDERATIONS [OPTIONAL]
 
 > **Purpose:** Define user interface and experience requirements.  
-> **Note:** This is NOT visual design (mockups, colors, fonts). Focus on functionality and behavior.
+> **Note:** This is NOT visual design (mockups, colors, fonts). Focus on functionality and behavior. Remove this section if not applicable.
 
 ### 6.1 Design Principles
 
@@ -601,10 +601,10 @@ graph TD
 
 ---
 
-## 9. NON-FUNCTIONAL REQUIREMENTS [REQUIRED]
+## 9. NON-FUNCTIONAL REQUIREMENTS [OPTIONAL]
 
 > **Purpose:** Define quality attributes and system-wide constraints.  
-> **Note:** These requirements apply to ALL features unless stated otherwise.
+> **Note:** These requirements may be documented in Design.md for some projects. Remove this section if not applicable.
 
 ### 9.1 Performance Requirements
 
