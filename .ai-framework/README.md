@@ -1,316 +1,573 @@
 # AI-Assisted Development Framework
 
-Framework for maintaining architectural coherence across AI-assisted development sessions through document-driven structure.
+Framework for maintaining architectural coherence across AI-assisted development sessions through document-driven structure and constraint-first methodology.
+
+---
+
+## What is This?
+
+A structured approach to AI-assisted development that prevents common pitfalls like architectural drift, scope creep, and inconsistent technical decisions across sessions. The framework uses a hierarchy of documents that serve as persistent context for stateless AI models.
+
+**Key Innovation:** Separates what humans decide (architecture, boundaries) from what AI generates (tasks, implementation plans), ensuring technical constraints guide solutions rather than AI suggesting the "path of least resistance."
+
+---
 
 ## Framework Structure
 
 ```
 .ai-framework/
-├── _discovery/           # Optional: Pre-framework research (Phase 0)
-│   ├── business-context.md
-│   ├── problem-statement.md
-│   └── initial-requirements.md
+├── README.md                      # This file - Framework documentation
 │
-├── strategy/              # Strategic documents (human-created, rarely updated)
-│   ├── scope.md          # Project vision, goals, boundaries (CREATE FIRST)
-│   ├── requirements.md   # Functional requirements, user stories (CREATE SECOND)
-│   └── design.md         # Technical architecture, ADRs, patterns (CREATE THIRD)
+├── _setup/                        # Reusable framework components
+│   ├── templates/                 # 7 document templates
+│   │   ├── 0-PRD.template.md         # Product Requirements (optional)
+│   │   ├── 1-scope.template.md       # Vision & boundaries
+│   │   ├── 2-requirements.template.md # Detailed functionality
+│   │   ├── 3-design.template.md      # Architecture & tech decisions
+│   │   ├── 4-tracker.template.md     # Task registry
+│   │   ├── 5-todo.template.md        # Session plan
+│   │   └── 6-handoff.template.md     # Session state transfer
+│   └── prompts/                   # 6 AI prompts
+│       ├── 1-discovery.prompt.md      # Generate PRD
+│       ├── 2-scope.prompt.md          # Generate Scope
+│       ├── 3-requirements.prompt.md   # Generate Requirements
+│       ├── 4-design.prompt.md         # Generate Design
+│       ├── 5-tracker.prompt.md        # Generate/update Tracker
+│       └── 6-session.prompt.md        # Session lifecycle (3 parts)
 │
-├── tactics/              # Tactical roadmap (AI-generated from strategy)
-│   └── tracker.md        # Global task registry
+├── docs/                          # Strategic documents (your project)
+│   ├── design.md                  # Technical architecture & constraints
+│   ├── scope.md                   # Project vision & boundaries
+│   ├── requirements.md            # Detailed features & user stories
+│   └── tracker.md                 # Complete task registry
 │
-├── session/              # Session execution (updated each session)
-│   ├── {developer-id}/   # Per-developer session space
-│   │   ├── current/
-│   │   │   ├── todo.md      # Current session plan
-│   │   │   └── handoff.md   # Personal state transfer
-│   │   └── archive/
-│   │       └── session-XXX_YYYY-MM-DD.md
-│   └── shared/
-│       └── project-status.md  # Consolidated team status
-│
-└── _setup/               # Reusable framework components
-    ├── templates/        # Empty templates for each document
-    ├── prompts/          # AI prompts for generation
-    └── README.md         # Setup documentation
+└── session/                       # Session execution & state
+    ├── {developer-id}/            # Per-developer workspace
+    │   ├── current/
+    │   │   ├── todo.md               # Active session plan
+    │   │   └── handoff.md            # Personal session state
+    │   └── archive/
+    │       └── session-XXX_YYYY-MM-DD.md  # Completed sessions
+    └── shared/
+        └── project-status.md      # Team-wide coordination
 ```
+
+---
 
 ## Document Hierarchy
 
-### Layer 0: Discovery (Optional, Pre-Framework)
-- **business-context.md** - Problem statement, target users, business goals
-- **problem-statement.md** - Detailed problem analysis
-- **initial-requirements.md** - High-level feature list
+### Phase 1: Strategic Foundation (Human-Created, Stable)
 
-### Layer 1: Strategic Foundation (Human-Created)
-- **scope.md** - Vision, goals, success metrics, boundaries (~8 pages)
-- **requirements.md** - Functional requirements, user stories, business rules, UI/UX (~30 pages)
-- **design.md** - Architecture, patterns, tech stack, ADRs (~10 pages)
+**Created in this order:**
 
-### Layer 2: Tactical Roadmap (AI-Generated)
-- **tracker.md** - All tasks derived from Scope + Requirements + Design
+1. **scope.md** (~8 pages, 4-6 hours)
+   - Project vision and goals
+   - Success metrics and SLOs
+   - In-scope / out-of-scope boundaries
+   - Stakeholders and constraints
+   - **Template:** `_setup/templates/1-scope.template.md`
+   - **AI Helper:** `_setup/prompts/2-scope.prompt.md`
 
-### Layer 3: Session Execution (Context-Sized)
-- **todo.md** - Subset of Tracker tasks for current session (per developer)
+2. **requirements.md** (~30 pages, 6-10 hours)
+   - Functional requirements by feature
+   - User stories with acceptance criteria
+   - Business rules and validation logic
+   - Data entities and relationships
+   - Integration requirements
+   - **Template:** `_setup/templates/2-requirements.template.md`
+   - **AI Helper:** `_setup/prompts/3-requirements.prompt.md`
 
-### Layer 4: Session Continuity (Transfer Mechanism)
-- **handoff.md** - Verified state and results from last session (per developer)
-- **project-status.md** - Consolidated team status (shared)
+3. **design.md** (~15 pages, 6-10 hours)
+   - Architecture patterns and layers
+   - Technology stack decisions
+   - Development standards and conventions
+   - Security and performance guidelines
+   - Architecture Decision Records (ADRs)
+   - **Template:** `_setup/templates/3-design.template.md`
+   - **AI Helper:** `_setup/prompts/4-design.prompt.md`
 
-## Generation Flow
+**Why this order?**
+- Scope first: Define boundaries before details
+- Requirements second: Know WHAT before deciding HOW
+- Design third: Architectural decisions informed by actual requirements
 
+### Phase 2: Tactical Roadmap (AI-Generated, Evolving)
+
+4. **tracker.md** (AI-generated from all strategy docs)
+   - Complete task breakdown (T-001, T-002, etc.)
+   - Task dependencies and priorities
+   - Status tracking (⚪ ⏸️ 🟡 ✅ 🚫)
+   - Progress metrics and velocity
+   - Updated after each session
+   - **Template:** `_setup/templates/4-tracker.template.md`
+   - **AI Prompt:** `_setup/prompts/5-tracker.prompt.md`
+
+### Phase 3: Session Execution (Context-Sized, Per-Session)
+
+5. **todo.md** (Subset of tracker, per developer)
+   - 1-3 tasks for current session
+   - Opening Brief (context + plan)
+   - Closing Report (what changed)
+   - Session duration: 1-6 hours
+   - **Template:** `_setup/templates/5-todo.template.md`
+   - **AI Prompt:** `_setup/prompts/6-session.prompt.md`
+
+6. **handoff.md** (Session state transfer, per developer)
+   - Current project snapshot
+   - Decisions made this session
+   - Next recommended steps
+   - Replaces completely each session (not accumulated)
+   - **Template:** `_setup/templates/6-handoff.template.md`
+   - **Generated by:** `_setup/prompts/6-session.prompt.md` (Part 2)
+
+---
+
+## Framework Phases & Prompts
+
+### Phase 1: Construction of Strategic Documents (4 prompts)
+
+**Purpose:** Create the foundation documents that define project vision, requirements, and architecture.
+
+| Prompt | Input | Output | Time |
+|--------|-------|--------|------|
+| `1-discovery.prompt.md` | Business idea, PRD, or existing codebase | PRD document | 2-4h |
+| `2-scope.prompt.md` | PRD or business context | scope.md | 4-6h |
+| `3-requirements.prompt.md` | scope.md + PRD | requirements.md | 6-10h |
+| `4-design.prompt.md` | requirements.md + scope.md | design.md | 6-10h |
+
+**Adaptability:**
+- **New projects:** Generate from scratch with AI assistance
+- **Existing projects:** Document AS-IS state, then create TO-BE evolution plan
+
+### Phase 2: Tactical Generation (1 prompt)
+
+**Purpose:** Convert strategic documents into actionable implementation tasks.
+
+| Prompt | Input | Output | Time |
+|--------|-------|--------|------|
+| `5-tracker.prompt.md` | design.md + scope.md + requirements.md | tracker.md | 1-2h |
+
+**Features:**
+- Generates complete task breakdown
+- Calculates dependencies automatically
+- Adapts to project type (new vs existing)
+- Updates after each session
+
+### Phase 3: Session Execution (1 prompt, 3 parts)
+
+**Purpose:** Manage complete session lifecycle from planning to closure.
+
+| Part | Trigger | Action | Output |
+|------|---------|--------|--------|
+| Part 0 | "Create ToDo for T-XXX" | Generate simple task list | todo.md Phase 1 |
+| Part 1 | "Start session" | Read full context, create plan | Opening Brief in todo.md |
+| Part 2 | "Session complete" | Generate reports, update state | Closing Report + handoff.md + Tracker updates |
+
+**Single unified prompt:** `6-session.prompt.md` handles all three moments.
+
+---
+
+## The Constraint-First Principle
+
+### The Problem: AI Bias Toward Generic Solutions
+
+When AI reads requirements before understanding technical constraints, it suggests the "path of least resistance" - usually generic, cloud-based solutions that may violate your architectural decisions.
+
+**Example:**
 ```
-PHASE 0 (Optional): Discovery
-└── Business Context + Problem Statement + Initial Requirements
-        ↓
-PHASE 1: Strategic Foundation (CORRECT ORDER)
-├── 1. scope.md         → WHY we're building & boundaries
-├── 2. requirements.md  → WHAT we're building (details)
-└── 3. design.md        → HOW we're building (architecture)
-        ↓
-PHASE 2: Tactical Planning
-└── tracker.md (AI-generated from Scope + Requirements + Design)
-        ↓
-PHASE 3: Execution
-└── todo.md → Today's work (subset of tracker)
-        ↓
-PHASE 4: Continuity
-└── handoff.md → Verified results for next session
+❌ Wrong Order:
+   AI reads: "Need real-time chat feature" (from requirements)
+   AI suggests: "Use Firebase" (easiest solution)
+   Your architecture: FastAPI + PostgreSQL (conflict!)
+
+✅ Right Order:
+   AI reads: "Must use FastAPI + PostgreSQL" (from design)
+   Then reads: "Need real-time chat feature" (from requirements)
+   AI suggests: "Server-Sent Events in FastAPI" (respects constraints)
 ```
+
+### Two Different Orders
+
+**1. Document CREATION Order (Logical for Humans):**
+```
+PRD → Scope → Requirements → Design
+```
+**Rationale:** You cannot decide HOW to build (Design) without knowing WHAT to build (Requirements).
+
+**2. Document PRESENTATION Order (For AI Code Generation):**
+```
+Design → Scope → Requirements
+```
+**Rationale:** AI gives more weight to information it reads first. Technical constraints must be non-negotiable.
+
+### How It Works in Practice
+
+When using AI to generate code or implementation plans:
+
+```markdown
+"Read these documents in this order:
+
+1. design.md (FIRST - these constraints are non-negotiable)
+2. scope.md (SECOND - project boundaries)  
+3. requirements.md (THIRD - features to implement)
+
+The technical decisions in design.md override everything else.
+Now generate the implementation for [feature]."
+```
+
+This is documented in:
+- `design.md` template (CRITICAL section at the top)
+- All generation prompts (explicit instructions)
+- Session prompt Part 1 (reading order enforced)
+
+---
 
 ## Getting Started
 
 ### For NEW Projects (From Scratch)
 
-**Phase 0: Discovery (Outside Framework) - OPTIONAL BUT RECOMMENDED**
+**Step 1: Optional - Create PRD (if you don't have one)**
+```bash
+# Use discovery prompt to structure your idea
+# Load: _setup/prompts/1-discovery.prompt.md
+# Claude will guide you through creating PRD
+```
 
-Before using this framework, you need basic project clarity. This typically comes from:
-- Product Requirements Document (PRD)
-- Business Case  
-- Discovery workshops
-- Stakeholder interviews
-- Market research
+**Step 2: Create Strategic Documents (IN ORDER)**
+```bash
+# 2.1 Create scope.md
+# Template: _setup/templates/1-scope.template.md
+# Or use: _setup/prompts/2-scope.prompt.md with your PRD
 
-If you don't have formal documentation, use the optional `_discovery/` templates to capture:
-- Problem statement (what problem are we solving?)
-- Target users (who will use this?)
-- Business goals (why are we building this?)
-- High-level features (what are the main capabilities?)
-- Constraints (budget, timeline, team size)
+# 2.2 Create requirements.md  
+# Template: _setup/templates/2-requirements.template.md
+# Or use: _setup/prompts/3-requirements.prompt.md with scope.md
 
-**Phase 1: Create Strategy Documents (IN THIS ORDER)**
+# 2.3 Create design.md
+# Template: _setup/templates/3-design.template.md
+# Or use: _setup/prompts/4-design.prompt.md with requirements.md
+```
 
-⚠️ **IMPORTANT:** Follow this sequence - you can't decide HOW to build (Design) before knowing WHAT to build (Scope + Requirements)
+**Step 3: Generate Tracker**
+```bash
+# Use: _setup/prompts/5-tracker.prompt.md
+# Input: design.md + scope.md + requirements.md
+# Output: Complete task breakdown in tracker.md
+```
 
-**1. Scope.md FIRST** - Define WHAT and WHY
-   - Project vision and goals
-   - Boundaries (in/out scope)
-   - Success metrics and SLOs
-   - Stakeholders and constraints
-   - **Source:** PRD, business context, discovery notes
+**Step 4: Start First Session**
+```bash
+# Create your developer folder
+mkdir -p session/{your-name}/current
+mkdir -p session/{your-name}/archive
 
-**2. Requirements.md SECOND** - Detail the WHAT
-   - Functional requirements (features in detail)
-   - User stories and acceptance criteria
-   - Business rules and validation logic
-   - Data entities and relationships
-   - UI/UX considerations
-   - **Source:** Scope.md + PRD + user research
-
-**3. Design.md THIRD** - Decide HOW
-   - Architecture patterns (based on requirements)
-   - Tech stack choices (based on constraints from Scope)
-   - ADRs documenting why we chose X over Y
-   - Coding standards and quality gates
-   - Security and performance guidelines
-   - **Source:** Scope.md + Requirements.md + technical expertise
-
-**Phase 2: Generate Tactical Plan**
-
-4. Use AI to generate **tracker.md** from the three strategy documents
-5. Review and refine the generated tasks
-
-**Phase 3: Start Development Sessions**
-
-6. Create your developer folder: `session/{your-name}/`
-7. Create first `todo.md` with initial tasks
-8. Begin AI-assisted development
+# Use: _setup/prompts/6-session.prompt.md
+# Part 0: "Create ToDo for T-001, T-002" → generates todo.md
+# Part 1: "Start session" → adds Opening Brief
+# [Work happens...]
+# Part 2: "Session complete" → generates Closing Report + handoff.md
+```
 
 ### For EXISTING Projects (Adopting Framework)
 
-Document your current state - order is flexible since the system already exists:
+**Step 1: Document Current State**
 
-**1. Design.md** - Document current architecture
-   - Current tech stack
-   - Existing patterns and conventions
-   - Document past decisions as ADRs
+Order is flexible since the system already exists:
 
-**2. Scope.md** - Document current goals
-   - Current project vision
-   - What's in/out of scope NOW
-   - Current success metrics
+```bash
+# 1.1 Document current architecture
+# Create: docs/design.md (AS-IS state)
+# Include: Current tech stack, patterns, technical debt analysis
 
-**3. Requirements.md** - Document existing features
-   - What the system does today
-   - Known requirements for upcoming work
-   - Business rules currently implemented
+# 1.2 Document current project goals  
+# Create: docs/scope.md
+# Include: Current vision, boundaries, success metrics
 
-**4. Generate Tracker.md** - For remaining/new work only
+# 1.3 Document existing features
+# Create: docs/requirements.md
+# Include: What system does today, known requirements for new work
+```
 
-**5. Create initial Handoff.md** - Capture current state
+**Step 2: Generate Tracker for Remaining Work**
+```bash
+# Use: _setup/prompts/5-tracker.prompt.md
+# Will generate:
+# - Feature Development tasks (new functionality)
+# - Architecture Improvement tasks (refactoring)
+# - Technical Debt tasks (fixes)
+# - Migration tasks (if proposing architecture changes)
+```
 
-**6. Continue with session-based development**
+**Step 3: Create Initial Handoff**
+```bash
+# Manually create: session/{your-name}/current/handoff.md
+# Capture: Current project state, recent work, next steps
+```
+
+**Step 4: Continue with Session-Based Development**
+
+Same as new projects - use session prompt for all future work.
+
+---
 
 ## Multi-Developer Workflow
 
-### Session Organization
+### Workspace Organization
 
-Each developer maintains their own workspace:
+Each developer maintains independent workspace:
+
 ```
 session/
 ├── alice/
 │   ├── current/
-│   │   ├── todo.md      (Alice's current tasks)
-│   │   └── handoff.md   (Alice's personal context)
-│   └── archive/
-├── bob/
+│   │   ├── todo.md      # Alice's active session
+│   │   └── handoff.md   # Alice's context
+│   └── archive/         # Alice's completed sessions
+├── bob/  
 │   ├── current/
-│   │   ├── todo.md      (Bob's current tasks)
-│   │   └── handoff.md   (Bob's personal context)
-│   └── archive/
+│   │   ├── todo.md      # Bob's active session
+│   │   └── handoff.md   # Bob's context
+│   └── archive/         # Bob's completed sessions
 └── shared/
-    └── project-status.md (Team-wide status, updated at merge)
+    └── project-status.md  # Team coordination
 ```
 
-### Tracker Updates
+### Session Workflow Per Developer
 
-**During development (on feature branch):**
-- Each developer's AI proposes tracker updates in their Closing Report
-- Developer approves → AI updates tracker.md in their branch
+**1. Session Start (Part 0 & 1)**
+```bash
+# Alice starts her session
+# Reads: docs/ (shared) + tracker.md (shared) + session/alice/handoff.md (personal)
+# Creates: session/alice/current/todo.md with Opening Brief
+```
+
+**2. Work (Parallel)**
+```bash
+# Alice works on T-005, T-006 (feature branch: feature/alice-auth)
+# Bob works on T-012, T-013 (feature branch: feature/bob-payments)
+# Both propose tracker updates in their branches
+```
+
+**3. Session Close (Part 2)**
+```bash
+# Alice completes session
+# Generates: Closing Report in todo.md
+# Updates: session/alice/current/handoff.md
+# Proposes: tracker.md updates (in her branch)
+# Archives: Moves todo.md to session/alice/archive/session-005_2026-01-15.md
+```
+
+**4. Merge to Main**
+```bash
+# Alice merges feature branch
+# Tracker conflicts expected (different tasks updated)
+# Resolution: Keep both updates (merge, don't overwrite)
+# Update: shared/project-status.md with consolidated state
+```
+
+### Tracker Update Strategy
+
+**During Development (On Feature Branch):**
+- AI proposes tracker updates in Closing Report
+- Developer approves → AI updates tracker.md in feature branch
 - Changes stay isolated until merge
 
-**At merge time:**
-- Merge conflicts in tracker.md are expected and normal
-- Resolve by keeping both updates (different tasks)
-- Update shared/project-status.md with consolidated info
+**At Merge Time:**
+- Merge conflicts in tracker.md are NORMAL
+- Resolution: Keep both updates (Alice's + Bob's tasks)
+- Different developers work on different tasks
+- Update shared/project-status.md
 
-### Reading Context at Session Start
-
+**Reading Context:**
 Each developer reads:
-1. **strategy/** documents (shared, stable)
-2. **tactics/tracker.md** (shared, latest from main)
-3. **session/{developer}/current/handoff.md** (personal context)
-4. **session/shared/project-status.md** (team context)
+1. `docs/` (shared strategy - stable)
+2. `docs/tracker.md` (shared tasks - latest from main)
+3. `session/{developer}/handoff.md` (personal context)
+4. `session/shared/project-status.md` (team status)
+
+---
 
 ## Core Principles
 
-1. **Separation of Concerns by Time Horizon**
-   - Discovery (weeks) - Optional, pre-framework research
-   - Strategy (months) - Stable, human-owned (Scope, Requirements, Design)
-   - Tactics (weeks) - Evolving, AI-generated (Tracker)
-   - Execution (hours) - Bounded by context window (ToDo)
-   - Transfer (each session) - Verified state only (Handoff)
+### 1. Separation of Concerns by Time Horizon
 
-2. **Stateless AI, Stateful Documents**
-   - AI models have no memory between sessions
-   - Documents provide persistent context
-   - Each session reads full context stack
+- **Strategy** (months) - Stable, human-owned (Scope, Requirements, Design)
+- **Tactics** (weeks) - Evolving, AI-generated (Tracker)
+- **Execution** (hours) - Bounded by context window (ToDo)
+- **Transfer** (each session) - Verified state only (Handoff)
 
-3. **Continuous Verification**
-   - Every session ends with validation
-   - Only verified work moves to handoff
-   - Quality gates enforced at each step
+### 2. Stateless AI, Stateful Documents
 
-4. **Correct Document Creation Order**
-   - Scope before Requirements (know boundaries before details)
-   - Requirements before Design (know WHAT before deciding HOW)
-   - Never start with Design (you can't architect what you don't understand)
+- AI models have no memory between sessions
+- Documents provide persistent context
+- Each session reads full context stack
+- Handoff captures verified state only
+
+### 3. Constraint-First Methodology
+
+- Design.md establishes technical non-negotiables
+- AI reads constraints BEFORE requirements
+- Prevents generic "path of least resistance" solutions
+- Ensures architectural coherence
+
+### 4. Continuous Verification
+
+- Every session ends with validation
+- Only verified work moves to handoff
+- Quality gates enforced at each step
+- Evidence required (tests, CI, reviews)
+
+### 5. Document Order Matters
+
+**Creation Order (Human Logic):**
+- Scope → Requirements → Design
+- Cannot decide HOW without knowing WHAT
+
+**Presentation Order (AI Context):**
+- Design → Scope → Requirements
+- Technical constraints guide solution space
+
+---
 
 ## Benefits
 
-- ✅ Architectural coherence across sessions
-- ✅ Auditable decision trail (ADRs)
-- ✅ Consistent security and quality patterns
-- ✅ Fast onboarding for new team members
-- ✅ Works with any AI model or platform
-- ✅ Complete functional context for task generation
-- ✅ Scales to multiple developers working in parallel
-- ✅ Clear document creation sequence prevents premature architecture decisions
+- ✅ **Architectural Coherence** - Technical constraints enforced across all AI sessions
+- ✅ **Scope Control** - Clear boundaries prevent feature creep
+- ✅ **Auditable Trail** - ADRs document why decisions were made
+- ✅ **Consistent Patterns** - Security, quality, and performance standards applied uniformly
+- ✅ **Fast Onboarding** - New team members read strategy docs to understand project
+- ✅ **AI-Agnostic** - Works with Claude, GPT-4, Gemini, or any LLM
+- ✅ **Scalable** - Supports multiple developers working in parallel
+- ✅ **Adaptable** - Works for new projects and existing codebases
+- ✅ **Context-Efficient** - Session docs stay within LLM context windows
 
-## Source & Enhancements
+---
+
+## Source & Evolution
 
 ### Original Framework
 
-Based on: [From Fast Code to Reliable Software: A Framework for AI-Assisted Development](https://dev.to/stanislav_komarovsky_b478/from-fast-code-to-reliable-software-a-framework-for-ai-assisted-development-2dle)
+Based on: [From Fast Code to Reliable Software: A Framework for AI-Assisted Development](https://dev.to/stanislav_komarovsky_b478/from-fast-code-to-reliable-software-a-framework-for-ai-assisted-development-2dle) by Stanislav Komarovsky
 
-The original framework uses:
-- Design.md + Scope.md → Tracker.md
+**Original Equation:**
+```
+Design.md + Scope.md → Tracker.md → Code
+```
 
-### Key Enhancements
+### Key Enhancements by Phoenix Calibration
 
 #### 1. Requirements.md as Separate Strategy Document
 
-**Why we added Requirements.md:**
+**Problem with original approach:**
+- Scope.md mixing boundaries with detailed requirements
+- Document size bloat (40+ pages)
+- Update frequency mismatch (boundaries rarely change, requirements evolve)
+- Context inefficiency for AI
 
-The original framework implies functional requirements within Scope.md (e.g., "In Scope: Payments, refunds, dispute handling"). Our analysis showed this approach doesn't scale for real-world projects:
+**Our solution:**
+- **scope.md** (~8 pages): Vision, boundaries, metrics, constraints
+- **requirements.md** (~30 pages): User stories, business rules, data entities, UI/UX
+- Proper separation of strategic boundaries vs operational specifications
 
-**Challenges with requirements in Scope.md:**
-- 📄 Document size: Scope + detailed requirements = 40+ pages
-- 🔄 Update frequency mismatch: Scope changes rarely (months), requirements evolve frequently (weeks)
-- 🧠 Context efficiency: AI must read entire document to find boundaries
-- 🗂️ Maintainability: Every requirement change touches the "strategic" Scope document
-
-**Solution: Separate Requirements.md:**
-- ✅ **Scope.md stays concise** (~8 pages): Vision, goals, boundaries, metrics
-- ✅ **Requirements.md contains details** (~30 pages): User stories, business rules, flows, UI/UX
-- ✅ **Proper separation of concerns**: Strategic boundaries vs. operational specifications
-- ✅ **Scalability**: Works for both MVPs and enterprise projects
-- ✅ **Clear update patterns**: Scope = rare, Requirements = iterative
-
-**Updated generation equation:**
+**Updated equation:**
 ```
-Scope.md (why/boundaries) + Requirements.md (what) + Design.md (how) → Tracker.md
+Design.md + Scope.md + Requirements.md → Tracker.md → Code
 ```
 
-#### 2. Document Creation Order
+#### 2. Constraint-First Principle
 
-**Why order matters:**
+**Problem:** AI suggests generic solutions when reading requirements before design.
 
-The original article doesn't specify document creation order, which can lead to:
-- Premature architecture decisions before understanding requirements
-- Rework when requirements don't fit chosen architecture
-- Unclear scope boundaries affecting design choices
+**Our solution:** Document TWO orders:
+- Creation order: Scope → Requirements → Design (human logic)
+- Presentation order: Design → Scope → Requirements (AI context)
 
-**Our enhancement:**
-- Explicit sequence: Scope → Requirements → Design
-- Rationale documented in README
-- Templates numbered to reinforce order
+Documented in templates and prompts to ensure consistent application.
 
-#### 3. Multi-Developer Support
+#### 3. Consolidated Prompts
 
-**Why we added per-developer workspaces:**
+**Evolution:** Reduced from 13+ prompts to 6 adaptive prompts
+- Phase 1: 4 prompts (discovery, scope, requirements, design)
+- Phase 2: 1 prompt (tracker)
+- Phase 3: 1 unified prompt (session with 3 parts)
 
-The original framework assumes single-developer usage. Real teams need:
-- Isolated todo.md and handoff.md per developer
+Each prompt adapts to:
+- New vs existing projects
+- Different project types
+- Team size and workflow
+
+#### 4. Multi-Developer Support
+
+**Addition:** Per-developer workspaces with parallel development
+- Independent todo.md and handoff.md per developer
 - Shared project-status.md for coordination
-- Tracker.md merge conflict resolution strategy
+- Tracker merge conflict strategy
+- Session archiving per developer
 
-#### 4. Discovery Phase
+#### 5. Unified Session Prompt
 
-**Why we added optional _discovery/ folder:**
+**Innovation:** Single prompt manages entire session lifecycle
+- Part 0: Create ToDo (lightweight task selection)
+- Part 1: Start Session (full context read + Opening Brief)
+- Part 2: Close Session (Closing Report + Handoff + Tracker updates)
 
-The original framework assumes you already know what to build. We added optional templates for:
-- Teams starting from scratch without formal PRD
-- Bridge between business idea and technical framework
-- Capturing initial research before committing to strategy documents
+Eliminates need for separate prompts for each session moment.
 
 ### Other Enhancements
 
-- **Session archiving**: Automated commands to archive completed sessions
-- **Development workflows**: Environment strategy (dev/test/staging/prod)
-- **Project type support**: Frontend, backend, fullstack, integrations
-- **Repository strategies**: Monorepo and polyrepo configurations
-- **Business rules**: Explicit section for business logic constraints
-- **Data entities**: Domain model from functional perspective
+- PRD template for projects without formal requirements
+- Session archiving strategy
+- Business rules as explicit requirement category
+- Data entities from functional perspective
+- Integration requirements section
+- Existing project support with AS-IS + TO-BE documentation
 
-All enhancements maintain coherence with the original framework's principles while extending its applicability to real-world software projects.
+---
+
+## License & Status
+
+**License:** Private - Phoenix Calibration
+
+**Status:** ✅ Production Ready
+- All 6 templates complete
+- All 6 prompts complete
+- Documentation complete
+- Multi-developer workflow tested
+
+**Version:** 1.0 (January 2026)
+
+---
+
+## Quick Reference
+
+### Document Flow
+```
+PRD (optional) → Scope → Requirements → Design → Tracker → ToDo → Handoff
+```
+
+### AI Context Order
+```
+Design (constraints) → Scope (boundaries) → Requirements (features)
+```
+
+### File Locations
+```
+Templates: .ai-framework/_setup/templates/*.template.md
+Prompts:   .ai-framework/_setup/prompts/*.prompt.md
+Docs:      .ai-framework/docs/*.md
+Sessions:  .ai-framework/session/{developer}/current/*.md
+```
+
+### Time Estimates
+```
+PRD:          2-4 hours (optional)
+Scope:        4-6 hours
+Requirements: 6-10 hours
+Design:       6-10 hours
+Tracker:      1-2 hours (AI-generated)
+Session:      1-6 hours (per session)
+```
+
+---
+
+**Ready to start?** Copy `.ai-framework/` to your project and follow the Getting Started guide above.
