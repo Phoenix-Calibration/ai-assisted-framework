@@ -1,25 +1,43 @@
-# AI-Assisted Development Framework
+# AIris
 
-A structured approach to AI-assisted development that prevents architectural drift, scope creep, and inconsistent technical decisions across sessions.
+**Clear vision for AI-assisted development**
 
-**Key Innovation:** Constraint-first methodology that ensures technical decisions guide AI suggestions rather than AI suggesting generic "path of least resistance" solutions.
+A constraint-first framework that ensures AI understands your architecture before suggesting code. Like the human iris focuses light to create clear vision, AIris focuses AI on your technical constraints to create coherent, maintainable software.
 
 ---
 
-## What is This?
+## What is AIris?
 
-This repository contains a complete implementation of the AI-Assisted Development Framework - a document-driven system that maintains architectural coherence across AI-assisted development sessions.
+AIris is a document-driven framework for AI-assisted development that prevents common pitfalls like architectural drift, scope creep, and inconsistent technical decisions across sessions.
 
-The framework separates:
-- **What humans decide**: Architecture, boundaries, requirements
-- **What AI generates**: Task breakdown, implementation plans  
-- **What AI executes**: Session-based development work
+**The Problem:** When AI reads requirements before understanding technical constraints, it suggests generic "path of least resistance" solutions that often violate your architectural decisions.
+
+**The AIris Solution:** Architecture-first AI development. See the structure before writing code.
+
+---
+
+## Key Innovation
+
+**Constraint-First Methodology:** AIris ensures technical decisions guide AI suggestions rather than AI suggesting generic solutions.
+
+```
+Traditional AI Development:
+User: "I need a chat feature"
+AI: "Let's use Firebase!" ❌
+(Ignores your FastAPI + PostgreSQL architecture)
+
+With AIris:
+AI reads: design.md → "FastAPI + PostgreSQL only"
+Then reads: requirements.md → "Need chat feature"
+AI suggests: "Server-Sent Events in FastAPI" ✅
+(Respects your constraints)
+```
 
 ---
 
 ## Quick Start
 
-**📖 Complete Documentation:** [.ai-framework/README.md](.ai-framework/README.md)
+**📖 Complete Documentation:** [.airis/README.md](.airis/README.md)
 
 **🎯 Core Concept:** Three phases with six prompts
 - **Phase 1:** Construction (4 prompts) - Build strategic documents
@@ -31,7 +49,7 @@ The framework separates:
 ## Repository Structure
 
 ```
-.ai-framework/
+.airis/
 ├── README.md              # 📖 Complete framework documentation
 │
 ├── _setup/                # Reusable components
@@ -53,10 +71,10 @@ The framework separates:
 
 ## Quick Links
 
-- 📖 **[Framework Documentation](.ai-framework/README.md)** - Complete guide
-- 📝 **[Templates](.ai-framework/_setup/templates/)** - 7 document templates
-- 🤖 **[AI Prompts](.ai-framework/_setup/prompts/)** - 6 generation prompts
-- 📊 **[Project Docs](.ai-framework/docs/)** - Example placeholders
+- 📖 **[Framework Documentation](.airis/README.md)** - Complete guide
+- 📝 **[Templates](.airis/_setup/templates/)** - 7 document templates
+- 🤖 **[AI Prompts](.airis/_setup/prompts/)** - 6 generation prompts
+- 📊 **[Project Docs](.airis/docs/)** - Example placeholders
 
 ---
 
@@ -64,9 +82,9 @@ The framework separates:
 
 ### For a New Project
 
-1. **Copy framework** to your project:
+1. **Copy AIris** to your project:
    ```bash
-   cp -r .ai-framework/ /your-project/
+   cp -r .airis/ /your-project/
    ```
 
 2. **Create strategic documents** (in order):
@@ -84,7 +102,7 @@ The framework separates:
 
 ### For an Existing Project
 
-1. **Copy framework** to your project root
+1. **Copy AIris** to your project root
 2. **Document current state**:
    - `docs/design.md` - Current architecture (AS-IS + TO-BE)
    - `docs/scope.md` - Current vision and goals
@@ -92,7 +110,7 @@ The framework separates:
 3. **Generate tracker** for remaining work
 4. **Continue** with session-based development
 
-📖 **[See detailed guides](.ai-framework/README.md#getting-started)**
+📖 **[See detailed guides](.airis/README.md#getting-started)**
 
 ---
 
@@ -108,21 +126,21 @@ AI Executes Sessions (ToDo → Work → Handoff)
           Repeat
 ```
 
-**Key Principle:** AI reads documents in constraint-first order:
-1. Design (technical constraints) 
-2. Scope (boundaries)
-3. Requirements (features)
+**The AIris Principle:** AI reads documents in constraint-first order:
+1. **Design** (technical constraints - non-negotiable)
+2. **Scope** (project boundaries)
+3. **Requirements** (features to implement)
 
-This prevents AI from suggesting solutions that violate your architecture.
+This ensures AI suggestions respect your architecture.
 
 ---
 
 ## Key Features
 
-### 🎯 Constraint-First Methodology
+### 👁️ Constraint-First Methodology
 - Technical decisions guide AI suggestions
 - Prevents generic "path of least resistance" solutions
-- Maintains architectural coherence
+- Maintains architectural coherence across all sessions
 
 ### 📚 Document Hierarchy
 - **Strategy** (months) - Scope, Requirements, Design
@@ -150,6 +168,7 @@ This prevents AI from suggesting solutions that violate your architecture.
 ## Benefits
 
 - ✅ **Architectural Coherence** - Technical constraints enforced across all sessions
+- ✅ **Clear Vision** - Like an iris focuses light, AIris focuses AI on what matters
 - ✅ **Scope Control** - Clear boundaries prevent feature creep
 - ✅ **Auditable Trail** - ADRs document all technical decisions
 - ✅ **Fast Onboarding** - New team members read strategy docs
@@ -162,18 +181,18 @@ This prevents AI from suggesting solutions that violate your architecture.
 ## Documentation
 
 ### Main Documentation
-- **[Framework Guide](.ai-framework/README.md)** - Complete documentation
-- **[Getting Started](.ai-framework/README.md#getting-started)** - Setup guides
-- **[Constraint-First Principle](.ai-framework/README.md#the-constraint-first-principle)** - Core methodology
-- **[Multi-Developer Workflow](.ai-framework/README.md#multi-developer-workflow)** - Team collaboration
+- **[AIris Guide](.airis/README.md)** - Complete framework documentation
+- **[Getting Started](.airis/README.md#getting-started)** - Setup guides
+- **[Constraint-First Principle](.airis/README.md#the-constraint-first-principle)** - Core methodology
+- **[Multi-Developer Workflow](.airis/README.md#multi-developer-workflow)** - Team collaboration
 
 ### Templates & Prompts
-- **[Templates](.ai-framework/_setup/templates/)** - All 7 document templates
-- **[Prompts](.ai-framework/_setup/prompts/)** - All 6 AI prompts
+- **[Templates](.airis/_setup/templates/)** - All 7 document templates
+- **[Prompts](.airis/_setup/prompts/)** - All 6 AI prompts
 
 ### Example Documents
-- **[Project Docs](.ai-framework/docs/)** - Placeholder examples
-- **[Session Structure](.ai-framework/session/)** - Workspace organization
+- **[Project Docs](.airis/docs/)** - Placeholder examples
+- **[Session Structure](.airis/session/)** - Workspace organization
 
 ---
 
@@ -181,14 +200,26 @@ This prevents AI from suggesting solutions that violate your architecture.
 
 **Based on:** [From Fast Code to Reliable Software: A Framework for AI-Assisted Development](https://dev.to/stanislav_komarovsky_b478/from-fast-code-to-reliable-software-a-framework-for-ai-assisted-development-2dle) by Stanislav Komarovsky
 
-**Enhanced by:** Phoenix Calibration Team
+**Developed by:** Phoenix Calibration Team
 
-**Key Enhancements:**
-- Requirements.md as separate strategic document
-- Constraint-first methodology (dual document ordering)
-- Consolidated prompts (6 vs 13+ original)
-- Multi-developer workspaces
-- Unified session prompt with 3-part lifecycle
+**Key Innovations:**
+- ✨ Constraint-first methodology (dual document ordering)
+- ✨ Requirements.md as separate strategic document
+- ✨ Consolidated prompts (6 vs 13+ original)
+- ✨ Multi-developer workspaces
+- ✨ Unified session prompt with 3-part lifecycle
+- ✨ Architecture-first naming and branding (AIris)
+
+---
+
+## Philosophy
+
+> "Like the human iris controls how much light enters the eye to create clear vision, AIris controls how AI reads your project documents to create clear, coherent software."
+
+**The AIris Way:**
+1. **See clearly** - Architecture and constraints first
+2. **Focus precisely** - Boundaries and scope defined
+3. **Build confidently** - Requirements guide implementation
 
 ---
 
@@ -201,6 +232,7 @@ This prevents AI from suggesting solutions that violate your architecture.
 - ✅ All 6 prompts complete  
 - ✅ Documentation complete
 - ✅ Multi-developer workflow tested
+- ✅ Full rebranding to AIris
 
 ---
 
@@ -212,8 +244,12 @@ This prevents AI from suggesting solutions that violate your architecture.
 
 ## Get Started
 
-1. **Read the docs:** [.ai-framework/README.md](.ai-framework/README.md)
-2. **Copy to your project:** `cp -r .ai-framework/ /your-project/`
-3. **Follow the guide:** [Getting Started](.ai-framework/README.md#getting-started)
+1. **Read the docs:** [.airis/README.md](.airis/README.md)
+2. **Copy to your project:** `cp -r .airis/ /your-project/`
+3. **Follow the guide:** [Getting Started](.airis/README.md#getting-started)
 
-**Questions?** See the [Quick Reference](.ai-framework/README.md#quick-reference) section.
+**Ready to see clearly?** 👁️ Let AIris guide your AI-assisted development.
+
+---
+
+**Questions?** See the [Quick Reference](.airis/README.md#quick-reference) section.

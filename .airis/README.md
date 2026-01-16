@@ -1,24 +1,26 @@
-# AI-Assisted Development Framework
+# AIris Framework
 
-Framework for maintaining architectural coherence across AI-assisted development sessions through document-driven structure and constraint-first methodology.
+**Clear vision for AI-assisted development**
+
+A constraint-first framework for maintaining architectural coherence across AI-assisted development sessions through document-driven structure.
 
 ---
 
 ## What is This?
 
-A structured approach to AI-assisted development that prevents common pitfalls like architectural drift, scope creep, and inconsistent technical decisions across sessions. The framework uses a hierarchy of documents that serve as persistent context for stateless AI models.
+AIris is a structured approach to AI-assisted development that prevents common pitfalls like architectural drift, scope creep, and inconsistent technical decisions across sessions. The framework uses a hierarchy of documents that serve as persistent context for stateless AI models.
 
-**Key Innovation:** Separates what humans decide (architecture, boundaries) from what AI generates (tasks, implementation plans), ensuring technical constraints guide solutions rather than AI suggesting the "path of least resistance."
+**Key Innovation:** Like the human iris focuses light to create clear vision, AIris focuses AI on your technical constraints first, ensuring AI suggestions respect your architecture rather than suggesting generic "path of least resistance" solutions.
 
 ---
 
 ## Framework Structure
 
 ```
-.ai-framework/
+.airis/
 ├── README.md                      # This file - Framework documentation
 │
-├── _setup/                        # Reusable framework components
+├── _setup/                        # Reusable components
 │   ├── templates/                 # 7 document templates
 │   │   ├── 0-PRD.template.md         # Product Requirements (optional)
 │   │   ├── 1-scope.template.md       # Vision & boundaries
@@ -180,7 +182,7 @@ When AI reads requirements before understanding technical constraints, it sugges
    AI suggests: "Use Firebase" (easiest solution)
    Your architecture: FastAPI + PostgreSQL (conflict!)
 
-✅ Right Order:
+✅ Right Order (The AIris Way):
    AI reads: "Must use FastAPI + PostgreSQL" (from design)
    Then reads: "Need real-time chat feature" (from requirements)
    AI suggests: "Server-Sent Events in FastAPI" (respects constraints)
@@ -199,6 +201,12 @@ PRD → Scope → Requirements → Design
 Design → Scope → Requirements
 ```
 **Rationale:** AI gives more weight to information it reads first. Technical constraints must be non-negotiable.
+
+### The AIris Vision Metaphor
+
+> "Like the human iris controls how much light enters the eye to create clear vision, AIris controls how AI reads your project documents to create clear, coherent software."
+
+**The iris focuses light → AIris focuses AI on constraints**
 
 ### How It Works in Practice
 
@@ -268,7 +276,7 @@ mkdir -p session/{your-name}/archive
 # Part 2: "Session complete" → generates Closing Report + handoff.md
 ```
 
-### For EXISTING Projects (Adopting Framework)
+### For EXISTING Projects (Adopting AIris)
 
 **Step 1: Document Current State**
 
@@ -423,15 +431,20 @@ Each developer reads:
 - Scope → Requirements → Design
 - Cannot decide HOW without knowing WHAT
 
-**Presentation Order (AI Context):**
+**Presentation Order (AI Context - The AIris Way):**
 - Design → Scope → Requirements
 - Technical constraints guide solution space
+
+### 6. The AIris Vision
+
+> "Clear vision comes from focus. Like the iris controls light to create clear sight, AIris controls context to create clear code."
 
 ---
 
 ## Benefits
 
 - ✅ **Architectural Coherence** - Technical constraints enforced across all AI sessions
+- ✅ **Clear Vision** - Like an iris focuses light, AIris focuses AI on what matters
 - ✅ **Scope Control** - Clear boundaries prevent feature creep
 - ✅ **Auditable Trail** - ADRs document why decisions were made
 - ✅ **Consistent Patterns** - Security, quality, and performance standards applied uniformly
@@ -454,7 +467,7 @@ Based on: [From Fast Code to Reliable Software: A Framework for AI-Assisted Deve
 Design.md + Scope.md → Tracker.md → Code
 ```
 
-### Key Enhancements by Phoenix Calibration
+### Key Innovations by Phoenix Calibration
 
 #### 1. Requirements.md as Separate Strategy Document
 
@@ -474,7 +487,7 @@ Design.md + Scope.md → Tracker.md → Code
 Design.md + Scope.md + Requirements.md → Tracker.md → Code
 ```
 
-#### 2. Constraint-First Principle
+#### 2. Constraint-First Principle (The AIris Way)
 
 **Problem:** AI suggests generic solutions when reading requirements before design.
 
@@ -513,6 +526,14 @@ Each prompt adapts to:
 
 Eliminates need for separate prompts for each session moment.
 
+#### 6. AIris Branding & Philosophy
+
+**Innovation:** Clear metaphor and branding
+- "AIris" = AI + Iris (vision organ)
+- Emphasizes focus and clarity in AI-assisted development
+- Constraint-first as "focusing the light" before coding
+- Architecture-first messaging
+
 ### Other Enhancements
 
 - PRD template for projects without formal requirements
@@ -529,10 +550,11 @@ Eliminates need for separate prompts for each session moment.
 **License:** Private - Phoenix Calibration
 
 **Status:** ✅ Production Ready
-- All 6 templates complete
+- All 7 templates complete
 - All 6 prompts complete
 - Documentation complete
 - Multi-developer workflow tested
+- Complete AIris branding
 
 **Version:** 1.0 (January 2026)
 
@@ -545,17 +567,17 @@ Eliminates need for separate prompts for each session moment.
 PRD (optional) → Scope → Requirements → Design → Tracker → ToDo → Handoff
 ```
 
-### AI Context Order
+### AI Context Order (The AIris Way)
 ```
 Design (constraints) → Scope (boundaries) → Requirements (features)
 ```
 
 ### File Locations
 ```
-Templates: .ai-framework/_setup/templates/*.template.md
-Prompts:   .ai-framework/_setup/prompts/*.prompt.md
-Docs:      .ai-framework/docs/*.md
-Sessions:  .ai-framework/session/{developer}/current/*.md
+Templates: .airis/_setup/templates/*.template.md
+Prompts:   .airis/_setup/prompts/*.prompt.md
+Docs:      .airis/docs/*.md
+Sessions:  .airis/session/{developer}/current/*.md
 ```
 
 ### Time Estimates
@@ -570,4 +592,6 @@ Session:      1-6 hours (per session)
 
 ---
 
-**Ready to start?** Copy `.ai-framework/` to your project and follow the Getting Started guide above.
+**Ready to start?** Copy `.airis/` to your project and follow the Getting Started guide above.
+
+**See clearly. Build confidently.** 👁️
