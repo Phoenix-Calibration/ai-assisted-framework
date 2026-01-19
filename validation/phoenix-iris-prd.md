@@ -132,9 +132,23 @@ The company makes strategic decisions based on intuition rather than data, missi
   - Optimize technician utilization based on data
 
 ### Secondary Users
-- **Future IRIS Products:** Analytics dashboards, Sales quote generator, QC system, Field mobile app
-- **Data Analysts:** Build custom queries and reports using MCP tools
-- **IT Team:** Monitor platform health, manage data pipelines
+
+**Future IRIS Products (Post-MVP):**
+Phoenix IRIS Core Platform will serve as the backend for future products:
+- **IRIS Analytics:** Executive dashboards (web app) consuming MCP tools
+- **IRIS Sales:** AI quote generator for sales team  
+- **IRIS QC:** Quality control system for technicians
+- **IRIS Field:** Mobile app for field operations
+
+**Data Analysts:**
+- Build custom queries using MCP tools directly
+- Validate data quality and completeness  
+- Support executive ad-hoc analysis requests
+
+**IT Team:**
+- Monitor platform health (BigQuery costs, pipeline status)
+- Manage data ingestion schedules
+- Troubleshoot integration issues
 
 ---
 
@@ -429,7 +443,7 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 ## 10. APPROVAL
 
 | Role | Name | Date |
-|------|------|------|
+|------|------|---------|
 | Product Owner | Ivan (CTO) | 2026-01-19 |
 | Engineering Lead | Ivan (CTO) | 2026-01-19 |
 | Business Owner | CEO | 2026-01-19 |
