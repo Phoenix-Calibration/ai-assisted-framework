@@ -33,7 +33,7 @@ Core platform ONLY (data warehouse + MCP server). Product UIs (dashboards, mobil
 1. **Data Ingestion:** Daily batch sync from Calsystem (Azure SQL) and Odoo (PostgreSQL)
 2. **Data Warehouse:** BigQuery with 3 layers - raw (10 priority tables, ~1.4M rows), transformed (staging), and marts (analytics-ready)
 3. **Data Transformation:** dbt models creating ServiceItem-centric fact tables with business days TAT calculation
-4. **Intelligence Layer:** FastMCP Server exposing 5 core tools (query_service_items, query_financials, calculate_metrics, analyze_operations, get_data_health)
+4. **Intelligence Layer:** FastMCP Server exposing 6 core tools (query_service_items, query_calibrations, query_financials, calculate_metrics, analyze_operations, get_data_health)
 5. **Cross-System Bridge:** dim_sale_items table linking Odoo revenue to Calsystem operations via GUID matching
 
 **Users:**  
@@ -332,8 +332,101 @@ Create a conversational analytics platform that eliminates manual reporting dela
 **F-001: Unified Data Warehouse (BigQuery)**  
 Ingest data from Calsystem (Azure SQL) and Odoo (PostgreSQL) into centralized BigQuery warehouse with daily refresh → Executives can query recent operational data without waiting days.
 
-**F-002: MCP Server (AI Query Interface)**  
-Expose 5 core MCP tools (query_service_items, query_financials, calculate_metrics, analyze_operations, get_data_health) → LLMs can answer executive questions in natural language with structured data responses.
+**F-002: MCP Server (AI Query Interface)**
+
+Expose 6 core MCP tools enabling executives to query operational data through natural language (via any LLM client: Claude, GPT, Gemini) with optional verifiable sources and domain-accurate interpretations.
+
+**Core Tools:**
+
+| Tool | Purpose | Business Value |
+|------|---------|----------------|
+| **query_service_items** ⭐ | TAT tracking, workflow status, equipment lookup | "Show me overdue services" → Instant answer |
+| **query_calibrations** | Calibration quality details, OOT rates, technician performance | "What's our OOT rate this month?" → Quality metrics |
+| **query_financials** | Revenue analysis, invoicing, collections | "Outstanding AR by customer?" → Real-time data |
+| **calculate_metrics** | TAT compliance, productivity KPIs | "TAT compliance last quarter?" → Board-ready metrics |
+| **analyze_operations** | Bottleneck detection, capacity planning | "Where are TAT delays happening?" → Actionable insights |
+| **get_data_health** | Data freshness, completeness monitoring | "Is my data current?" → Trust validation |
+
+**Why 6 tools (not 15+):** Research shows fewer tools = 37-70% faster AI decision-making and higher accuracy. One flexible tool beats many specific tools.
+
+---
+
+**Key Capabilities:**
+
+**1. Optional Citation-Grade Responses (ISO 17025 Compliance)**
+- **What:** AI answers can include verifiable source references when requested by user
+- **Why:** Executives choose when they need audit trails (board prep) vs quick exploratory queries
+- **Example with citations:** "TAT is 6.2 days | Source: BigQuery mart_services_items (342 services, Jan 1-20)"
+- **Example without citations:** "TAT is 6.2 days"
+- **How to request:** User says "Show me TAT with sources" or tool parameter `include_citations=true`
+- **Value:** Flexibility - quick answers by default, verifiable sources on-demand for high-stakes decisions
+
+**2. Business Logic Guardrails (Prevent AI Hallucinations)**
+- **What:** Hard-coded domain rules prevent incorrect interpretations
+- **Why:** Generic AI doesn't understand Phoenix-specific business context
+- **Critical Rules:**
+  - TAT calculations auto-exclude on-site services (different SLAs)
+  - Zero-cost services report as "Pricing Pending" (not "Free")
+  - Incomplete data communicated transparently (~70% invoice linkage)
+  - OOT Rate formula standardized: COUNT(as_found='Out of tolerance') / Total × 100
+- **Value:** Accurate answers aligned with 23 years Phoenix operational knowledge
+
+**3. Cross-System Visibility (Odoo ↔ Calsystem Bridge)**
+- **What:** Tools automatically join financial (Odoo) + operational (Calsystem) data
+- **Why:** Executives need unified view (revenue + service status) in single query
+- **Example:** "Revenue by service status?" → Combines both systems seamlessly
+- **Value:** No more manual reconciliation or requesting IT to merge data
+
+---
+
+**Executive Capabilities Enabled:**
+
+**CEO Can:**
+- Answer board questions instantly (not 5-7 day wait for reports)
+- Request source citations only for board presentations (optional verification)
+- Track strategic KPIs in real-time (TAT trends, revenue growth)
+
+**CFO Can:**
+- Reconcile Odoo invoices with Calsystem services automatically
+- Analyze revenue patterns by customer/service type
+- Close books faster (no manual data extraction)
+
+**COO Can:**
+- Identify TAT bottlenecks proactively (before customer complaints)
+- Monitor technician utilization and capacity
+- Track calibration quality metrics (OOT rates by product/technician)
+- Make data-driven operational decisions daily
+
+---
+
+**Trade-offs Accepted (MVP Scope):**
+
+⚠️ **Data Freshness:** Daily refresh (24 hours), not real-time  
+- **Why MVP:** Sufficient for strategic decisions; hourly refresh evaluated in Phase 3
+
+⚠️ **Query Complexity:** 6 tools cover 80-95% use cases  
+- **Why MVP:** Edge cases handled through filter combinations; acceptable for MVP validation
+
+⚠️ **Business Rules:** Hard-coded in tool logic (not configurable UI)  
+- **Why MVP:** Faster to build; rule engine considered for Phase 2 if needed
+
+⚠️ **Citations:** Optional (not enforced), requires explicit request  
+- **Why MVP:** Performance optimization - citations add ~50ms latency; users choose when needed
+
+---
+
+**Success Criteria:**
+- 250+ executive queries/month by Month 3 (platform adoption)
+- 90%+ success rate (accurate, cited answers)
+- <5 second response time p95 (executive expectations)
+- Zero manual IT intervention for 95%+ of queries
+- Citations used in <30% of queries (exploratory queries dominate)
+
+**Rationale:** MCP tools are the CORE of Phoenix IRIS platform - enabling conversational analytics that eliminates 5-7 day report delays and empowers executives with self-service data access. Future IRIS products (Analytics, Sales, QC, Field) will consume these same tools.
+
+**Technical Details:** Full MCP tool specifications, schemas, and SQL implementations documented in Design.md Section 7.
+
+---
 
 **F-003: ServiceItem-Centric Data Model**  
 Transform raw data into analytics-ready fact tables with ServiceItem as central entity and business days TAT calculation → Accurate TAT tracking and workflow visibility.
@@ -498,7 +591,7 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 - **Impact:** Cut corners on quality, incomplete MVP
 - **Probability:** Medium (40%) - Aggressive timeline for new stack
 - **Mitigation:**
-  - Prioritize ruthlessly: Core 5 features only for MVP
+  - Prioritize ruthlessly: Core 6 features only for MVP
   - Use manual scripts before Airflow to save time
   - Skip non-essential tables (focus on 10 priority tables)
   - Weekly progress reviews to catch delays early
@@ -586,7 +679,7 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 ## 10. APPROVAL
 
 | Role | Name | Date |
-|------|------|---------|
+|------|------|------------|
 | Product Owner | Ivan (CTO) | 2026-01-19 |
 | Engineering Lead | Ivan (CTO) | 2026-01-19 |
 | Business Owner | CEO | 2026-01-19 |
@@ -599,7 +692,7 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 Business days from equipment received (ServiceItem.ReceiveDate) to certificate approved (CalibrationReport.ApprovedDate). Calculated excluding weekends and 16 Dominican Republic public holidays per year. Target: 8 days → 5.5 days.
 
 **MCP (Model Context Protocol):**  
-Standard protocol enabling LLMs to communicate with external data sources through structured tools. Phoenix IRIS implements 5 MCP tools that any LLM client can consume.
+Standard protocol enabling LLMs to communicate with external data sources through structured tools. Phoenix IRIS implements 6 MCP tools that any LLM client can consume.
 
 **ServiceItem (Central Entity):**  
 Each ServiceItem = 1 piece of customer equipment going through calibration workflow. Primary entity for tracking TAT, status, and linking to revenue (via Odoo bridge).
