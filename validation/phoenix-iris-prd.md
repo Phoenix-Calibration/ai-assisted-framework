@@ -499,8 +499,62 @@ dim_sale_items (BRIDGE TABLE)
 
 ---
 
-**F-004: Data Quality Validation**  
-Implement automated data quality checks (freshness, completeness, consistency) exposed via get_data_health() tool → Trust in data accuracy before making decisions.
+**F-004: Data Quality Validation**
+
+Implement automated data quality checks (freshness, completeness, consistency) exposed via get_data_health() MCP tool → Executives trust data accuracy and can verify before making high-stakes decisions.
+
+**Why This Is Critical:**
+- Legacy systems have known gaps (~70% invoice linkage, incomplete equipment types)
+- Executives making $400K/year decisions need confidence in data quality
+- Prevents "garbage in, garbage out" analytics
+- ISO 17025 compliance requires documented data integrity validation
+
+**Data Quality Checks:**
+
+**1. Freshness (Timeliness):**
+- Last successful ingestion timestamp per source system (Calsystem, Odoo)
+- Target: Daily refresh completed within 24 hours
+- Alert threshold: >36 hours since last update
+- Example: "Calsystem last updated: 4 hours ago ✅"
+
+**2. Completeness (Coverage):**
+- Row counts validated against expected baselines (ServiceItem: ~400K expected)
+- Critical field null rate monitoring (ReceiveDate, CustomerID, ProductID must be <5%)
+- Bridge table linkage rate tracking (target: >70% ServiceItems linked to Odoo)
+- Example: "Invoice linkage: 68% (272K/400K) ⚠️ Below 70% target - known legacy issue"
+
+**3. Consistency (Data Integrity):**
+- Referential integrity validation (all CustomerIDs exist in Customer table)
+- Business rule enforcement (TAT cannot be negative, zero-cost services flagged)
+- Cross-system reconciliation (Odoo invoice totals match Calsystem service counts)
+- Example: "Referential integrity: 99.8% ✅ (800 orphaned records documented)"
+
+**What get_data_health() Tool Provides:**
+- Overall system health status (GOOD/WARNING/CRITICAL)
+- Per-source freshness indicators (hours since last update)
+- Completeness metrics (row counts, null rates, linkage percentages)
+- Consistency scores (referential integrity, business rule compliance)
+- Known issues list with context (e.g., "68% linkage due to legacy GUID mismatches")
+
+**When Checks Run:**
+- **Post-ingestion:** Automatic validation after each nightly data sync
+- **On-demand:** Executives query via get_data_health() before board presentations
+- **Continuous:** Background monitoring for early issue detection
+
+**What Executives See:**
+- "Is my data current?" → "Last updated 4 hours ago ✅"
+- "Can I trust these numbers?" → "98% referential integrity ✅, 68% invoice linkage ⚠️"
+- "Any known issues?" → "45 zero-cost services flagged as 'Pricing Pending'"
+
+**Success Criteria:**
+- 99%+ freshness compliance (data updated within 24 hours)
+- 95%+ completeness on critical fields
+- 98%+ referential integrity maintained
+- Zero high-stakes executive decisions made on stale or incomplete data
+
+**Technical Details:** Full get_data_health() JSON schema, validation SQL queries, and monitoring implementation documented in Design.md Section 8.
+
+---
 
 ### Future (Post-MVP)
 
