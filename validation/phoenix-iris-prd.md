@@ -499,10 +499,7 @@ dim_sale_items (BRIDGE TABLE)
 
 ---
 
-**F-004: Cross-System Bridge (Odoo ↔ Calsystem)**  
-Create dim_sale_items bridge table linking Odoo sale orders to Calsystem service items via GUID → Revenue can be tracked by service item status.
-
-**F-005: Data Quality Validation**  
+**F-004: Data Quality Validation**  
 Implement automated data quality checks (freshness, completeness, consistency) exposed via get_data_health() tool → Trust in data accuracy before making decisions.
 
 ### Future (Post-MVP)
