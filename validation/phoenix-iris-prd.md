@@ -154,33 +154,172 @@ Phoenix IRIS Core Platform will serve as the backend for future products:
 
 ## 4. BUSINESS GOALS
 
-**Primary Objective:**  
+### North Star Metrics
+
+**1. Platform Success (Direct Indicator):**  
+**Executive Query Volume:** 0 → 250+ queries/month by Month 3  
+**with Success Rate:** N/A → 90%+ maintained
+
+Combined metric measuring platform adoption AND quality:
+
+**Volume (Adoption):**
+- **Current state:** 0 queries/month (no self-service platform exists)
+- **Month 1 (July 2026):** 50 queries/month (exploration and learning phase)
+- **Month 3 (September 2026):** 250 queries/month (daily habit established)
+- **Month 6 (December 2026):** 500 queries/month (operational dependency)
+
+**Success Rate (Quality):**
+- **Definition:** Query answered successfully with valid citations, no errors or escalations
+- **Target:** 90% of all queries result in successful answers
+- **Quality gate:** Prevents inflating volume with failed or repeated queries
+
+**Why this is our direct platform success indicator:**
+- **Auto-measured:** Every MCP tool call automatically logged (user_id, timestamp, tool, outcome, citations) - no manual IT tracking required
+- **If platform works:** Query volume grows steadily + success rate remains high (>90%)
+- **If platform fails:** Volume drops OR success rate tanks (alerts triggered)
+- **Reflects multi-dimensional success:** Adoption × Reliability × Accuracy × Usefulness
+
+**Measurement (fully automated):**
+```python
+# MCP server auto-logs every request:
+monthly_queries = count(user_id IN [CEO, CFO, COO], month = current)
+successful_queries = count(outcome = 'success', month = current)  
+success_rate = successful_queries / monthly_queries
+
+# Dashboard tracks:
+# - Query volume trend (weekly/monthly)
+# - Success rate percentage
+# - Query breakdown by executive and tool type
+# - Alert if success rate <85% for 2 consecutive weeks
+```
+
+**What 250 queries/month means:**
+- CEO: ~100 queries (strategic questions, board prep, market analysis)
+- CFO: ~80 queries (financial reconciliation, margin analysis, collections)
+- COO: ~70 queries (TAT monitoring, bottleneck identification, capacity planning)
+- Average: 12 queries per executive per week (real daily usage)
+
+---
+
+**2. Operational Excellence:**  
+**TAT Compliance Rate:** Unknown → 85% by Month 6
+
+Percentage of service items meeting or exceeding their service-specific target TAT (measured in business days).
+
+**Current state:** TAT compliance completely unmeasured - data calculated manually weeks after completion in spreadsheets. No real-time visibility into performance, cannot proactively identify bottlenecks.
+
+**With IRIS Platform:** Real-time TAT tracking by service type enables COO to identify and resolve bottlenecks before they impact customers.
+
+**Why this matters:**
+- **COO gains proactive management capability** instead of reactive firefighting
+- **Customer satisfaction improves** through reliable on-time delivery
+- **Competitive advantage** via faster turnaround than industry standard
+- **Platform validates core value:** Making invisible operational data visible and actionable
+
+**TAT Compliance Calculation:**
+```
+For each service type, define target TAT (business days):
+- Standard Calibration: 5 days
+- Complex Calibration: 8 days  
+- Repair Service: 10 days
+- On-site Service: Variable (excluded from lab metrics)
+
+Service Type Compliance = (Items meeting target) / (Total items completed)
+
+Weighted TAT Compliance Rate = Σ(Service_Compliance × Service_Volume) / Total_Volume
+```
+
+**Measurement timeline:**
+- **Baseline (Staging - Months 1-2):** Establish current performance (~70-75% estimated)
+- **Month 3 (First production data):** Track trend and identify improvement areas
+- **Month 6:** Target 85% compliance rate achieved
+- **Month 12:** Target 90% compliance rate (stretch goal)
+
+**Data source:** BigQuery `mart_services_items_summary_breakdown` table
+- Field: `demora_turnaround` (business days calculated)
+- Mapping: `equipment_type` → TAT target lookup
+- Filter: `release_status = 'Delivered'` AND `cal_location != 'On-Site Calibration'`
+
+---
+
+**3. Strategic Growth:**  
+**Revenue Per Employee:** $190K → $205K (+8%) by Year 1
+
+Company-wide efficiency metric reflecting improved decision-making and operational excellence enabled by IRIS Platform.
+
+**Current baseline (Q1 2026):** $190K revenue per employee
+
+**IRIS Platform contribution path:**
+```
+Better Data Visibility (IRIS)
+  ↓
+Faster Executive Decisions
+  ↓
+Higher TAT Compliance → Happier Customers → Better Retention + Referrals
+  ↓
+Operational Efficiency → Same Team Serves More Customers
+  ↓
+Increased Revenue Per Employee
+```
+
+**Target trajectory:**
+- **Q2 2026 (partial):** Platform launches mid-quarter
+- **Q4 2026:** $197K (+4% partial year impact)
+- **Q4 2027:** $205K (+8% full year impact)
+
+**Why this metric matters:**
+- **Aligns with CEO strategic vision** and board expectations
+- **Reflects compound effects** of data-driven decision making
+- **Measurable business outcome** beyond pure technology metrics
+- **Long-term sustainability indicator** for company growth
+
+**Measurement:** Quarterly financial reports (Revenue ÷ Employee Count)
+
+---
+
+### Primary Objective
+
 Create a conversational analytics platform that eliminates manual reporting delays and enables real-time, data-driven decision making for Phoenix Calibration executives.
 
-**Success Metrics:**
+---
+
+### Success Metrics by Phase
 
 **Launch (June 2026):**
-- Data freshness: <2 hours for Calsystem data
-- Query latency: <5 seconds for summary queries
-- Platform uptime: 99.5%
-- Initial users: 3 executives trained and active
+- Data freshness: <2 hours for Calsystem data (6-hour sync operational)
+- Query latency: <5 seconds for summary queries (p95)
+- Platform uptime: 99.5% availability
+- Initial users: 3 executives trained and actively using platform
 
 **3 months (September 2026):**
 - Executive satisfaction: >8/10 rating
-- Query success rate: >80% answered correctly
-- Manual reporting reduced: 75% reduction in IT report requests
-- TAT visibility: Real-time business days calculation working
+- Manual reporting reduced: 75% reduction in manual data extraction requests
+- TAT visibility: Real-time business days calculation operational
+- Platform success metrics: 250+ queries/month @ 90% success rate
 
 **12 months (June 2027):**
-- Decision-making speed: Strategic decisions 5x faster
-- Platform adoption: Used daily by all executives
+- Decision-making speed: Strategic decisions 5x faster (hours vs days)
+- Platform adoption: Used daily by all executives (habit formed)
 - First IRIS product launched: Analytics dashboard consuming MCP tools
-- ROI positive: Platform costs < value of time saved
+- ROI validated: Platform costs < documented value of time saved
 
-**ROI:**
-- **Benefit:** $400K/year (executive time saved + faster decisions + reduced errors)
-- **Cost:** $60K one-time dev + $9K/year ops ($700/mo GCP + $50/mo tools)
-- **Payback:** 2 months
+---
+
+### ROI Analysis
+
+**Annual Benefits:** $400K/year
+- Executive time saved: $156K/year (40+ hours/week → self-service)
+- Faster decision-making: $80K/year (reduced opportunity cost)
+- Reduced manual reporting overhead: $45K/year (CFO month-end close)
+- Improved TAT compliance: $120K/year (customer satisfaction + retention)
+
+**Costs:**
+- **Development:** $60K one-time (internal team, no contractors)
+- **Operations:** $9K/year ($700/mo GCP + $50/mo tools)
+
+**Payback Period:** 2 months (conservative)
+
+**3-Year NPV:** $1.14M ($400K × 3 years - $87K total costs)
 
 ---
 
