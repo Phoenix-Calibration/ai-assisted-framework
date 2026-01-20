@@ -377,7 +377,6 @@ Expose 6 core MCP tools enabling executives to query operational data through na
 
 **Why 6 tools (not 15+):** Research shows fewer tools = 37-70% faster AI decision-making and higher accuracy. One flexible tool beats many specific tools.
 
----
 
 **Key Capabilities:**
 
@@ -405,7 +404,6 @@ Expose 6 core MCP tools enabling executives to query operational data through na
 - **Example:** "Revenue by service status?" → Combines both systems seamlessly
 - **Value:** No more manual reconciliation or requesting IT to merge data
 
----
 
 **Executive Capabilities Enabled:**
 
@@ -425,7 +423,6 @@ Expose 6 core MCP tools enabling executives to query operational data through na
 - Track calibration quality metrics (OOT rates by product/technician)
 - Make data-driven operational decisions daily
 
----
 
 **Trade-offs Accepted (MVP Scope):**
 
@@ -441,7 +438,6 @@ Expose 6 core MCP tools enabling executives to query operational data through na
 ⚠️ **Citations:** Optional (not enforced), requires explicit request  
 - **Why MVP:** Performance optimization - citations add ~50ms latency; users choose when needed
 
----
 
 **Success Criteria:**
 - 250+ executive queries/month by Month 3 (platform adoption)
@@ -456,8 +452,52 @@ Expose 6 core MCP tools enabling executives to query operational data through na
 
 ---
 
-**F-003: ServiceItem-Centric Data Model**  
-Transform raw data into analytics-ready fact tables with ServiceItem as central entity and business days TAT calculation → Accurate TAT tracking and workflow visibility.
+**F-003: ServiceItem-Centric Data Model**
+
+Transform raw data into analytics-ready fact tables with ServiceItem as central entity, enriched with business days TAT calculation and cross-system bridges → Accurate TAT tracking, workflow visibility, and revenue attribution.
+
+**Why ServiceItem is Central:**
+- **Primary operational entity:** 1 ServiceItem = 1 piece equipment going through calibration
+- **TAT anchor:** ReceiveDate (TAT start) + ApprovedDate (TAT end) both on ServiceItem table
+- **Workflow hub:** TrackingStatusId tracks 7 workflow stages (Pending → Delivered)
+- **Bridge-able:** GUID enables linking to Odoo revenue via dim_sale_items
+- **CEO/CFO/COO questions ALL reference ServiceItems:** "How many services overdue?", "Revenue by service status?", "Bottlenecks in workflow?"
+
+**Data Model Structure:**
+```
+fact_service_items (CORE) ⭐
+├── Primary Keys: service_item_id (GUID)
+├── Dates: receive_date, approved_date, expected_date
+├── TAT Metrics: tat_business_days, tat_calendar_days, tat_variance
+├── Status: tracking_status (enum), is_tat_overdue (boolean)
+├── Dimensions: customer_key, product_key, technician_key
+└── Odoo Bridge: LEFT JOIN dim_sale_items ON service_item_id = calsys_id
+
+dim_sale_items (BRIDGE TABLE)
+├── Odoo Side: sale_item_id, order_reference, subtotal
+├── Calsystem Side: calsys_id (GUID match)
+└── Sync Status: calsys_link ('link' | 'unlink' | 'failed')
+```
+
+**Business Days TAT Calculation:**
+- **Custom BigQuery UDF:** `business_days_between(start_date, end_date)`
+- **Excludes:** Weekends (Saturday/Sunday) + 16 DR public holidays per year
+- **Critical for accuracy:** Industry measures TAT in business days, not calendar days
+- **Example:** 5 calendar days over weekend = 3 business days TAT
+
+**What This Enables:**
+- "Average TAT by customer segment" → ServiceItem joins Customer + TAT calculation
+- "Revenue stuck in 'InProgress' status" → ServiceItem joins dim_sale_items
+- "Technician productivity" → ServiceItem joins Technician dimension
+- "Equipment lifecycle tracking" → ServiceItem history by asset
+
+**Technical Foundation:**
+- Built with dbt (version-controlled transformations)
+- Incremental models for performance (full reload fallback)
+- Data quality tests on every dbt run
+- Documented in Design.md Section 5 (Data Architecture)
+
+---
 
 **F-004: Cross-System Bridge (Odoo ↔ Calsystem)**  
 Create dim_sale_items bridge table linking Odoo sale orders to Calsystem service items via GUID → Revenue can be tracked by service item status.
