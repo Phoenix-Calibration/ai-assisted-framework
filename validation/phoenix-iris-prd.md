@@ -329,8 +329,36 @@ Create a conversational analytics platform that eliminates manual reporting dela
 
 ### Must-Have (MVP - Core Platform)
 
-**F-001: Unified Data Warehouse (BigQuery)**  
-Ingest data from Calsystem (Azure SQL) and Odoo (PostgreSQL) into centralized BigQuery warehouse with daily refresh → Executives can query recent operational data without waiting days.
+**F-001: Unified Data Warehouse (BigQuery)**
+
+Consolidate operational data from 2 disconnected systems (Calsystem on Azure SQL + Odoo on PostgreSQL) into centralized BigQuery warehouse with 3-layer architecture and daily refresh → Executives gain single source of truth for cross-system analytics without manual data extraction.
+
+**Problem Solved:**
+- **Before:** CFO manually reconciles Odoo invoices with Calsystem services (10-day month-end close)
+- **After:** Automated bridge table links revenue to service status instantly
+
+**Architecture:**
+1. **Raw Layer:** 10 priority tables (~1.4M rows) ingested daily from source systems
+2. **Transformed Layer:** dbt models with ServiceItem as central entity
+3. **Marts Layer:** Analytics-ready fact tables optimized for MCP tool queries
+
+**Why BigQuery:**
+- Columnar storage optimized for analytical queries (<5s p95 latency)
+- Separation from production databases (no impact on operations)
+- Cost-effective for sporadic executive queries ($700/mo vs $2K+ for dedicated warehouse)
+- Native integration with dbt and FastMCP
+
+**Data Scope:**
+- **Calsystem:** ServiceItem (400K rows), Calibration, Customer, Product, Technician, etc.
+- **Odoo:** sale.order, sale.order.line, account.move (invoices), res.partner (customers)
+- **Sync Frequency:** Daily batch (nightly) - sufficient for strategic decision-making
+
+**What This Enables:**
+- "Show revenue by service status" (joins Odoo + Calsystem automatically)
+- "TAT compliance by customer segment" (cross-system analytics)
+- "Outstanding AR linked to service delays" (CFO month-end close automation)
+
+---
 
 **F-002: MCP Server (AI Query Interface)**
 
