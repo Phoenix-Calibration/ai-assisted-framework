@@ -30,7 +30,7 @@ Build Phoenix IRIS Core Platform - the foundational backend that unifies operati
 Core platform ONLY (data warehouse + MCP server). Product UIs (dashboards, mobile apps) are separate future projects that will consume this platform.
 
 **Key Components:**
-1. **Data Ingestion:** Airflow pipelines extracting from Calsystem (Azure SQL, every 6h) and Odoo (PostgreSQL, daily)
+1. **Data Ingestion:** Daily batch sync from Calsystem (Azure SQL) and Odoo (PostgreSQL)
 2. **Data Warehouse:** BigQuery with 3 layers - raw (10 priority tables, ~1.4M rows), transformed (staging), and marts (analytics-ready)
 3. **Data Transformation:** dbt models creating ServiceItem-centric fact tables with business days TAT calculation
 4. **Intelligence Layer:** FastMCP Server exposing 5 core tools (query_service_items, query_financials, calculate_metrics, analyze_operations, get_data_health)
@@ -42,12 +42,13 @@ Core platform ONLY (data warehouse + MCP server). Product UIs (dashboards, mobil
 - **Tertiary:** Data analysts, IT team (platform maintainers)
 
 **Goal:**  
-Enable data-driven decision making through conversational AI access to unified operational data, eliminating manual reporting delays and enabling real-time business insights.
+Transform executive decision-making from manual, delayed reporting to self-service analytics - enabling 250+ monthly queries with 90% success rate, improving TAT compliance to 85%, and contributing to 8% revenue per employee growth.
 
-**Success Metric:**  
-- Data freshness: 5-7 days → <2 hours
-- TAT visibility: Manual calculation → Real-time business days
-- Executive queries: Impossible → <5 seconds via chat
+**Success Metrics:**  
+- **Platform success:** 250+ queries/month @ 90% success (Month 3)
+- **Operational impact:** 85% TAT compliance (Month 6)
+- **Business growth:** +8% revenue per employee (Year 1)
+- **Technical foundation:** Daily data refresh, <5s query latency, 99.5% uptime
 
 **Timeline:**  
 - Staging functional: End of April 2026 (~3.5 months)
@@ -286,7 +287,7 @@ Create a conversational analytics platform that eliminates manual reporting dela
 ### Success Metrics by Phase
 
 **Launch (June 2026):**
-- Data freshness: <2 hours for Calsystem data (6-hour sync operational)
+- Data freshness: Daily refresh (24 hours)
 - Query latency: <5 seconds for summary queries (p95)
 - Platform uptime: 99.5% availability
 - Initial users: 3 executives trained and actively using platform
@@ -302,6 +303,7 @@ Create a conversational analytics platform that eliminates manual reporting dela
 - Platform adoption: Used daily by all executives (habit formed)
 - First IRIS product launched: Analytics dashboard consuming MCP tools
 - ROI validated: Platform costs < documented value of time saved
+- Data freshness evolution: Evaluate moving to hourly refresh based on usage patterns
 
 ---
 
@@ -328,7 +330,7 @@ Create a conversational analytics platform that eliminates manual reporting dela
 ### Must-Have (MVP - Core Platform)
 
 **F-001: Unified Data Warehouse (BigQuery)**  
-Ingest data from Calsystem (Azure SQL) and Odoo (PostgreSQL) into centralized BigQuery warehouse with 2-hour freshness → Executives can query recent operational data without waiting days.
+Ingest data from Calsystem (Azure SQL) and Odoo (PostgreSQL) into centralized BigQuery warehouse with daily refresh → Executives can query recent operational data without waiting days.
 
 **F-002: MCP Server (AI Query Interface)**  
 Expose 5 core MCP tools (query_service_items, query_financials, calculate_metrics, analyze_operations, get_data_health) → LLMs can answer executive questions in natural language with structured data responses.
@@ -354,12 +356,13 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 - Real-time alerts (Slack/email notifications)
 - Predictive analytics (forecast TAT, capacity planning)
 - Multi-tenant SaaS (support franchise labs)
+- Enhanced data freshness (hourly or sub-hourly refresh as usage patterns demand)
 
 ### Out of Scope (MVP)
 
 - **Web dashboards:** Future IRIS Analytics product, not Core platform
 - **Mobile apps:** Future IRIS Field product
-- **Real-time streaming:** Batch processing sufficient for MVP (6-hour refresh)
+- **Real-time streaming:** Batch processing sufficient for MVP (daily refresh)
 - **Historical migration >2 years:** Only recent data for MVP validation
 - **Custom ML models:** Use existing BigQuery ML capabilities only
 
@@ -392,7 +395,7 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 **Data:**  
 - **Priority tables:** 10 core tables (~1.4M rows total)
 - **Largest table:** ServiceItem (400K rows, central entity)
-- **Refresh rate:** 6 hours Calsystem, 24 hours Odoo (sufficient for MVP)
+- **Refresh rate:** Daily (24 hours) for MVP - Calsystem and Odoo synced nightly
 - **Storage:** us-central1 region (cost optimization)
 
 ---
@@ -405,7 +408,7 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 - Calsystem staging database remains stable and accessible during development
 - Current schema structure (10 priority tables) won't undergo major changes
 - ~1.4M rows across priority tables sufficient for MVP validation
-- Incremental load strategy (COALESCE(LastModified, Created)) works reliably
+- Daily batch sync sufficient for executive decision-making (no real-time requirement for MVP)
 
 **Team & Skills:**
 - Internal team can learn BigQuery/dbt/MCP within 2-week ramp-up
@@ -416,12 +419,13 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 - Executives have access to Claude Desktop or can use web-based LLM clients
 - CEO/CFO/COO willing to learn conversational query patterns
 - Business questions can be answered with available data (no major gaps)
+- Daily data freshness acceptable for strategic decision-making
 
 **Infrastructure:**
 - GCP project phoenix-analytics-staging remains accessible
 - Service accounts and IAM roles already configured remain valid
-- Azure SQL staging database stays online for 6-hour sync windows
-- Odoo staging instance remains accessible for daily syncs
+- Azure SQL staging database stays online for nightly sync windows
+- Odoo staging instance remains accessible for nightly syncs
 
 ### Dependencies
 
@@ -504,11 +508,11 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 - **Impact:** Data drift, missed updates, stale analytics
 - **Probability:** Medium (30%) - Complex incremental logic
 - **Mitigation:**
-  - Use proven pattern: COALESCE(LastModified, Created)
-  - Add validation queries after each incremental run
-  - Keep full-reload scripts as backup
-  - Monitor for NULL LastModified edge cases
-- **Fallback:** Fall back to daily full reloads if incremental fails
+  - Start with daily full reloads for MVP simplicity
+  - Add incremental load optimization post-launch
+  - Monitor for data freshness via get_data_health() tool
+  - Set clear expectations: daily refresh, not real-time
+- **Fallback:** Continue daily full reloads if incremental unnecessary for MVP
 
 ### Low Risk
 
