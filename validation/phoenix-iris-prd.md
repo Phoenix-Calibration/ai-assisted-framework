@@ -599,10 +599,16 @@ Implement automated data quality checks (freshness, completeness, consistency) e
 - **Leadership:** CTO (Ivan) leads architecture and technical decisions
 
 **Technical:**  
-- **Must use:** GCP BigQuery (data warehouse), FastMCP (MCP server), Python (ETL scripts), dbt (transformations)
-- **Must integrate:** Calsystem (Azure SQL via pyodbc), Odoo (PostgreSQL via odoorpc)
 - **Cannot use:** Cloud Composer initially (too expensive for MVP - use manual scripts first)
 - **Must comply:** ISO 17025 (lab compliance), A2LA audit requirements (dev/prod separation)
+
+**ISO 17025 Compliance Requirements:**
+- **Data Integrity:** All data transformations must be version-controlled (dbt models in Git) with documented change history for audit trails
+- **Traceability:** Every calculation (TAT, metrics) must be reproducible with source data references - no black-box analytics
+- **Environment Separation:** Dev/Staging/Production environments strictly separated with controlled promotion process (A2LA requirement)
+- **Access Control:** Role-based access to production data (executives read-only, IT admin-only for schema changes)
+- **Validation Evidence:** Data quality checks (F-004) provide documented evidence of system validation for ISO audits
+- **Change Management:** Any production schema changes require documented testing and approval process
 
 **Data:**  
 - **Priority tables:** 10 core tables (~1.4M rows total)
@@ -793,15 +799,45 @@ Implement automated data quality checks (freshness, completeness, consistency) e
    - Session-based workflow (ToDo → Work → Handoff)
    - Context preserved across multiple development cycles
 
+### Production Rollout Strategy
+
+**Phase 1: Staging Validation (April 2026 - 3 weeks)**
+- Deploy complete platform to phoenix-analytics-staging
+- Load 2 weeks of data for smoke testing
+- Executives test with real queries (30-50 queries to validate)
+- Data quality checks validated (freshness, completeness, integrity)
+- Performance validated (<5s p95 query latency)
+- **Go/No-Go Decision:** Platform meets success criteria before production
+
+**Phase 2: Production Deployment (Early June 2026 - 1 week)**
+- Promote staging code to production environment
+- Full historical data load (2 years ServiceItems, Calibrations, Financials)
+- Production MCP server deployment with TLS certificates
+- Executive training sessions (2 hours hands-on with Claude Desktop)
+- Monitor data quality metrics daily for first week
+
+**Phase 3: Adoption & Iteration (June-September 2026 - 3 months)**
+- **Month 1 (July):** Initial adoption - 50 queries/month target
+- **Month 2 (August):** Daily usage forming - 150 queries/month
+- **Month 3 (September):** Platform success validated - 250+ queries/month @ 90% success rate
+- Weekly check-ins with executives to address pain points
+- Monthly platform metrics review and optimization
+- Document executive feedback for future IRIS product features
+
+**Rollback Plan:**
+- If production fails validation: Revert to staging, fix issues, redeploy
+- If adoption < 50 queries/month 1: One-on-one executive coaching sessions
+- If success rate < 80%: Pause, improve data quality or tool logic
+
 ---
 
 ## 10. APPROVAL
 
 | Role | Name | Date |
-|------|------|------------|
-| Product Owner | Ivan (CTO) | 2026-01-19 |
-| Engineering Lead | Ivan (CTO) | 2026-01-19 |
-| Business Owner | CEO | 2026-01-19 |
+|------|------|------|
+| Product Owner | Ivan (CTO) | 2026-01-20 |
+| Engineering Lead | Ivan (CTO) | 2026-01-20 |
+| Business Owner | CEO | 2026-01-20 |
 
 ---
 
