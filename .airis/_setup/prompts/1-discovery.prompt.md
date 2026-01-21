@@ -54,6 +54,11 @@ Ask these questions to understand the proposed solution:
 - What are their characteristics? (technical level, context, goals)
 - Are there different user types/personas?
 
+**Project Scope:**
+- What is this project/product? (high-level explanation)
+- If multi-repo: What does THIS specific repository contain?
+- What are the main building blocks/components?
+
 ### Step 3: Understand Scope and Constraints
 
 Ask these questions to understand boundaries:
@@ -62,6 +67,7 @@ Ask these questions to understand boundaries:
 - What features/capabilities are essential? (MVP)
 - What features are nice-to-have but not critical?
 - What is explicitly OUT of scope?
+- What will be addressed in future phases?
 
 **Constraints:**
 - Timeline: When do you need this?
@@ -77,16 +83,48 @@ Based on the discovery conversation, generate a PRD with this structure:
 ```markdown
 # Product Requirements Document
 
-**Project Name:** [Name]
-**Date:** [YYYY-MM-DD]
-**Author:** [Name]
-**Version:** 1.0
+## METADATA
+
+- **Project Name:** [Name]
+- **What is [PROJECT_NAME]:** [1-2 sentence explanation of what this project/product is]
+- **This Repository:** [What this specific repository/codebase contains - specify if multi-repo]
+- **Author:** [Name, Role]
+- **Date:** [YYYY-MM-DD]
+- **Status:** Draft
 
 ---
 
 ## 1. Executive Summary
 
-[2-3 paragraphs summarizing the problem, solution, and expected impact]
+**Problem:**  
+[What problem are we solving?]
+
+**Solution:**  
+[What are we building?]
+
+**Scope of This Project:**  
+[What's included in THIS project vs what's future work - clarify MVP boundaries]
+
+**Key Components:**  
+1. [Component 1]: [Brief description of main building block]
+2. [Component 2]: [Brief description of main building block]
+3. [Component 3]: [Brief description of main building block]
+[Add more as needed - typically 3-5 components]
+
+**Users:**  
+[Who will use this?]
+
+**Goal:**  
+[Why are we building this?]
+
+**Success Metric:**  
+[How will we measure success?]
+
+**Timeline:**  
+[When will this launch?]
+
+**Budget:**  
+[$X total]
 
 ---
 
@@ -228,6 +266,11 @@ Ask these questions about the current project:
 - How long has it been in operation?
 - What problem was it built to solve?
 
+**Project Context:**
+- What is this project/product? (high-level explanation)
+- If multi-repo: What does THIS specific repository contain?
+- What are the main components/building blocks?
+
 **Technical Context:**
 - What technologies/frameworks are used?
 - What's the current architecture? (share folder structure)
@@ -267,17 +310,49 @@ Generate a PRD that documents the current state AS IF it were written originally
 ```markdown
 # Product Requirements Document (Retrospective)
 
-**Project Name:** [Name]
-**Date:** [YYYY-MM-DD] (Documented)
-**Original Launch:** [YYYY-MM-DD] (if known)
-**Author:** [Name]
-**Version:** 1.0 (Retrospective Documentation)
+## METADATA
+
+- **Project Name:** [Name]
+- **What is [PROJECT_NAME]:** [1-2 sentence explanation of what this project/product is]
+- **This Repository:** [What this specific repository/codebase contains - specify if multi-repo]
+- **Author:** [Name, Role]
+- **Date:** [YYYY-MM-DD] (Documented)
+- **Original Launch:** [YYYY-MM-DD] (if known)
+- **Status:** Retrospective Documentation
 
 ---
 
 ## 1. Executive Summary
 
-[Document the problem, solution, and impact AS IT EXISTS TODAY]
+**Problem:**  
+[The problem this system solves]
+
+**Solution:**  
+[Current solution description]
+
+**Scope of This Project:**  
+[What THIS project covers vs what's separate/future - clarify current boundaries]
+
+**Key Components:**  
+1. [Component 1]: [Brief description of main building block]
+2. [Component 2]: [Brief description of main building block]
+3. [Component 3]: [Brief description of main building block]
+[Document actual architecture components - typically 3-5]
+
+**Users:**  
+[Current users]
+
+**Goal:**  
+[Original/current goal]
+
+**Success Metric:**  
+[How success is measured]
+
+**Timeline:**  
+[Original timeline or current milestones]
+
+**Budget:**  
+[If known]
 
 ---
 
@@ -406,11 +481,14 @@ Now that we've documented the current state:
 Read the PRD provided by the user and check for:
 
 **Completeness:**
+- [ ] Project name and explanation clear?
+- [ ] Repository scope clarified (if multi-repo)?
 - [ ] Problem statement clear?
 - [ ] Target users identified?
 - [ ] Solution described?
+- [ ] Project scope boundaries set?
+- [ ] Key components identified?
 - [ ] Success metrics defined?
-- [ ] Scope boundaries set?
 - [ ] Constraints documented?
 
 ### Step 2: Identify Gaps
@@ -418,12 +496,16 @@ Read the PRD provided by the user and check for:
 Point out missing sections:
 - "Your PRD is missing [section]. Let me ask you about..."
 - "The [section] needs more detail. Can you clarify..."
+- "For multi-repo projects, we need to clarify what THIS repository contains..."
+- "Can you list the main components/building blocks?"
 
 ### Step 3: Restructure if Needed
 
 If the PRD structure is different from our template:
 - Extract information from their format
 - Reorganize into our standard template
+- Add the new METADATA fields (What is, This Repository)
+- Add the new Executive Summary subsections (Scope of This Project, Key Components)
 - Preserve all their content, just restructure
 
 ### Step 4: Output Refined PRD
@@ -444,6 +526,9 @@ All flows produce a PRD following the template structure above.
 
 Before finalizing the PRD, verify:
 
+- [ ] METADATA complete (including "What is" and "This Repository")
+- [ ] Executive Summary includes "Scope of This Project"
+- [ ] Executive Summary includes "Key Components" (3-5 items)
 - [ ] Problem is clearly articulated
 - [ ] Target users are identified
 - [ ] Solution approach is described
@@ -459,12 +544,18 @@ Before finalizing the PRD, verify:
 ### For New Projects:
 - Ask open-ended questions first
 - Don't assume - clarify everything
+- Ask explicitly: "What is this project/product?" to get concise explanation
+- For multi-repo: Ask "What does THIS repository contain?"
+- Ask "What are the main building blocks?" to identify key components
 - Challenge assumptions politely
 - Help user think through edge cases
 - Be realistic about scope (MVP first)
 
 ### For Existing Projects:
 - Focus on documenting current state accurately
+- Ask "What is this project?" even if name seems obvious
+- Clarify repository boundaries in multi-repo scenarios
+- Identify actual architectural components, not aspirational
 - Don't judge past decisions
 - Identify gaps between intent and reality
 - Document both successes and challenges
@@ -472,6 +563,7 @@ Before finalizing the PRD, verify:
 
 ### For Refinement:
 - Respect their existing work
+- Check for new required fields (What is, This Repository, Scope of This Project, Key Components)
 - Suggest improvements diplomatically
 - Add missing pieces, don't replace
 - Ensure consistency across sections
@@ -486,12 +578,13 @@ Before finalizing the PRD, verify:
 ```
 Great! Let me help you structure this into a formal PRD. 
 
-First, let's understand the problem:
+First, let's understand the project:
 
-1. What specific problem are calibration labs facing that your system will solve?
-2. Who in the lab would use this system? (Lab managers, technicians, quality officers?)
-3. How do labs currently handle calibration management?
-4. What makes the current approach inadequate?
+1. Can you describe in 1-2 sentences what this calibration management system is?
+2. What specific problem are calibration labs facing that your system will solve?
+3. Who in the lab would use this system? (Lab managers, technicians, quality officers?)
+4. How do labs currently handle calibration management?
+5. What are the main components/building blocks you envision? (e.g., equipment tracking, scheduling, reporting?)
 
 Take your time - the more detail you provide, the better PRD we can create.
 ```
@@ -503,11 +596,18 @@ Take your time - the more detail you provide, the better PRD we can create.
 Based on our discussion, I've created a comprehensive PRD for your Calibration Management System.
 
 The PRD documents:
+
+METADATA:
+- What it is: ISO 17025-compliant platform for automated calibration lifecycle management
+- Repository scope: Full-stack application (single repo)
+
+EXECUTIVE SUMMARY:
 - Problem: Manual tracking causes compliance issues and audit failures
-- Users: Quality managers, technicians, lab administrators  
 - Solution: Automated calibration tracking with ISO 17025 compliance
+- Scope: Core platform MVP - equipment tracking, scheduling, certificate generation
+- Key Components: Equipment Registry, Calibration Scheduler, Certificate Generator, Audit Trail, Compliance Dashboard
+- Users: Quality managers, technicians, lab administrators  
 - Success Metrics: Zero audit failures, 50% time savings
-- MVP Scope: Equipment tracking, calibration scheduling, certificate generation
 
 Next steps:
 1. Review and approve this PRD
@@ -523,5 +623,6 @@ Would you like to proceed with creating Scope.md?
 ## CHANGE LOG
 
 | Version | Date | Changes |
-|---------|------|---------|
+|---------|------|----------|
 | 1.0 | 2026-01-15 | Initial prompt created |
+| 1.1 | 2026-01-21 | Added 4 Priority 1 improvements from validation: "What is [PROJECT_NAME]", "This Repository", "Scope of This Project", "Key Components" |
