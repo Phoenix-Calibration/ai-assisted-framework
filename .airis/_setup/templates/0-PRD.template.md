@@ -9,6 +9,8 @@
 ## METADATA
 
 - **Project Name:** [Name]
+- **What is [PROJECT_NAME]:** [1-2 sentence explanation of what this project/product is]
+- **This Repository:** [What this specific repository/codebase contains - specify if multi-repo]
 - **Author:** [Name, Role]
 - **Date:** [YYYY-MM-DD]
 - **Status:** [Draft / Approved]
@@ -22,6 +24,15 @@
 
 **Solution:**  
 [What are we building?]
+
+**Scope of This Project:**  
+[What's included in THIS project vs what's future work - clarify MVP boundaries]
+
+**Key Components:**  
+1. [Component 1]: [Brief description of main building block]
+2. [Component 2]: [Brief description of main building block]
+3. [Component 3]: [Brief description of main building block]
+[Add more as needed - typically 3-5 components]
 
 **Users:**  
 [Who will use this?]
