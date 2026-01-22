@@ -1,0 +1,20 @@
+{
+  "name": "install-airis",
+  "version": "1.0.0",
+  "description": "Quick installer for AIris Framework",
+  "scripts": {
+    "install-airis": "node install-airis-npm.js"
+  },
+  "bin": {
+    "install-airis": "./install-airis-npm.js"
+  },
+  "keywords": [
+    "airis",
+    "ai-assisted-development",
+    "constraint-first",
+    "documentation",
+    "framework"
+  ],
+  "author": "Phoenix Calibration",
+  "license": "PRIVATE"
+}

@@ -35,82 +35,65 @@ AI suggests: "Server-Sent Events in FastAPI" ✅
 
 ---
 
-## Quick Start
+## Framework Structure
 
-**📖 Complete Documentation:** [.airis/README.md](.airis/README.md)
-
-**🎯 Core Concept:** Three phases with six prompts
-- **Phase 1:** Construction (4 prompts) - Build strategic documents
-- **Phase 2:** Tactical Generation (1 prompt) - Generate task tracker
-- **Phase 3:** Session Execution (1 prompt) - Manage development sessions
-
----
-
-## Repository Structure
+After installation, you'll have:
 
 ```
 .airis/
-├── README.md              # 📖 Complete framework documentation
-│
-├── _setup/                # Reusable components
-│   ├── templates/         # 7 document templates
-│   └── prompts/           # 6 AI prompts
-│
-├── docs/                  # Your project's strategy documents
-│   ├── design.md          # Architecture & constraints
-│   ├── scope.md           # Vision & boundaries
-│   ├── requirements.md    # Features & user stories
-│   └── tracker.md         # Task registry
-│
-└── session/               # Development sessions
-    ├── {developer}/       # Per-developer workspace
-    └── shared/            # Team coordination
+├── README.md                      # Complete framework documentation
+├── _setup/
+│   ├── templates/                 # 7 document templates
+│   │   ├── 0-PRD.template.md
+│   │   ├── 1-scope.template.md
+│   │   ├── 2-requirements.template.md
+│   │   ├── 3-design.template.md
+│   │   ├── 4-tracker.template.md
+│   │   ├── 5-todo.template.md
+│   │   └── 6-handoff.template.md
+│   └── prompts/                   # 6 AI prompts
+│       ├── 1-discovery.prompt.md
+│       ├── 2-scope.prompt.md
+│       ├── 3-requirements.prompt.md
+│       ├── 4-design.prompt.md
+│       ├── 5-tracker.prompt.md
+│       └── 6-session.prompt.md
+├── docs/                          # Placeholder examples
+└── session/                       # Session workspace
 ```
 
 ---
 
-## Quick Links
+## Quick Start
 
-- 📖 **[Framework Documentation](.airis/README.md)** - Complete guide
-- 📝 **[Templates](.airis/_setup/templates/)** - 7 document templates
-- 🤖 **[AI Prompts](.airis/_setup/prompts/)** - 6 generation prompts
-- 📊 **[Project Docs](.airis/docs/)** - Example placeholders
+### **Step 1: Install AIris** (see above)
 
----
+### **Step 2: Read the Docs**
+```bash
+# Main documentation
+.airis/README.md
 
-## How to Use
+# Installation guide
+INSTALLATION.md
+```
 
-### For a New Project
+### **Step 3: Create Your Strategy Documents**
 
-1. **Copy AIris** to your project:
-   ```bash
-   cp -r .airis/ /your-project/
-   ```
+**For NEW projects:**
+1. Create `docs/scope.md` - Define vision and boundaries
+2. Create `docs/requirements.md` - Detail features and stories  
+3. Create `docs/design.md` - Make technical decisions
 
-2. **Create strategic documents** (in order):
-   - `docs/scope.md` - Define vision and boundaries
-   - `docs/requirements.md` - Detail features and stories
-   - `docs/design.md` - Make technical decisions
+**For EXISTING projects:**
+1. Document current architecture in `docs/design.md`
+2. Document current vision in `docs/scope.md`
+3. Document existing features in `docs/requirements.md`
 
-3. **Generate tracker**:
-   - Use AI prompt: `5-tracker.prompt.md`
-   - Get complete task breakdown
+### **Step 4: Use AI Prompts**
 
-4. **Start developing**:
-   - Use AI prompt: `6-session.prompt.md`
-   - Work in session-based cycles
+Copy prompts from `.airis/_setup/prompts/` into your AI chat to generate your documents.
 
-### For an Existing Project
-
-1. **Copy AIris** to your project root
-2. **Document current state**:
-   - `docs/design.md` - Current architecture (AS-IS + TO-BE)
-   - `docs/scope.md` - Current vision and goals
-   - `docs/requirements.md` - Existing and new features
-3. **Generate tracker** for remaining work
-4. **Continue** with session-based development
-
-📖 **[See detailed guides](.airis/README.md#getting-started)**
+📖 **[Complete Guide](.airis/README.md)**
 
 ---
 
@@ -158,11 +141,6 @@ This ensures AI suggestions respect your architecture.
 - Parallel development workflows
 - Shared team coordination
 
-### 🔄 Session Lifecycle
-- **Part 0:** Create ToDo (task selection)
-- **Part 1:** Start Session (context read + planning)
-- **Part 2:** Close Session (reports + state transfer)
-
 ---
 
 ## Benefits
@@ -181,18 +159,66 @@ This ensures AI suggestions respect your architecture.
 ## Documentation
 
 ### Main Documentation
-- **[AIris Guide](.airis/README.md)** - Complete framework documentation
-- **[Getting Started](.airis/README.md#getting-started)** - Setup guides
-- **[Constraint-First Principle](.airis/README.md#the-constraint-first-principle)** - Core methodology
-- **[Multi-Developer Workflow](.airis/README.md#multi-developer-workflow)** - Team collaboration
+- **[AIris Framework Guide](.airis/README.md)** - Complete framework documentation
+- **[Installation Guide](INSTALLATION.md)** - Detailed setup instructions
+- **[Getting Started](.airis/README.md#getting-started)** - Quick start guide
 
 ### Templates & Prompts
 - **[Templates](.airis/_setup/templates/)** - All 7 document templates
 - **[Prompts](.airis/_setup/prompts/)** - All 6 AI prompts
 
-### Example Documents
-- **[Project Docs](.airis/docs/)** - Placeholder examples
-- **[Session Structure](.airis/session/)** - Workspace organization
+---
+
+## Philosophy
+
+> "Like the human iris controls how much light enters the eye to create clear vision, AIris controls how AI reads your project documents to create clear, coherent software."
+
+**The AIris Way:**
+1. **See clearly** - Architecture and constraints first
+2. **Focus precisely** - Boundaries and scope defined
+3. **Build confidently** - Requirements guide implementation
+
+---
+
+## 🚀 Quick Install
+
+Choose your preferred method:
+
+### **Option 1: Installation Script (Recommended)**
+
+**Windows (PowerShell):**
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Phoenix-Calibration/ai-assisted-framework/main/install-airis.ps1" -OutFile "install-airis.ps1"
+.\install-airis.ps1
+```
+
+**Linux/Mac (Bash):**
+```bash
+curl -O https://raw.githubusercontent.com/Phoenix-Calibration/ai-assisted-framework/main/install-airis.sh
+chmod +x install-airis.sh
+./install-airis.sh
+```
+
+### **Option 2: One-Line Command**
+
+**Windows:**
+```powershell
+git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework.git temp-airis; Copy-Item -Path "temp-airis\.airis" -Destination "." -Recurse; Remove-Item -Path "temp-airis" -Recurse -Force
+```
+
+**Linux/Mac:**
+```bash
+git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework.git temp-airis && cp -r temp-airis/.airis . && rm -rf temp-airis
+```
+
+### **Option 3: NPM/Node.js Projects**
+
+```bash
+# Coming soon - will be available as NPM package
+# npx install-airis
+```
+
+📖 **[Full Installation Guide](INSTALLATION.md)**
 
 ---
 
@@ -212,17 +238,6 @@ This ensures AI suggestions respect your architecture.
 
 ---
 
-## Philosophy
-
-> "Like the human iris controls how much light enters the eye to create clear vision, AIris controls how AI reads your project documents to create clear, coherent software."
-
-**The AIris Way:**
-1. **See clearly** - Architecture and constraints first
-2. **Focus precisely** - Boundaries and scope defined
-3. **Build confidently** - Requirements guide implementation
-
----
-
 ## Status
 
 **Version:** 1.0 (January 2026)
@@ -232,7 +247,24 @@ This ensures AI suggestions respect your architecture.
 - ✅ All 6 prompts complete  
 - ✅ Documentation complete
 - ✅ Multi-developer workflow tested
-- ✅ Full rebranding to AIris
+- ✅ Installation scripts ready
+
+---
+
+## Support
+
+### Resources
+- **Documentation:** `.airis/README.md`
+- **Installation Help:** `INSTALLATION.md`
+- **Templates:** `.airis/_setup/templates/`
+- **Prompts:** `.airis/_setup/prompts/`
+
+### Issues
+Open an issue on GitHub for:
+- Bug reports
+- Feature requests
+- Installation problems
+- Documentation improvements
 
 ---
 
@@ -244,12 +276,13 @@ This ensures AI suggestions respect your architecture.
 
 ## Get Started
 
-1. **Read the docs:** [.airis/README.md](.airis/README.md)
-2. **Copy to your project:** `cp -r .airis/ /your-project/`
-3. **Follow the guide:** [Getting Started](.airis/README.md#getting-started)
+1. **Install:** Use one of the methods above
+2. **Read:** `.airis/README.md` for complete guide
+3. **Create:** Your strategy documents
+4. **Build:** With AI-assisted confidence
 
 **Ready to see clearly?** 👁️ Let AIris guide your AI-assisted development.
 
 ---
 
-**Questions?** See the [Quick Reference](.airis/README.md#quick-reference) section.
+**See clearly. Build confidently.** 👁️
