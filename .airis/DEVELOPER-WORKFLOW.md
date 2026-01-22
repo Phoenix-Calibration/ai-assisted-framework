@@ -19,7 +19,7 @@ You are guiding the user through session-based development. Your role changes ac
 
 **Part 0 (Task Selection):** Help user select 1-3 appropriate tasks from tracker.md based on dependencies, priority, and session scope (1-6 hours). Create simple task list in TODO.md.
 
-**Part 1 (Session Start):** Read full context stack in constraint-first order (design.md → scope.md → requirements.md → tracker.md → handoff.md). Generate detailed Opening Brief including implementation plan with technical subtasks and strategy.
+**Part 1 (Session Start):** Read context stack using progressive loading strategy (handoff.md + design.md always, others selectively). Generate detailed Opening Brief including implementation plan with technical subtasks and strategy.
 
 **Part 2 (Work):** Support implementation by answering questions, suggesting approaches that respect constraints from design.md, helping debug issues. Always reference design.md constraints first.
 
@@ -157,19 +157,27 @@ Select 1-3 tasks from tracker.md and create initial TODO.md with simple task lis
 ### Purpose
 Load full context and create detailed implementation plan with technical subtasks and strategy.
 
-### The Context Stack (Constraint-First)
+### The Context Stack (Progressive Loading)
 
-AI reads documents in this specific order:
+AI reads documents progressively based on need:
 
-```
-1. design.md       ← Constraints FIRST (non-negotiable)
-2. scope.md        ← Project boundaries
-3. requirements.md ← Features to implement
-4. tracker.md      ← Task status and dependencies
-5. handoff.md      ← Previous session state
-```
+**Always Read:**
+1. **handoff.md** (previous session state - start here)
+2. **design.md** (technical constraints - non-negotiable)
 
-**Why this order?** Technical constraints guide the solution space. AI must understand "how we build" before suggesting "what to build."
+**Read Selectively:**
+3. **requirements.md** (only features in session tasks)
+4. **tracker.md** (only session tasks + dependencies)
+
+**Reference If Needed:**
+5. **scope.md** (only for boundary clarification)
+
+**Token Impact:**
+- Full read: ~17,500 tokens (rare)
+- Typical read: ~5,000 tokens (most sessions)
+- Minimum read: ~2,500 tokens (simple tasks)
+
+**Why this order?** handoff.md provides immediate context, design.md ensures constraint compliance, other docs read selectively for efficiency.
 
 ### The Opening Brief
 
@@ -205,7 +213,7 @@ cd session/{your-name}/current/
 "Start session"
 ```
 
-**Step 3:** AI reads full context stack (constraint-first order)
+**Step 3:** AI reads context stack (progressive loading)
 
 **Step 4:** AI generates Opening Brief and appends to TODO.md
 
@@ -1239,14 +1247,14 @@ Alice and Bob both update tracker.md on feature branches:
 
 ```
 Strategic Documents:
-docs/design.md          # Constraints (read FIRST)
-docs/scope.md           # Boundaries
-docs/requirements.md    # Features
-docs/tracker.md         # Task registry
+docs/design.md          # Constraints (read with handoff.md)
+docs/scope.md           # Boundaries (reference if needed)
+docs/requirements.md    # Features (read selectively)
+docs/tracker.md         # Task registry (read selectively)
 
 Session Files:
 session/{developer}/current/todo.md       # Active session
-session/{developer}/current/handoff.md    # State transfer
+session/{developer}/current/handoff.md    # State transfer (read first)
 session/{developer}/archive/session-*.md  # History
 
 Team Coordination:
