@@ -3,8 +3,10 @@
 ## Purpose
 Manage complete session lifecycle: 
 - Create ToDo Phase 1 (simple task list)
-- Start Session (Opening Brief with full context read - Phase 2)
-- Close Session (Closing Report + Handoff + Tracker updates - Phase 3)
+- Start Session (Opening Brief with progressive context loading - Phase 2)
+- Close Session (Closing Report + Handoff + **Propose** Tracker updates - Phase 3)
+
+**CRITICAL:** This prompt does NOT apply tracker updates. It only proposes them. User invokes 5-tracker.prompt.md to apply changes.
 
 ## Context Detection
 Detect which moment of the session:
@@ -13,10 +15,10 @@ Detect which moment of the session:
 → Generate ToDo.md Phase 1 (simple task list only)
 
 **IF user provides:** ToDo.md Phase 1 OR "Start session"
-→ Read full context stack → Generate Opening Brief (Phase 2)
+→ Read context stack progressively → Generate Opening Brief (Phase 2)
 
 **IF user says:** "Session complete" OR "Generate Closing Report"
-→ Generate Closing Report + Update Handoff + Propose Tracker updates (Phase 3)
+→ Generate Closing Report + Update Handoff + **Propose** Tracker updates (Phase 3)
 
 ---
 
@@ -82,72 +84,53 @@ Created ToDo.md:
 Ready to start session? Say "Start session" when ready.
 ```
 
-**User:** "What should I work on?"
-
-**AI:**
-```
-[Quick scan of Handoff and Tracker]
-
-I recommend:
-- T-003: Design database schema (recommended in last session, high priority)
-- T-004: Implement authentication (if time permits)
-
-Should I create a ToDo with these tasks? (Yes/No)
-```
-
-**User:** "Yes"
-
-**AI:**
-```
-Created ToDo.md:
-
-# Session ToDo (2026-01-15, 2-hour time budget)
-
-- T-003: Design database schema
-- T-004: Implement authentication (if time permits)
-
-Ready to start session? Say "Start session" when ready.
-```
-
 ---
 
 ## PART 1: SESSION START (Opening Brief - Phase 2)
 
 ### Purpose
-Read FULL context stack and generate Opening Brief
+Read context using PROGRESSIVE LOADING strategy and generate Opening Brief
 
 ### Trigger
 User says: "Start session" OR provides existing ToDo.md Phase 1
 
-### Step 1: Read Complete Context Stack
+### Step 1: Read Context Stack (Progressive Loading)
 
-**NOW read everything in this EXACT order:**
+**Read in stages based on need:**
 
-1. **Design.md** (FIRST - technical constraints non-negotiable)
-   - Read complete document
-   - All sections
-   
-2. **Scope.md** (SECOND - project boundaries)
-   - Read complete document
-   - All sections
-   
-3. **Requirements.md** (THIRD - what to build)
-   - Read complete document
-   - All sections
-   
-4. **Tracker.md** (FOURTH - task details)
-   - Read complete document
-   - Focus on tasks mentioned in ToDo
-   
-5. **Handoff.md** (FIFTH - previous session state)
+**STAGE 1 - ALWAYS READ (Mandatory):**
+
+1. **Handoff.md** (FIRST - immediate context)
    - Read complete document
    - Understand current project state
    
-6. **ToDo.md** (LAST - today's plan)
-   - Read the task list from Phase 1
-   - These are today's tasks
+2. **Design.md** (SECOND - constraints are non-negotiable)
+   - Read complete document
+   - All sections
 
-**Important:** This full context read happens ONLY at session start, NOT when creating ToDo.
+**STAGE 2 - SELECTIVE READ (As Needed):**
+
+3. **Requirements.md** (THIRD - features relevant to session tasks)
+   - Read ONLY sections related to tasks in ToDo
+   - Skip unrelated features
+   
+4. **Tracker.md** (FOURTH - session tasks + dependencies)
+   - Read ONLY tasks mentioned in ToDo
+   - Read their dependencies
+   - Skip completed/unrelated tasks
+
+**STAGE 3 - REFERENCE (If Clarification Needed):**
+
+5. **Scope.md** (FIFTH - only if boundary questions arise)
+   - Read only if needed for clarification
+   - Not typically required for implementation
+
+**Token Efficiency:**
+- Full read (all docs complete): ~17,500 tokens (rare)
+- Typical read (Stage 1 + selective Stage 2): ~5,000 tokens (most sessions)
+- Minimum read (Stage 1 only): ~2,500 tokens (simple tasks)
+
+**Why progressive?** Respects context window limits while maintaining constraint-first principle.
 
 ### Step 2: Generate Opening Brief
 
@@ -183,17 +166,18 @@ Add this section to ToDo.md:
 ```
 
 ### Step 3: Validation
-- [ ] Read ALL 6 documents in correct order
+- [ ] Read context using progressive loading
+- [ ] Always read Handoff + Design (Stage 1)
+- [ ] Selectively read Requirements + Tracker (Stage 2)
 - [ ] Opening Brief references specific sections
 - [ ] Plan is concrete and actionable
-- [ ] Success criteria from Tracker
 
 ---
 
-## PART 2: SESSION CLOSE (Closing Report + Handoff + Tracker - Phase 3)
+## PART 2: SESSION CLOSE (Closing Report + Handoff + Propose Tracker - Phase 3)
 
 ### Purpose
-Generate session artifacts and propose Tracker updates
+Generate session artifacts and **PROPOSE** Tracker updates (NOT apply them)
 
 ### Trigger
 User says: "Session complete" OR "Generate Closing Report" OR "End session"
@@ -230,7 +214,7 @@ Add to ToDo.md:
 - [Blocker description] OR None
 
 **Next Steps:**
-1. Human: [Immediate actions for human]
+1. Human: [Immediate actions for human including tracker update]
 2. Next session: [Recommended task for next session]
 3. Follow-up: [Any longer-term considerations]
 
@@ -274,7 +258,7 @@ Generate/replace complete Handoff.md with 8 sections:
 
 ## 7. Next Steps
 **Immediate:**
-[Human actions]
+[Human actions - including invoking tracker prompt]
 
 **Next Session:**
 [AI recommendations]
@@ -288,49 +272,72 @@ Generate/replace complete Handoff.md with 8 sections:
 - This is a fresh snapshot for next session
 - Focus on current state, not history
 
-### Step 3: Propose Tracker Updates
+### Step 3: PROPOSE Tracker Updates (DO NOT APPLY)
 
-Generate update proposal:
+**CRITICAL:** You do NOT apply tracker updates. You only propose them.
+
+Generate proposal section:
 
 ```markdown
 ---
 
 ## Proposed Tracker Updates
 
-**Do you want me to update Tracker.md with these changes?**
+**To apply these updates, invoke 5-tracker.prompt.md:**
 
-**For each task worked on:**
-[Task ID]: [Task title]
-- Status: [Old] → [New]
-- Actual Effort: [Time] (estimated: [Original estimate])
-- Evidence: [Links and proof]
-- Completion Date: [If complete]
-- Notes: [Important notes]
+Command: "Update tracker: T-003 ⚪→✅, T-004 ⚪→🟡"
 
-**For dependent tasks:**
-[Task ID that was blocked]:
-- Status: ⏸️ Blocked → ⚪ Ready to start
-- Note: [What unblocked it]
+**Proposed Changes:**
 
-**Project Metrics Update:**
-- Tasks completed: [Old] → [New]
+**Tasks Completed:**
+- T-XXX: [Task title]
+  - Status: [Old] → [New]
+  - Actual Effort: [Time] (estimated: [Original estimate])
+  - Evidence: [Links and proof]
+  - Completion Date: [If complete]
+  - Notes: [Important notes]
+
+**Tasks In Progress:**
+- T-YYY: [Task title]
+  - Status: ⚪ → 🟡
+  - Progress: [Percentage]
+  - Remaining: [Estimate]
+
+**Dependencies Unblocked:**
+- T-ZZZ: ⏸️ Blocked → ⚪ Ready to start
+  - Reason: [What unblocked it]
+
+**New Tasks Discovered:**
+- T-AAA: [New task title]
+  - Priority: [Level]
+  - Estimate: [Time]
+  - Dependencies: [If any]
+
+**Project Metrics:**
+- Tasks completed: +[Number]
 - Progress: [Old]% → [New]%
 - Velocity: [Calculate from recent sessions]
 
 ---
 
-Reply "Yes" to apply these updates automatically, or "No" to update manually.
+**Next:** Invoke 5-tracker.prompt.md to apply these updates to tracker.md
 ```
 
-### Step 4: If User Approves - Update Tracker
+### Step 4: Remind User
 
-If user says "Yes":
-1. Apply all proposed changes to Tracker.md
-2. Confirm: "✅ Tracker.md updated successfully"
-3. List what was changed
+After generating proposals:
 
-If user says "No":
-1. Acknowledge: "Understood. Please update Tracker.md manually using the proposal above."
+```
+✅ Closing Report generated
+✅ Handoff.md updated
+✅ Tracker updates proposed
+
+To apply tracker updates, invoke:
+"Update tracker: T-003 ⚪→✅, T-004 ⚪→🟡"
+(Use 5-tracker.prompt.md)
+```
+
+**DO NOT** apply tracker updates yourself. User must explicitly invoke 5-tracker.prompt.md.
 
 ---
 
@@ -349,7 +356,7 @@ If user says "No":
 ### Error Handling
 - If strategy docs are incomplete: ask user to complete them first
 - If Handoff.md missing (first session): create from scratch
-- If Tracker.md outdated: recommend regenerating it
+- If Tracker.md outdated: recommend regenerating it with 5-tracker.prompt.md
 
 ---
 
@@ -378,18 +385,16 @@ Created. Say "Start session" when ready.
 
 **AI:** 
 ```
-Reading context...
-✓ Design.md
-✓ Scope.md  
-✓ Requirements.md
-✓ Tracker.md
-✓ Handoff.md
-✓ ToDo.md
+Reading context (progressive loading)...
+✓ Handoff.md (Stage 1 - Always)
+✓ Design.md (Stage 1 - Always)
+✓ Requirements.md §3 (Stage 2 - Selective, T-003 related)
+✓ Tracker.md T-003 (Stage 2 - Selective)
 
 Adding Opening Brief...
 ```
 
-**NOW the full context read happens.**
+**Progressive context read based on task needs.**
 
 Output:
 ```markdown
@@ -446,28 +451,35 @@ Ready to begin!
 [Updates Handoff.md]
 [Proposes Tracker updates]
 
-Done! Do you want me to update Tracker.md? (Yes/No)
+✅ Done! 
+
+To update tracker.md, invoke:
+"Update tracker: T-003 ⚪→✅"
+(Use 5-tracker.prompt.md)
 ```
+
+**User then separately invokes:** "Update tracker: T-003 ⚪→✅"  
+**(That calls 5-tracker.prompt.md, not this prompt)**
 
 ---
 
-## Summary of Changes
+## Summary of Responsibilities
 
 **Part 0 (Create ToDo):**
+- ✅ Generate simple task list file
 - ❌ NO full context read
 - ❌ NO Opening Brief
-- ✅ ONLY generate simple task list file
-- ✅ Optional: quick Handoff/Tracker scan for recommendations
 
 **Part 1 (Start Session):**
-- ✅ Full context stack read (Design → Scope → Requirements → Tracker → Handoff → ToDo)
+- ✅ Progressive context loading (Stage 1 always, Stage 2 selective, Stage 3 if needed)
 - ✅ Generate Opening Brief
 - ✅ Add to existing ToDo.md
 
 **Part 2 (Close Session):**
 - ✅ Generate Closing Report
-- ✅ Update Handoff
-- ✅ Propose Tracker updates
+- ✅ Update Handoff.md (complete replacement)
+- ✅ **PROPOSE** Tracker updates (with command for user)
+- ❌ **DO NOT APPLY** tracker updates (that's 5-tracker.prompt.md's job)
 
 ---
 
@@ -480,24 +492,29 @@ Done! Do you want me to update Tracker.md? (Yes/No)
 - [ ] Ready message to user
 
 **Part 1 - Start Session:**
-- [ ] Read ALL 6 docs in order: Design → Scope → Requirements → Tracker → Handoff → ToDo
+- [ ] Stage 1: Read Handoff + Design (always)
+- [ ] Stage 2: Read Requirements + Tracker (selectively, task-related only)
+- [ ] Stage 3: Read Scope (only if needed)
 - [ ] Opening Brief added to ToDo
 - [ ] References specific sections
 - [ ] Plan is actionable
 
 **Part 2 - Close Session:**
 - [ ] Closing Report complete
-- [ ] Handoff updated (8 sections)
-- [ ] Tracker proposal clear
+- [ ] Handoff updated (8 sections, replaced not accumulated)
+- [ ] Tracker proposal with clear command
+- [ ] Reminder to use 5-tracker.prompt.md
+- [ ] Did NOT apply tracker updates
 
 ---
 
-## Tips
+## CRITICAL REMINDERS
 
-1. **Part 0 is lightweight** - Just create the file, no analysis
-2. **Part 1 is comprehensive** - Full context read essential
-3. **Part 2 is thorough** - Document everything for next session
-4. **Always validate** - Check all criteria before proceeding
+1. **Progressive Loading:** Read Handoff + Design always, others selectively
+2. **Single Responsibility:** Session prompt handles sessions, tracker prompt handles tracker.md
+3. **Propose Only:** Never apply tracker updates, only propose with command
+4. **User Control:** User explicitly invokes 5-tracker.prompt.md to apply
+5. **Handoff Replacement:** Always replace, never accumulate
 
 ---
 
@@ -506,3 +523,4 @@ Done! Do you want me to update Tracker.md? (Yes/No)
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-01-15 | Initial prompt created |
+| 1.1 | 2026-01-22 | Progressive loading + tracker proposal only |
