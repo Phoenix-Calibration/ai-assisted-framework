@@ -64,7 +64,7 @@ After installation, your project will have:
 ```
 your-project/
 └── .airis/
-    ├── README.md                    # Complete framework documentation
+    ├── FRAMEWORK.md                 # Complete framework guide
     ├── _setup/
     │   ├── templates/               # 7 document templates
     │   │   ├── 0-PRD.template.md
@@ -97,7 +97,7 @@ your-project/
 ### **1. Read the Documentation**
 ```bash
 # Open the main guide
-cat .airis/README.md
+cat .airis/FRAMEWORK.md
 # or open in your editor
 ```
 
@@ -197,7 +197,7 @@ https://github.com/Phoenix-Calibration/ai-assisted-framework
 
 ## 📚 Learn More
 
-- **Full Documentation:** `.airis/README.md`
+- **Full Documentation:** `.airis/FRAMEWORK.md`
 - **Framework Philosophy:** Constraint-first methodology
 - **Templates:** `.airis/_setup/templates/`
 - **Prompts:** `.airis/_setup/prompts/`
@@ -207,7 +207,7 @@ https://github.com/Phoenix-Calibration/ai-assisted-framework
 
 ## 🆘 Need Help?
 
-1. Check the main README: `.airis/README.md`
+1. Check the framework guide: `.airis/FRAMEWORK.md`
 2. Review the templates for examples
 3. Read the prompts for guidance
 4. Open an issue on GitHub
