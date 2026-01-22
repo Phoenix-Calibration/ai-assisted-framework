@@ -23,13 +23,14 @@ You are guiding the user through session-based development. Your role changes ac
 
 **Part 2 (Work):** Support implementation by answering questions, suggesting approaches that respect constraints from design.md, helping debug issues. Always reference design.md constraints first.
 
-**Part 3 (Session Close):** Generate thorough Closing Report documenting accomplishments with evidence, update handoff.md with verified state only, propose tracker.md updates.
+**Part 3 (Session Close):** Generate thorough Closing Report documenting accomplishments with evidence, update handoff.md with verified state only, **propose** tracker.md updates (not apply - that's done via 5-tracker.prompt.md).
 
 **Key behaviors:**
 - Track progress within the session
 - Follow constraint-first principle (design.md constraints are non-negotiable)
 - Only document verified accomplishments in handoff.md
-- Propose tracker updates, don't assume approval
+- **Propose** tracker updates in Closing Report, don't apply them
+- Remind user to invoke 5-tracker.prompt.md for tracker updates
 - Remind user about archiving completed TODO.md
 
 **Reference these files:**
@@ -88,6 +89,8 @@ Part 1: Start Session (Opening Brief + Implementation Plan)
 Part 2: Work (Implementation)
    ↓
 Part 3: Close Session (Closing Report + State Transfer)
+   ↓
+Update Tracker (via 5-tracker.prompt.md)
    ↓
 Archive session → session/{developer}/archive/
    ↓
@@ -428,17 +431,19 @@ Handoff.md **replaces completely** each session (not accumulated).
 
 ### Proposing Tracker Updates
 
-AI proposes tracker.md updates in Closing Report:
+**Session prompt proposes tracker.md updates** in Closing Report:
 - Tasks completed: ⚪ → ✅ or 🟡 → ✅
 - Tasks started: ⚪ → 🟡
 - New tasks discovered: Add to backlog
 - Estimates refined: Update based on actual time
 
-**User reviews and approves** before AI applies updates.
+**User reviews proposals, then invokes tracker prompt** to apply updates.
+
+**Why separate?** Single responsibility - session prompt handles sessions, tracker prompt handles tracker.md.
 
 ### Session Archiving
 
-After Part 3 complete:
+After closing complete:
 ```bash
 # Move completed TODO.md to archive
 mv session/{developer}/current/todo.md \
@@ -451,7 +456,7 @@ Naming: `session-XXX_YYYY-MM-DD.md` where XXX is incremental session number.
 
 **Step 1:** Finish implementation work
 
-**Step 2:** Invoke prompt Part 2
+**Step 2:** Invoke session close prompt
 ```bash
 # Using 6-session.prompt.md Part 2
 "Session complete"
@@ -468,13 +473,19 @@ Naming: `session-XXX_YYYY-MM-DD.md` where XXX is incremental session number.
 
 **Step 6:** Review and approve handoff.md changes
 
-**Step 7:** AI proposes tracker.md updates
+**Step 7:** AI applies handoff.md updates
 
-**Step 8:** Review and approve tracker.md changes
+**Step 8:** Review proposed tracker.md updates in Closing Report
 
-**Step 9:** AI applies approved updates
+**Step 9:** Invoke tracker update prompt
+```bash
+# Using 5-tracker.prompt.md
+"Update tracker: T-005 ⚪→✅, T-006 ⚪→✅, T-007 ⚪→✅"
+```
 
-**Step 10:** Archive TODO.md to session archive
+**Step 10:** AI applies approved tracker updates
+
+**Step 11:** Archive TODO.md to session archive
 
 ### Example TODO.md After Part 3
 
@@ -568,9 +579,10 @@ tests/test_auth.py::test_malformed_token PASSED
 ### Next Steps
 
 **Immediate:**
-1. Merge feature/alice-auth to main (after code review)
-2. Start T-023 (Token refresh mechanism)
-3. Update API documentation with auth endpoints
+1. Update tracker.md (via 5-tracker.prompt.md)
+2. Merge feature/alice-auth to main (after code review)
+3. Start T-023 (Token refresh mechanism)
+4. Update API documentation with auth endpoints
 
 **Dependencies Unblocked:**
 - T-024 (Role-based authorization) - can start after merge
@@ -599,6 +611,9 @@ tests/test_auth.py::test_malformed_token PASSED
 **Estimates Updated:**
 - T-023: Original 4h → 3h (auth foundation simplifies refresh)
 
+**To apply these updates:**
+Invoke: "Update tracker: T-005 ⚪→✅, T-006 ⚪→✅, T-007 ⚪→✅, T-028 new task"
+
 ---
 
 ## Proposed Handoff Updates
@@ -617,6 +632,7 @@ Replace handoff.md with:
 - Password hashing: bcrypt with 12 rounds
 
 **Next Recommended Steps:**
+- Update tracker.md with session accomplishments
 - Merge feature/alice-auth after code review
 - Continue with T-023 (Token refresh) or T-024 (RBAC)
 - Update API docs with authentication flow
@@ -630,7 +646,7 @@ Replace handoff.md with:
 - Test database fixture from T-002 reused successfully
 ```
 
-**Agent Note:** Closing Report should be thorough with concrete evidence. Only document verified accomplishments. Propose tracker updates, don't assume approval. Generate handoff.md that provides complete context for next session without duplicating tracker.md.
+**Agent Note:** Closing Report should be thorough with concrete evidence. Only document verified accomplishments. **Propose** tracker updates in "Proposed Tracker Updates" section with clear command for user to invoke 5-tracker.prompt.md. Do not apply tracker updates yourself. Generate handoff.md that provides complete context for next session without duplicating tracker.md.
 
 ---
 
@@ -804,9 +820,10 @@ Handoff.md is **replaced** each session, not appended:
 ## Next Recommended Steps
 
 **Immediate (Next Session):**
-1. **T-023: Token refresh** - Auth system ready for this enhancement
-2. **Code review** feature/alice-auth branch
-3. **Merge to main** after approval
+1. **Update tracker.md** - Apply session 5 completions
+2. **T-023: Token refresh** - Auth system ready for this enhancement
+3. **Code review** feature/alice-auth branch
+4. **Merge to main** after approval
 
 **Soon (This Week):**
 - T-024: Role-based authorization (depends on auth merge)
@@ -845,7 +862,7 @@ Previous blocker (bcrypt configuration) resolved in Session 5.
 
 ### When to Update
 
-**After each session** as part of Part 3 (Closing Report).
+**After each session** using the tracker update prompt (5-tracker.prompt.md).
 
 ### What to Update
 
@@ -870,7 +887,8 @@ Previous blocker (bcrypt configuration) resolved in Session 5.
 
 ### How Updates Work
 
-**Step 1:** AI proposes updates in Closing Report
+**Step 1:** Session prompt proposes updates in Closing Report
+
 ```markdown
 ## Proposed Tracker Updates
 
@@ -882,15 +900,24 @@ Dependencies Unblocked:
 
 New Tasks:
 - T-029: Implement payment retry logic (Priority: Medium, Effort: 2h)
+
+To apply: "Update tracker: T-012 ⚪→✅, T-029 new task"
 ```
 
 **Step 2:** Developer reviews proposals
 
-**Step 3:** Developer approves or modifies
+**Step 3:** Developer invokes tracker update prompt
+
+```bash
+# Using 5-tracker.prompt.md
+"Update tracker: T-012 ⚪→✅, T-029 new task"
+```
 
 **Step 4:** AI applies approved updates to tracker.md
 
 **Step 5:** Tracker.md reflects current project state
+
+**Why this way?** Tracker prompt is the single source of truth for tracker.md updates. Session prompt only proposes changes.
 
 ### Multi-Developer Merge Conflicts
 
@@ -924,7 +951,8 @@ Each session:
 1. Reads previous handoff.md for context
 2. Does work
 3. Updates handoff.md with new state
-4. Next session repeats
+4. Updates tracker.md with accomplishments
+5. Next session repeats
 
 ### Starting Next Session
 
@@ -1031,7 +1059,9 @@ session/alice/archive/
 1. Part 0: Select one task (e.g., T-015)
 2. Part 1: Detailed implementation plan
 3. Work: Complete implementation
-4. Part 3: Document completion, archive
+4. Part 3: Document completion
+5. Update tracker.md
+6. Archive
 
 **Best for:** Complex features, research tasks, debugging
 
@@ -1045,7 +1075,9 @@ session/alice/archive/
 1. Part 0: Select 3 related tasks (e.g., T-020, T-021, T-022)
 2. Part 1: Implementation plan for all tasks
 3. Work: Complete in sequence or parallel
-4. Part 3: Document all completions, archive
+4. Part 3: Document all completions
+5. Update tracker.md
+6. Archive
 
 **Best for:** Related small features, bug fixes, testing tasks
 
@@ -1075,7 +1107,9 @@ session/alice/archive/
 1. Part 0: Create "Research: [Topic]" task
 2. Part 1: Questions to answer, approach
 3. Work: Explore, prototype, document findings
-4. Part 3: Summarize learnings, propose new tasks for tracker.md
+4. Part 3: Summarize learnings
+5. Propose new tasks for tracker.md
+6. Archive
 
 **Best for:** Technical spikes, library evaluation, architecture investigation
 
@@ -1180,10 +1214,10 @@ Alice and Bob both update tracker.md on feature branches:
 **Solution:**
 - Review recent session archives
 - Reconcile actual status vs. tracker.md
-- Update tracker.md to reflect reality
+- Invoke tracker update prompt with corrections
 - Document discrepancy reason
 
-**Prevention:** Always run Part 3, always update tracker.md
+**Prevention:** Always update tracker.md after Part 3
 
 ---
 
@@ -1206,7 +1240,7 @@ Alice and Bob both update tracker.md on feature branches:
 - Reconstruct Closing Report manually
 - Review git commits for evidence
 - Update handoff.md based on memory + commits
-- Update tracker.md
+- Update tracker.md via tracker prompt
 - Archive reconstructed TODO.md
 
 **Prevention:** Always run Part 3, make it a habit
@@ -1238,7 +1272,8 @@ Alice and Bob both update tracker.md on feature branches:
 ```
 [ ] Generate Closing Report (Part 2)
 [ ] Review and approve handoff.md updates
-[ ] Review and approve tracker.md updates
+[ ] Review proposed tracker.md updates
+[ ] Invoke tracker update prompt (5-tracker.prompt.md)
 [ ] Archive TODO.md to session archive
 [ ] Commit code to repository
 ```
@@ -1265,21 +1300,32 @@ session/shared/project-status.md          # Team status
 
 ```
 Part 0: Create TODO
+  Prompt: 6-session.prompt.md Part 0
   Command: "Create TODO for T-XXX, T-YYY"
   Output: TODO.md with task list
 
 Part 1: Start Session
+  Prompt: 6-session.prompt.md Part 1
   Command: "Start session"
   Output: Opening Brief in TODO.md
 
 Part 2: Close Session
+  Prompt: 6-session.prompt.md Part 2
   Command: "Session complete"
-  Output: Closing Report + updates
+  Output: Closing Report + handoff updates + proposed tracker updates
+
+Update Tracker:
+  Prompt: 5-tracker.prompt.md
+  Command: "Update tracker: T-XXX ⚪→✅, T-YYY new task"
+  Output: Updated tracker.md
 ```
 
-### Prompt Location
+### Prompt Locations
 
-All session prompts in: `.airis/_setup/prompts/6-session.prompt.md`
+```
+Session workflow: .airis/_setup/prompts/6-session.prompt.md
+Tracker updates:  .airis/_setup/prompts/5-tracker.prompt.md
+```
 
 ---
 
@@ -1301,10 +1347,16 @@ All session prompts in: `.airis/_setup/prompts/6-session.prompt.md`
 ### Session Workflow
 - **[6-session.prompt.md](_setup/prompts/6-session.prompt.md)** - Session prompt
   - Complete 3-part prompt
-  - Handles entire session lifecycle
+  - Handles session lifecycle
   - Part 0: Create TODO
-  - Part 1: Start Session
-  - Part 2: Close Session
+  - Part 1: Start Session (Opening Brief)
+  - Part 2: Close Session (Closing Report + handoff + propose tracker updates)
+
+### Tracker Management
+- **[5-tracker.prompt.md](_setup/prompts/5-tracker.prompt.md)** - Tracker prompt
+  - Generate initial tracker
+  - Apply session tracker updates
+  - Single source of truth for tracker.md changes
 
 ### Templates
 - **[5-todo.template.md](_setup/templates/5-todo.template.md)** - TODO structure
@@ -1323,12 +1375,14 @@ All session prompts in: `.airis/_setup/prompts/6-session.prompt.md`
 ✅ **Context efficiency** - Stays within LLM windows  
 ✅ **Constraint alignment** - Design.md read first, always  
 ✅ **Continuous progress** - Small, verified increments  
+✅ **Single responsibility** - Each prompt manages its domain  
 
 **The session workflow ensures AI-assisted development remains:**
 - Architecturally coherent (constraint-first)
 - Properly documented (Opening Brief + Closing Report)
 - Continuously verified (only proven work in handoff.md)
 - Maintainable long-term (complete history in archives)
+- Well-organized (tracker.md managed by dedicated prompt)
 
 ---
 
