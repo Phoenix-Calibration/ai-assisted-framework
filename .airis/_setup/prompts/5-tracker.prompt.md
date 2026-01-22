@@ -1,34 +1,37 @@
 # Tracker Prompt
 
 ## Purpose
-Generate Tracker.md - the global task registry derived from strategy layer documents. Adapts for both new and existing projects, and handles updates after each session.
+Generate and update Tracker.md - the global task registry derived from strategy layer documents. Adapts for both new and existing projects, and handles updates after each session.
+
+**Single source of truth for tracker.md changes.**
 
 ---
 
 ## Prerequisites
 
-**Required Input:**
+**For Generation (Initial Creation):**
 - Design.md (complete)
 - Scope.md (complete)
 - Requirements.md (complete)
 
-**For Updates:**
+**For Updates (After Sessions):**
 - Current Tracker.md
-- Proposed updates from session Closing Report
+- Update command from user
 
 ---
 
 ## Context Detection
 
-Detect project type and action:
+Detect operation mode:
 
 **IF user says:** "Generate Tracker" OR "Create Tracker.md"
-→ Read Design.md to detect:
-  - IF Design.md has §14 (Architecture Evolution Plan) → **Existing project**
-  - ELSE → **New project**
+→ **GENERATE MODE** (initial creation)
+  - Read Design.md to detect project type:
+    - IF Design.md has §14 (Architecture Evolution Plan) → **Existing project**
+    - ELSE → **New project**
 
-**IF user says:** "Update Tracker" OR provides Closing Report
-→ **Update mode** (apply session changes)
+**IF user says:** "Update tracker: [changes]" OR provides update command
+→ **UPDATE MODE** (apply session changes)
 
 ---
 
@@ -223,86 +226,141 @@ Group tasks by Design.md §14.4 phases:
 
 ## PART 2: UPDATE TRACKER (After Session)
 
-### Step 1: Read Update Request
+### Purpose
+Apply changes to tracker.md based on user command. This is the ONLY way tracker.md should be updated.
 
-From session Closing Report, extract:
-- Tasks worked on
+### Input Format
+
+User provides update command:
+
+**Format:** "Update tracker: [changes]"
+
+**Examples:**
+```
+"Update tracker: T-003 ⚪→✅, T-004 ⚪→🟡"
+"Update tracker: T-005 ⚪→✅, T-029 new task"
+"Update tracker: T-012 completed, unblock T-015"
+```
+
+### Step 1: Parse Update Command
+
+Extract from command:
+- Task IDs mentioned
 - Status changes (⚪ → 🟡 → ✅)
-- Actual effort vs estimated
-- Evidence/links
-- Completion notes
+- New tasks to add
+- Dependencies to update
 
-### Step 2: Apply Updates
+### Step 2: Read Current Tracker
 
-For each task in the update request:
+Read tracker.md completely to:
+- Find tasks mentioned in update
+- Identify dependent tasks
+- Get current metrics
+
+### Step 3: Apply Status Changes
+
+For each task with status change:
 
 **Update Status:**
-```
-Before: T-003: Design database schema [⚪ Not Started]
-After:  T-003: Design database schema [✅ Complete]
+```markdown
+Before:
+**T-003: Design database schema** [⚪ Not Started]
+
+After:
+**T-003: Design database schema** [✅ Complete]
 ```
 
-**Add Evidence:**
-```
-Evidence:
-- Tests: Migration scripts tested locally
-- Documentation: ERD created (docs/erd.png)
-- CI: N/A (infrastructure task)
-- Completion Date: 2026-01-15
-```
-
-**Update Effort:**
-```
-Estimated Effort: 2 hours
-Actual Effort: 1.5 hours
-Efficiency: 133%
+**Add Completion Details:**
+```markdown
+- **Actual Effort:** [From session if provided]
+- **Completion Date:** [Today's date]
+- **Evidence:** 
+  - [Links from session Closing Report if provided]
+- **Notes:**
+  - [Any notes from session if provided]
 ```
 
-**Add Notes:**
-```
-Notes:
-- Used UUID for primary keys (ADR-002)
-- Separate audit schema for better performance
-```
+### Step 4: Update Dependencies
 
-### Step 3: Update Dependent Tasks
+If a task changed to ✅ Complete:
 
-```
-T-004 depends on T-003:
+```markdown
+Find tasks with:
+- **Dependencies:** T-003
+
+Update those tasks:
 Before: [⏸️ Blocked by T-003]
 After:  [⚪ Ready to start]
 ```
 
-### Step 4: Recalculate Metrics
+### Step 5: Add New Tasks
 
-```
-Project Progress:
-- Tasks Complete: 2 → 3
-- Progress: 4% → 6%
-
-Velocity:
-- Last 3 sessions: 1.5 tasks/session average
-- Efficiency: 120% (completing faster than estimates)
-```
-
-### Step 5: Confirm with User
+If command includes "new task":
 
 ```markdown
-## Proposed Tracker Updates
-
-**Do you want me to update Tracker.md with these changes?**
-
-Changes to apply:
-- T-003: ⚪ → ✅ Complete
-- T-004: ⏸️ → ⚪ Ready
-- Progress: 4% → 6%
-- Velocity updated
-
-Reply "Yes" to apply, or "No" to update manually.
+**T-029: [Task title from command]** [⚪ Not Started]
+- **Description:** [From command or ask user]
+- **Category:** [Infer or ask]
+- **Priority:** [From command or ask]
+- **Dependencies:** [From command or None]
+- **Estimated Effort:** [From command or ask]
+- **Acceptance Criteria:**
+  - [Ask user or TBD]
 ```
 
-**IF Yes:** Apply changes and confirm
-**IF No:** Acknowledge and provide manual instructions
+### Step 6: Recalculate Metrics
+
+Update progress metrics:
+
+```markdown
+**Overall Progress:** X/Y tasks complete (Z%)
+(Recalculate based on new statuses)
+
+**By Category:**
+- Infrastructure: X/Y complete
+- Features: X/Y complete
+(Update each category)
+
+**Velocity:**
+- Last 3 sessions: X tasks/session
+(Calculate from recent completion dates)
+```
+
+### Step 7: Update Change Log
+
+Add entry:
+
+```markdown
+| Date | Changes | Updated By |
+|------|---------|------------|
+| 2026-01-22 | T-003→✅, T-004→🟡, T-029 added | Session #005 |
+```
+
+### Step 8: Confirm Changes
+
+After applying updates:
+
+```markdown
+✅ Tracker.md updated successfully
+
+Changes applied:
+- T-003: ⚪ → ✅ Complete
+- T-004: ⚪ → 🟡 In Progress  
+- T-015: ⏸️ → ⚪ Ready (unblocked by T-003)
+- T-029: Added as new task
+
+Progress: 4% → 6%
+Velocity: 1.5 tasks/session (last 3 sessions)
+```
+
+### Step 9: Validation
+
+Check:
+- [ ] All mentioned tasks found and updated
+- [ ] Dependencies correctly updated
+- [ ] Metrics recalculated
+- [ ] Change log entry added
+- [ ] No formatting broken
 
 ---
 
@@ -313,7 +371,7 @@ Reply "Yes" to apply, or "No" to update manually.
 
 > **Purpose:** Complete roadmap of all development tasks.  
 > **Generated From:** Design.md + Scope.md + Requirements.md  
-> **Updated:** After every session  
+> **Updated:** After every session via 5-tracker.prompt.md  
 > **Used By:** session.prompt.md to plan work
 
 ---
@@ -342,8 +400,10 @@ Reply "Yes" to apply, or "No" to update manually.
 - **Acceptance Criteria:**
   - ✅ All folders created per Design.md §4.1
   - ✅ Base config files present
-- **Evidence:** [Links]
+- **Evidence:** 
+  - Commit: abc123f
 - **Completed:** 2026-01-15
+- **Notes:** Used cookiecutter template
 
 [Continue for all tasks...]
 
@@ -418,15 +478,67 @@ graph TD
 
 | Date | Changes | Updated By |
 |------|---------|------------|
-| [Date] | Initial tracker generated | AI |
-| [Date] | T-003 completed, T-004 unblocked | Session #003 |
+| [Date] | Initial tracker generated | AI |\n| [Date] | T-003 completed, T-004 unblocked | Session #003 |
+```
+
+---
+
+## Update Command Examples
+
+### Example 1: Simple Status Change
+```
+User: "Update tracker: T-003 ⚪→✅"
+
+AI: Parses as:
+- T-003 status change: Not Started → Complete
+- Check for dependent tasks
+- Update metrics
+- Confirm
+```
+
+### Example 2: Multiple Updates
+```
+User: "Update tracker: T-005 ⚪→✅, T-006 ⚪→✅, T-007 ⚪→🟡"
+
+AI: Parses as:
+- T-005: Not Started → Complete
+- T-006: Not Started → Complete  
+- T-007: Not Started → In Progress
+- Check dependencies for all three
+- Update metrics
+- Confirm
+```
+
+### Example 3: New Task
+```
+User: "Update tracker: T-029 new task (Priority: High, Effort: 3h)"
+
+AI: Parses as:
+- Create T-029
+- Set Priority: High
+- Set Effort: 3h
+- Ask for: Description, Category, Dependencies, Acceptance Criteria
+- Add to tracker
+- Confirm
+```
+
+### Example 4: Complex Update
+```
+User: "Update tracker: T-012 ⚪→✅ completed, unblock T-015 and T-016"
+
+AI: Parses as:
+- T-012: Not Started → Complete
+- T-015: Blocked → Ready (remove T-012 dependency)
+- T-016: Blocked → Ready (remove T-012 dependency)
+- Update metrics
+- Confirm
 ```
 
 ---
 
 ## Validation Checklist
 
-**For New Projects:**
+**For Generation (New Projects):**
 - [ ] Read Design, Scope, Requirements COMPLETELY
 - [ ] All features from Scope §4 have tasks
 - [ ] All FRs from Requirements have tasks
@@ -434,7 +546,7 @@ graph TD
 - [ ] Priorities align with Scope goals
 - [ ] All 7 categories represented
 
-**For Existing Projects:**
+**For Generation (Existing Projects):**
 - [ ] Read Design, Scope, Requirements COMPLETELY
 - [ ] All 4 task categories present
 - [ ] Tasks aligned with Migration Phases (Design §14.4)
@@ -442,26 +554,77 @@ graph TD
 - [ ] Dependencies account for migration order
 
 **For Updates:**
-- [ ] All status changes applied
-- [ ] Evidence links added
-- [ ] Dependent tasks unblocked
+- [ ] Command parsed correctly
+- [ ] All mentioned tasks found in tracker
+- [ ] Status changes applied
+- [ ] Dependencies updated (blocked → ready)
+- [ ] New tasks added with required fields
 - [ ] Metrics recalculated
-- [ ] User confirmation received
+- [ ] Change log entry added
+- [ ] Changes confirmed to user
+
+---
+
+## Error Handling
+
+**If task ID not found:**
+```
+❌ Error: T-099 not found in tracker.md
+
+Available tasks: T-001 to T-050
+Did you mean one of these?
+```
+
+**If command unclear:**
+```
+⚠️ Cannot parse update command
+
+Expected format:
+"Update tracker: T-XXX ⚪→✅, T-YYY new task"
+
+Please clarify your update request.
+```
+
+**If dependency conflict:**
+```
+⚠️ Warning: T-020 depends on T-012, but T-012 is not complete
+
+Cannot mark T-020 as Ready until T-012 is ✅
+
+Proceed anyway? (Yes/No)
+```
 
 ---
 
 ## Tips
 
+**For Generation:**
 1. **Be Comprehensive:** Every feature needs tasks
 2. **Be Realistic:** Estimate effort conservatively
 3. **Be Clear:** Acceptance criteria must be testable
 4. **Track Dependencies:** Visualize with Mermaid
-5. **Update Regularly:** After every session
+
+**For Updates:**
+1. **Parse Carefully:** Extract all task IDs and changes
+2. **Update Dependencies:** Always check for blocked tasks
+3. **Recalculate Metrics:** Progress and velocity
+4. **Confirm Changes:** List what was updated
+
+---
+
+## CRITICAL REMINDERS
+
+1. **Single Source of Truth:** This prompt is the ONLY way to update tracker.md
+2. **Session Prompt Proposes:** 6-session.prompt.md only proposes updates
+3. **User Invokes:** User explicitly calls this prompt to apply changes
+4. **Complete Updates:** Always update dependencies and metrics
+5. **Validation Required:** Check all changes before confirming
 
 ---
 
 ## CHANGE LOG
 
 | Version | Date | Changes |
-|---------|------|---------|
+|---------|------|------------|
 | 1.0 | 2026-01-15 | Initial prompt created |
+| 1.1 | 2026-01-22 | Added UPDATE MODE for session updates |
