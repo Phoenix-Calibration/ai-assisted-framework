@@ -61,7 +61,7 @@ Write-Host ""
 Write-Host "🎉 AIris Framework installed successfully!" -ForegroundColor Green
 Write-Host ""
 Write-Host "📖 Next steps:" -ForegroundColor Cyan
-Write-Host "   1. Read: .airis/README.md for complete documentation" -ForegroundColor White
+Write-Host "   1. Read: .airis/FRAMEWORK.md for complete documentation" -ForegroundColor White
 Write-Host "   2. Start with: .airis/_setup/templates/ for your project docs" -ForegroundColor White
 Write-Host "   3. Use prompts: .airis/_setup/prompts/ for AI assistance" -ForegroundColor White
 Write-Host ""

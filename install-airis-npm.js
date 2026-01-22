@@ -90,7 +90,7 @@ log('');
 log('🎉 AIris Framework installed successfully!', 'green');
 log('');
 log('📖 Next steps:', 'cyan');
-log('   1. Read: .airis/README.md for complete documentation');
+log('   1. Read: .airis/FRAMEWORK.md for complete documentation');
 log('   2. Start with: .airis/_setup/templates/ for your project docs');
 log('   3. Use prompts: .airis/_setup/prompts/ for AI assistance');
 log('');
