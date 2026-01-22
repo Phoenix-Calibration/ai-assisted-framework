@@ -51,13 +51,16 @@ After installation, you'll have:
 │   │   ├── 4-tracker.template.md
 │   │   ├── 5-todo.template.md
 │   │   └── 6-handoff.template.md
-│   └── prompts/                   # 6 AI prompts
-│       ├── 1-discovery.prompt.md
-│       ├── 2-scope.prompt.md
-│       ├── 3-requirements.prompt.md
-│       ├── 4-design.prompt.md
-│       ├── 5-tracker.prompt.md
-│       └── 6-session.prompt.md
+│   ├── prompts/                   # 6 AI prompts
+│   │   ├── 1-discovery.prompt.md
+│   │   ├── 2-scope.prompt.md
+│   │   ├── 3-requirements.prompt.md
+│   │   ├── 4-design.prompt.md
+│   │   ├── 5-tracker.prompt.md
+│   │   └── 6-session.prompt.md
+│   └── instructions/              # Claude Project instructions
+│       ├── airis-integration.instructions.md
+│       └── airis-session.instructions.md
 ├── docs/                          # Placeholder examples
 └── session/                       # Session workspace
 ```
@@ -166,6 +169,7 @@ This ensures AI suggestions respect your architecture.
 ### Templates & Prompts
 - **[Templates](.airis/_setup/templates/)** - All 7 document templates
 - **[Prompts](.airis/_setup/prompts/)** - All 6 AI prompts
+- **[Instructions](.airis/_setup/instructions/)** - Claude Project integration guides
 
 ---
 
@@ -258,6 +262,7 @@ git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework
 - **Installation Help:** `INSTALLATION.md`
 - **Templates:** `.airis/_setup/templates/`
 - **Prompts:** `.airis/_setup/prompts/`
+- **Instructions:** `.airis/_setup/instructions/`
 
 ### Issues
 Open an issue on GitHub for:
