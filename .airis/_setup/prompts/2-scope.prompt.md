@@ -1,7 +1,9 @@
 # Scope Prompt
 
 ## Purpose
-Create Scope.md that defines the project's vision, goals, boundaries, and success metrics. Works for both new and existing projects by extracting key information from the PRD.
+Create Scope.md that defines the project's vision, goals, boundaries, features, and success metrics. Works for both new and existing projects by extracting key information from the PRD.
+
+**Key Change:** Scope.md now includes high-level Features (§5) that will be expanded into detailed tasks in Tracker.md. There is no separate Requirements.md document.
 
 ---
 
@@ -24,6 +26,7 @@ Read the entire PRD.md to understand:
 - Proposed/current solution
 - Success metrics
 - Scope boundaries
+- Features and capabilities
 - Constraints
 
 ### Step 2: Extract Information for Each Section
@@ -43,57 +46,60 @@ Use the template structure and map PRD content to Scope sections:
 - Convert metrics into goal statements
 - Use SMART format (Specific, Measurable, Achievable, Relevant, Time-bound)
 
-#### § 4 IN-SCOPE FEATURES
-- Extract from PRD "In Scope (MVP)" section
-- List features that WILL be included
-- For existing projects: features that EXIST today + planned additions
+#### § 4 SCOPE BOUNDARIES
+- In Scope: User groups, processes, integrations
+- Out of Scope: Explicitly excluded items and why
+- Future Phases: What's planned for later
 
-#### § 5 OUT-OF-SCOPE
-- Extract from PRD "Out of Scope" section
-- List features explicitly NOT included
-- Helps prevent scope creep
+#### § 5 FEATURES (High-Level) - KEY SECTION
+- **This replaces the need for a separate Requirements.md**
+- Extract features from PRD and organize by category (F-001, F-002, etc.)
+- For each feature category, define:
+  - Description (1-2 sentences)
+  - Priority (Must Have / Should Have / Could Have)
+  - Capabilities (list what it does)
+  - Business Rules (high-level only)
+- Include Feature Summary Table
+- Include Data Entities (high-level: name, description, key relationships)
+- **Note:** Detailed acceptance criteria will be generated in Tracker.md
 
-#### § 6 SUCCESS METRICS
-- Extract from PRD "Success Metrics"
-- Organize by category: Business, User, Technical
-- Define specific targets
-
-#### § 7 TARGET USERS
+#### § 6 TARGET USERS
 - Extract from PRD "Users and Stakeholders"
-- Create user personas or descriptions
-- Include their needs and goals
+- Create user personas with needs, goals, pain points
+- Include technical level
 
-#### § 8 STAKEHOLDERS
-- Extract from PRD "Users and Stakeholders"
+#### § 7 STAKEHOLDERS
 - List decision makers, influencers, affected parties
-- Note their interests
+- Note their interests and influence level
 
-#### § 9 ASSUMPTIONS
-- Extract from PRD "Assumptions and Dependencies"
-- List what we're assuming to be true
-- These may need validation
-
-#### § 10 CONSTRAINTS
-- Extract from PRD "Constraints" section
-- Organize by: Time, Budget, Technical, Resources, Business
+#### § 8 CONSTRAINTS
+- Time, Budget, Resource, Business constraints
 - These are non-negotiable limits
 
-#### § 11 TECHNICAL CONSTRAINTS
-- Extract from PRD "Technical" constraints
-- List required technologies, platforms
-- List integration requirements
-- List performance/security requirements
-
-#### § 12 RISKS
+#### § 9 RISKS
 - Extract from PRD "Risks" section
-- Rate by severity: High, Medium, Low
+- Rate by severity and probability
 - Include mitigation strategies
 
-#### § 13 DEPENDENCIES
-- Extract from PRD "Dependencies" section
+#### § 10 ASSUMPTIONS
+- List what we're assuming to be true
+- Note which need validation
+
+#### § 11 DEPENDENCIES
 - External: APIs, services, vendors
 - Internal: Teams, systems, resources
 - Note blocking vs non-blocking
+
+#### § 12 COMPLIANCE & REGULATIONS
+- Standards that must be met
+- Data privacy requirements
+
+#### § 13 OPEN QUESTIONS
+- Questions that need answers
+- Track owner and status
+
+#### § 14 APPROVAL
+- Sign-off from stakeholders
 
 ---
 
@@ -102,11 +108,11 @@ Use the template structure and map PRD content to Scope sections:
 ```markdown
 # Scope Document
 
-> **Purpose:** Define project vision, goals, boundaries, and success criteria.  
-> **Created:** YYYY-MM-DD  
-> **Last Updated:** YYYY-MM-DD  
-> **Source:** PRD.md  
-> **Next Document:** Requirements.md (created after this)
+> **Purpose:** Define project vision, goals, boundaries, features, and success criteria.
+> **Created:** YYYY-MM-DD
+> **Last Updated:** YYYY-MM-DD
+> **Source:** PRD.md
+> **Next Document:** Design.md (created after this)
 
 ---
 
@@ -131,224 +137,187 @@ Example format:
 
 ## 3. GOALS
 
-[Extract from PRD Success Metrics and convert to goal statements]
-
 ### Primary Goals (Must Achieve)
 1. **[Goal 1]:** [Description with target metric]
    - Success Metric: [Specific measurable target]
    - Timeline: [When to achieve]
 
-2. **[Goal 2]:** [Description with target metric]
-   - Success Metric: [Specific measurable target]
-   - Timeline: [When to achieve]
-
 ### Secondary Goals (Should Achieve)
-1. **[Goal 3]:** [Description]
+1. **[Goal 2]:** [Description]
    - Success Metric: [Target]
 
 ---
 
-## 4. IN-SCOPE FEATURES
+## 4. SCOPE BOUNDARIES
 
-[Extract from PRD "In Scope" section]
+### In Scope
 
-### Core Features (MVP)
-- **[Feature 1]:** [Brief description]
-- **[Feature 2]:** [Brief description]
-- **[Feature 3]:** [Brief description]
+**User Groups:**
+- [User group 1]
+- [User group 2]
 
-### Additional Features (Phase 2)
-- **[Feature 4]:** [Brief description]
-- **[Feature 5]:** [Brief description]
+**Processes:**
+- [Process 1]
+- [Process 2]
 
-**Note:** For existing projects, separate into:
-- **Existing Features:** [What exists today]
-- **Planned Features:** [What will be added]
+**Systems/Integrations:**
+- [System 1]
+- [System 2]
 
----
+### Out of Scope
 
-## 5. OUT-OF-SCOPE
+**Explicitly Excluded (and why):**
+- [Item 1]: [Reason]
+- [Item 2]: [Reason]
 
-[Extract from PRD "Out of Scope" section]
+### Future Phases
 
-The following are explicitly OUT of scope for this project:
-
-- **[Item 1]:** [Why it's out of scope]
-- **[Item 2]:** [Why it's out of scope]
-- **[Item 3]:** [Why it's out of scope]
-
----
-
-## 6. SUCCESS METRICS
-
-[Extract from PRD Success Metrics section]
-
-### 6.1 Business Metrics
-
-| Metric | Target | Measurement Method | Timeline |
-|--------|--------|-------------------|----------|
-| [Metric 1] | [Target] | [How to measure] | [When] |
-| [Metric 2] | [Target] | [How to measure] | [When] |
-
-### 6.2 User Metrics
-
-| Metric | Target | Measurement Method | Timeline |
-|--------|--------|-------------------|----------|
-| [Metric 1] | [Target] | [How to measure] | [When] |
-| [Metric 2] | [Target] | [How to measure] | [When] |
-
-### 6.3 Technical Metrics (SLOs)
-
-| Metric | Target | Measurement Method |
-|--------|--------|-------------------|
-| Availability | [e.g., 99.9%] | [Monitoring tool] |
-| Response Time | [e.g., < 200ms] | [APM tool] |
-| Error Rate | [e.g., < 0.1%] | [Logging] |
+**Phase 2** (Target: [Date]):
+- [Feature A]
+- [Feature B]
 
 ---
 
-## 7. TARGET USERS
+## 5. FEATURES (High-Level)
 
-[Extract from PRD "Users and Stakeholders" - Primary Users section]
+> **Note:** This section defines WHAT features the system will have.
+> Detailed acceptance criteria will be generated in Tracker.md as task criteria.
 
-### 7.1 Primary User Personas
+### Feature Categories
+
+#### F-001: [Feature Category Name]
+**Description:** [1-2 sentences]
+**Priority:** Must Have / Should Have / Could Have
+**Capabilities:**
+- [Capability 1.1]: [Brief description]
+- [Capability 1.2]: [Brief description]
+
+**Business Rules (High-Level):**
+- [Rule 1]: [Brief description]
+
+---
+
+#### F-002: [Feature Category Name]
+**Description:** [1-2 sentences]
+**Priority:** Must Have / Should Have / Could Have
+**Capabilities:**
+- [Capability 2.1]: [Brief description]
+
+**Business Rules (High-Level):**
+- [Rule 1]: [Brief description]
+
+---
+
+### Feature Summary Table
+
+| ID | Feature | Priority | Capabilities | Phase |
+|----|---------|----------|--------------|-------|
+| F-001 | [Name] | Must Have | [Count] | MVP |
+| F-002 | [Name] | Should Have | [Count] | Phase 2 |
+
+### Data Entities (High-Level)
+
+| Entity | Description | Key Relationships |
+|--------|-------------|-------------------|
+| [Entity 1] | [What it represents] | [Related to...] |
+| [Entity 2] | [What it represents] | [Related to...] |
+
+---
+
+## 6. TARGET USERS
+
+### Primary User Personas
 
 **Persona 1: [Name/Role]**
-- **Description:** [Who they are]
-- **Needs:** [What they need from the system]
-- **Goals:** [What they want to accomplish]
-- **Pain Points:** [Current challenges]
-- **Technical Level:** [Beginner / Intermediate / Advanced]
-
-**Persona 2: [Name/Role]**
 - **Description:** [Who they are]
 - **Needs:** [What they need]
 - **Goals:** [What they want to accomplish]
 - **Pain Points:** [Current challenges]
-- **Technical Level:** [Skill level]
+- **Technical Level:** [Beginner / Intermediate / Advanced]
 
-### 7.2 Secondary Users (if applicable)
-
+### Secondary Users
 - **[Role]:** [Brief description and needs]
 
 ---
 
-## 8. STAKEHOLDERS
-
-[Extract from PRD "Users and Stakeholders" - Stakeholders section]
+## 7. STAKEHOLDERS
 
 | Stakeholder | Role | Interest | Influence |
 |-------------|------|----------|-----------|
-| [Name/Role] | [Position] | [What they care about] | [High/Medium/Low] |
-| [Name/Role] | [Position] | [What they care about] | [High/Medium/Low] |
+| [Name/Role] | [Position] | [What they care about] | High/Med/Low |
 
 ---
 
-## 9. ASSUMPTIONS
+## 8. CONSTRAINTS
 
-[Extract from PRD "Assumptions" section]
+### Time Constraints
+[Timeline requirements]
 
-We are proceeding based on these assumptions:
+### Budget Constraints
+[Budget limitations]
+
+### Resource Constraints
+[Team size, skills available]
+
+### Business Constraints
+[Regulatory, compliance, legal requirements]
+
+---
+
+## 9. RISKS
+
+| Risk | Impact | Probability | Mitigation Strategy |
+|------|--------|-------------|---------------------|
+| [Risk 1] | High/Med/Low | High/Med/Low | [How to mitigate] |
+
+---
+
+## 10. ASSUMPTIONS
 
 1. **[Assumption 1]:** [Description]
-   - **Validation needed:** [Yes/No - how to validate]
-
-2. **[Assumption 2]:** [Description]
-   - **Validation needed:** [Yes/No - how to validate]
-
-**Note:** If assumptions prove false, scope may need revision.
+   - **Validation needed:** Yes/No
 
 ---
 
-## 10. CONSTRAINTS
+## 11. DEPENDENCIES
 
-[Extract from PRD "Constraints" section]
+### External Dependencies
+| Dependency | Type | Criticality | Risk |
+|------------|------|-------------|------|
+| [API/Service] | API | Blocking | [Risk if unavailable] |
 
-### 10.1 Time Constraints
-[Timeline requirements from PRD]
-
-### 10.2 Budget Constraints
-[Budget limitations from PRD]
-
-### 10.3 Resource Constraints
-[Team size, skills available from PRD]
-
-### 10.4 Business Constraints
-[Regulatory, compliance, legal requirements from PRD]
+### Internal Dependencies
+| Dependency | Type | Criticality | Risk |
+|------------|------|-------------|------|
+| [Team/System] | Resource | Non-blocking | [Risk] |
 
 ---
 
-## 11. TECHNICAL CONSTRAINTS
+## 12. COMPLIANCE & REGULATIONS
 
-[Extract from PRD "Technical" constraints]
+**Standards/Regulations:**
+- **[Standard Name]:** [Requirements]
 
-### 11.1 Required Technologies
-[Technologies that MUST be used]
-- [Technology 1]: [Reason]
-- [Technology 2]: [Reason]
-
-### 11.2 Integration Requirements
-[External systems to integrate with]
-- [System 1]: [Purpose]
-- [System 2]: [Purpose]
-
-### 11.3 Platform Requirements
-[Platforms that must be supported]
-- [Platform 1]: [e.g., Web, iOS, Android, Windows]
-
-### 11.4 Performance Requirements
-[Non-negotiable performance targets]
-- [Requirement 1]: [e.g., Support 10,000 concurrent users]
-- [Requirement 2]: [e.g., Response time < 200ms]
-
-### 11.5 Security Requirements
-[Security standards that must be met]
-- [Requirement 1]: [e.g., SOC 2 compliance]
-- [Requirement 2]: [e.g., Data encryption at rest and in transit]
+**Data Privacy:**
+- Data collected: [Types]
+- Retention: [Period]
 
 ---
 
-## 12. RISKS
+## 13. OPEN QUESTIONS
 
-[Extract from PRD "Risks" section]
-
-### 12.1 High-Priority Risks
-
-| Risk | Impact | Probability | Mitigation Strategy |
-|------|--------|-------------|---------------------|
-| [Risk 1] | [High/Med/Low] | [High/Med/Low] | [How to mitigate] |
-
-### 12.2 Medium-Priority Risks
-
-| Risk | Impact | Probability | Mitigation Strategy |
-|------|--------|-------------|---------------------|
-| [Risk 2] | [High/Med/Low] | [High/Med/Low] | [How to mitigate] |
-
-### 12.3 Low-Priority Risks
-
-| Risk | Impact | Probability | Mitigation Strategy |
-|------|--------|-------------|---------------------|
-| [Risk 3] | [High/Med/Low] | [High/Med/Low] | [How to mitigate] |
+| ID | Question | Owner | Due Date | Status |
+|----|----------|-------|----------|--------|
+| Q-001 | [Question]? | [Name] | [Date] | Open |
 
 ---
 
-## 13. DEPENDENCIES
+## 14. APPROVAL
 
-[Extract from PRD "Dependencies" section]
-
-### 13.1 External Dependencies
-
-| Dependency | Type | Criticality | Owner | Risk |
-|------------|------|-------------|-------|------|
-| [External API] | API | Blocking | [Vendor] | [Risk if unavailable] |
-| [Third-party service] | Service | Non-blocking | [Vendor] | [Risk if unavailable] |
-
-### 13.2 Internal Dependencies
-
-| Dependency | Type | Criticality | Owner | Risk |
-|------------|------|-------------|-------|------|
-| [Internal team] | Resource | Blocking | [Team name] | [Risk if unavailable] |
-| [Internal system] | System | Non-blocking | [Team name] | [Risk if unavailable] |
+| Role | Name | Date | Notes |
+|------|------|------|-------|
+| Product Manager | | | |
+| Engineering Lead | | | |
 
 ---
 
@@ -356,12 +325,15 @@ We are proceeding based on these assumptions:
 
 Once this Scope document is approved:
 
-1. **Create Requirements.md** (6-10 hours)
-   - Use requirements.prompt.md
-   - Read this Scope document completely first
-   - Expand §4 (In-Scope Features) into detailed requirements
+1. **Create Design.md** (6-10 hours)
+   - Read this Scope document completely
+   - Define technical architecture based on Features (§5)
+   - Document tech stack decisions with ADRs
+   - Define data models from Entity list
 
-2. **Continue to Design.md** (after Requirements.md is complete)
+2. **Generate Tracker.md** (after Design.md is complete)
+   - AI generates tasks from Scope + Design
+   - Each feature becomes tasks with detailed acceptance criteria
 
 ---
 
@@ -369,7 +341,7 @@ Once this Scope document is approved:
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 1.0 | [Date] | [Name] | Initial scope definition from PRD |
+| 1.0 | [Date] | [Name] | Initial scope definition |
 ```
 
 ---
@@ -380,12 +352,12 @@ Before finalizing Scope.md, verify:
 
 - [ ] All sections filled from PRD
 - [ ] Vision is clear and inspiring
-- [ ] Goals are SMART (Specific, Measurable, Achievable, Relevant, Time-bound)
-- [ ] In-scope features align with goals
+- [ ] Goals are SMART
+- [ ] Features (§5) cover all planned capabilities
+- [ ] Data Entities identified
 - [ ] Out-of-scope items are explicit
-- [ ] Success metrics are measurable
 - [ ] User personas are detailed
-- [ ] Constraints are clearly documented
+- [ ] Constraints are documented
 - [ ] Risks have mitigation strategies
 - [ ] Dependencies are identified
 
@@ -394,11 +366,11 @@ Before finalizing Scope.md, verify:
 ## Special Considerations
 
 ### For Existing Projects:
-- Section 4 (In-Scope) should separate:
+- Section 5 (Features) should separate:
   - **Current Features:** What exists today
   - **Planned Features:** What will be added
+- Data Entities should document current schema
 - Vision should balance current state with future improvements
-- Goals should include both maintenance and new development
 
 ### For New Projects:
 - All features are "planned"
@@ -410,9 +382,9 @@ Before finalizing Scope.md, verify:
 ## Tips for Effective Scope Creation
 
 1. **Be Specific:** Vague scope leads to scope creep
-2. **Be Realistic:** Don't over-promise in goals
-3. **Be Clear on Boundaries:** Out-of-scope is as important as in-scope
-4. **Reference PRD:** Always trace back to the PRD
+2. **Features at Right Level:** High-level capabilities, not detailed user stories
+3. **Data Entities Matter:** They inform the Design.md data models
+4. **Business Rules Summary:** Just the key rules, details go to Tracker
 5. **Think Long-term:** Scope should guide the project for months
 
 ---
@@ -429,17 +401,21 @@ Creating Scope.md with:
 - §1 Project Overview: ISO 17025 calibration management system
 - §2 Vision: Eliminate manual tracking errors and ensure compliance
 - §3 Goals: Zero audit failures, 50% time savings, 100% on-time calibrations
-- §4 In-Scope: Equipment tracking, scheduling, certificate generation, audit trails
-- §5 Out-of-Scope: Financial management, HR functions, inventory beyond equipment
-- §6-13: [All other sections extracted from PRD]
+- §4 Scope Boundaries: In/Out scope defined
+- §5 Features:
+  - F-001: Equipment Management (Must Have) - 5 capabilities
+  - F-002: Calibration Scheduling (Must Have) - 4 capabilities
+  - F-003: Certificate Generation (Must Have) - 3 capabilities
+  - F-004: Audit Trail (Must Have) - 2 capabilities
+  - Data Entities: Equipment, Calibration, Certificate, User
+- §6-14: [All other sections]
 
 Scope.md created successfully!
 
 Next steps:
 1. Review and approve this Scope.md
-2. Use requirements.prompt.md to create detailed Requirements.md
-
-Ready to create Requirements.md?
+2. Use design.prompt.md to create Design.md
+3. Then generate Tracker.md with detailed tasks
 ```
 
 ---
@@ -449,3 +425,4 @@ Ready to create Requirements.md?
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-01-15 | Initial prompt created |
+| 2.0 | 2026-02-05 | Removed Requirements.md dependency, added Features section |

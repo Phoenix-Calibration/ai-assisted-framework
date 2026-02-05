@@ -21,29 +21,26 @@ AIris is a structured approach to AI-assisted development that prevents common p
 ├── FRAMEWORK.md                   # This file - Complete framework guide
 │
 ├── _setup/                        # Reusable components
-│   ├── templates/                 # 7 document templates
+│   ├── templates/                 # 6 document templates
 │   │   ├── 0-PRD.template.md         # Product Requirements (optional)
-│   │   ├── 1-scope.template.md       # Vision & boundaries
-│   │   ├── 2-requirements.template.md # Detailed functionality
-│   │   ├── 3-design.template.md      # Architecture & tech decisions
-│   │   ├── 4-tracker.template.md     # Task registry
-│   │   ├── 5-todo.template.md        # Session plan
-│   │   └── 6-handoff.template.md     # Session state transfer
-│   ├── prompts/                   # 6 AI prompts
+│   │   ├── 1-scope.template.md       # Vision, boundaries & features
+│   │   ├── 2-design.template.md      # Architecture & tech decisions
+│   │   ├── 3-tracker.template.md     # Task registry
+│   │   ├── 4-todo.template.md        # Session plan
+│   │   └── 5-handoff.template.md     # Session state transfer
+│   ├── prompts/                   # 5 AI prompts
 │   │   ├── 1-discovery.prompt.md      # Generate PRD
-│   │   ├── 2-scope.prompt.md          # Generate Scope
-│   │   ├── 3-requirements.prompt.md   # Generate Requirements
-│   │   ├── 4-design.prompt.md         # Generate Design
-│   │   ├── 5-tracker.prompt.md        # Generate/update Tracker
-│   │   └── 6-session.prompt.md        # Session lifecycle (3 parts)
+│   │   ├── 2-scope.prompt.md          # Generate Scope (with features)
+│   │   ├── 3-design.prompt.md         # Generate Design
+│   │   ├── 4-tracker.prompt.md        # Generate/update Tracker
+│   │   └── 5-session.prompt.md        # Session lifecycle (3 parts)
 │   └── instructions/              # Claude Project instructions
 │       ├── airis-integration.instructions.md  # Framework integration guide
 │       └── airis-session.instructions.md      # Session management guide
 │
 ├── docs/                          # Strategic documents (your project)
+│   ├── scope.md                   # Project vision, boundaries & features
 │   ├── design.md                  # Technical architecture & constraints
-│   ├── scope.md                   # Project vision & boundaries
-│   ├── requirements.md            # Detailed features & user stories
 │   └── tracker.md                 # Complete task registry
 │
 └── session/                       # Session execution & state
@@ -65,80 +62,72 @@ AIris is a structured approach to AI-assisted development that prevents common p
 
 **Created in this order:**
 
-1. **scope.md** (~8 pages, 4-6 hours)
+1. **scope.md** (~10-15 pages, 4-6 hours)
    - Project vision and goals
    - Success metrics and SLOs
    - In-scope / out-of-scope boundaries
+   - **Features (high-level)** - capabilities, business rules summary, data entities
    - Stakeholders and constraints
    - **Template:** `_setup/templates/1-scope.template.md`
    - **AI Helper:** `_setup/prompts/2-scope.prompt.md`
 
-2. **requirements.md** (~30 pages, 6-10 hours)
-   - Functional requirements by feature
-   - User stories with acceptance criteria
-   - Business rules and validation logic
-   - Data entities and relationships
-   - Integration requirements
-   - **Template:** `_setup/templates/2-requirements.template.md`
-   - **AI Helper:** `_setup/prompts/3-requirements.prompt.md`
-
-3. **design.md** (~15 pages, 6-10 hours)
+2. **design.md** (~15 pages, 6-10 hours)
    - Architecture patterns and layers
    - Technology stack decisions
    - Development standards and conventions
    - Security and performance guidelines
    - Architecture Decision Records (ADRs)
-   - **Template:** `_setup/templates/3-design.template.md`
-   - **AI Helper:** `_setup/prompts/4-design.prompt.md`
+   - **Template:** `_setup/templates/2-design.template.md`
+   - **AI Helper:** `_setup/prompts/3-design.prompt.md`
 
 **Why this order?**
-- Scope first: Define boundaries before details
-- Requirements second: Know WHAT before deciding HOW
-- Design third: Architectural decisions informed by actual requirements
+- Scope first: Define boundaries and features before architecture
+- Design second: Architectural decisions informed by features in Scope
+- **Note:** Detailed requirements (user stories, validation rules) are generated as acceptance criteria in Tracker.md
 
 ### Phase 2: Tactical Roadmap (AI-Generated, Evolving)
 
-4. **tracker.md** (AI-generated from all strategy docs)
+3. **tracker.md** (AI-generated from Scope + Design)
    - Complete task breakdown (T-001, T-002, etc.)
+   - **Detailed acceptance criteria** - expands high-level features into testable criteria
    - Task dependencies and priorities
    - Status tracking (⚪ ⏸️ 🟡 ✅ 🚫)
    - Progress metrics and velocity
    - Updated after each session
-   - **Template:** `_setup/templates/4-tracker.template.md`
-   - **AI Prompt:** `_setup/prompts/5-tracker.prompt.md`
+   - **Template:** `_setup/templates/3-tracker.template.md`
+   - **AI Prompt:** `_setup/prompts/4-tracker.prompt.md`
 
 ### Phase 3: Session Execution (Context-Sized, Per-Session)
 
-5. **todo.md** (Subset of tracker, per developer)
+4. **todo.md** (Subset of tracker, per developer)
    - 1-3 tasks for current session
    - Opening Brief (context + plan)
    - Closing Report (what changed)
    - Session duration: 1-6 hours
-   - **Template:** `_setup/templates/5-todo.template.md`
-   - **AI Prompt:** `_setup/prompts/6-session.prompt.md`
+   - **Template:** `_setup/templates/4-todo.template.md`
+   - **AI Prompt:** `_setup/prompts/5-session.prompt.md`
 
-6. **handoff.md** (Session state transfer, per developer)
+5. **handoff.md** (Session state transfer, per developer)
    - Current project snapshot
    - Decisions made this session
    - Next recommended steps
    - Replaces completely each session (not accumulated)
-   - **Template:** `_setup/templates/6-handoff.template.md`
-   - **Generated by:** `_setup/prompts/6-session.prompt.md` (Part 2)
+   - **Template:** `_setup/templates/5-handoff.template.md`
+   - **Generated by:** `_setup/prompts/5-session.prompt.md` (Part 2)
 
 ---
 
 ## Framework Phases & Prompts
 
-### Phase 1: Construction of Strategic Documents (4 prompts)
+### Phase 1: Construction of Strategic Documents (3 prompts)
 
-**Purpose:** Create the foundation documents that define project vision, requirements, and architecture.
+**Purpose:** Create the foundation documents that define project vision, features, and architecture.
 
 | Prompt | Input | Output | Time |
 |--------|-------|--------|------|
 | `1-discovery.prompt.md` | Business idea, PRD, or existing codebase | PRD document | 2-4h |
-| `2-scope.prompt.md` | PRD or business context | scope.md | 4-6h |
-| `3-requirements.prompt.md` | scope.md + PRD | requirements.md | 6-10h |
-| `4-design.prompt.md` | requirements.md + scope.md | design.md | 6-10h |
+| `2-scope.prompt.md` | PRD or business context | scope.md (with features) | 4-6h |
+| `3-design.prompt.md` | scope.md | design.md | 6-10h |
 
 **Adaptability:**
 - **New projects:** Generate from scratch with AI assistance
@@ -146,14 +135,15 @@ AIris is a structured approach to AI-assisted development that prevents common p
 
 ### Phase 2: Tactical Generation (1 prompt)
 
-**Purpose:** Convert strategic documents into actionable implementation tasks.
+**Purpose:** Convert strategic documents into actionable implementation tasks with detailed acceptance criteria.
 
 | Prompt | Input | Output | Time |
 |--------|-------|--------|------|
-| `5-tracker.prompt.md` | design.md + scope.md + requirements.md | tracker.md | 1-2h |
+| `4-tracker.prompt.md` | design.md + scope.md | tracker.md | 1-2h |
 
 **Features:**
-- Generates complete task breakdown
+- Generates complete task breakdown from features in Scope.md
+- **Expands high-level features into detailed acceptance criteria**
 - Calculates dependencies automatically
 - Adapts to project type (new vs existing)
 - Updates after each session
@@ -168,7 +158,7 @@ AIris is a structured approach to AI-assisted development that prevents common p
 | Part 1 | "Start session" | Read full context, create plan | Opening Brief in todo.md |
 | Part 2 | "Session complete" | Generate reports, update state | Closing Report + handoff.md + Tracker updates |
 
-**Single unified prompt:** `6-session.prompt.md` handles all three moments.
+**Single unified prompt:** `5-session.prompt.md` handles all three moments.
 
 ---
 
@@ -195,13 +185,13 @@ When AI reads requirements before understanding technical constraints, it sugges
 
 **1. Document CREATION Order (Logical for Humans):**
 ```
-PRD → Scope → Requirements → Design
+PRD → Scope (with features) → Design
 ```
-**Rationale:** You cannot decide HOW to build (Design) without knowing WHAT to build (Requirements).
+**Rationale:** You cannot decide HOW to build (Design) without knowing WHAT to build (Features in Scope).
 
 **2. Document PRESENTATION Order (For AI Code Generation):**
 ```
-Design → Scope → Requirements
+Design → Scope (features)
 ```
 **Rationale:** AI gives more weight to information it reads first. Technical constraints must be non-negotiable.
 
@@ -219,8 +209,7 @@ When using AI to generate code or implementation plans:
 "Read these documents in this order:
 
 1. design.md (FIRST - these constraints are non-negotiable)
-2. scope.md (SECOND - project boundaries)  
-3. requirements.md (THIRD - features to implement)
+2. scope.md (SECOND - project boundaries and features)
 
 The technical decisions in design.md override everything else.
 Now generate the implementation for [feature]."
@@ -246,24 +235,20 @@ This is documented in:
 
 **Step 2: Create Strategic Documents (IN ORDER)**
 ```bash
-# 2.1 Create scope.md
+# 2.1 Create scope.md (includes features section)
 # Template: _setup/templates/1-scope.template.md
 # Or use: _setup/prompts/2-scope.prompt.md with your PRD
 
-# 2.2 Create requirements.md  
-# Template: _setup/templates/2-requirements.template.md
-# Or use: _setup/prompts/3-requirements.prompt.md with scope.md
-
-# 2.3 Create design.md
-# Template: _setup/templates/3-design.template.md
-# Or use: _setup/prompts/4-design.prompt.md with requirements.md
+# 2.2 Create design.md
+# Template: _setup/templates/2-design.template.md
+# Or use: _setup/prompts/3-design.prompt.md with scope.md
 ```
 
 **Step 3: Generate Tracker**
 ```bash
-# Use: _setup/prompts/5-tracker.prompt.md
-# Input: design.md + scope.md + requirements.md
-# Output: Complete task breakdown in tracker.md
+# Use: _setup/prompts/4-tracker.prompt.md
+# Input: design.md + scope.md
+# Output: Complete task breakdown in tracker.md with detailed acceptance criteria
 ```
 
 **Step 4: Start First Session**
@@ -272,7 +257,7 @@ This is documented in:
 mkdir -p session/{your-name}/current
 mkdir -p session/{your-name}/archive
 
-# Use: _setup/prompts/6-session.prompt.md
+# Use: _setup/prompts/5-session.prompt.md
 # Part 0: "Create ToDo for T-001, T-002" → generates todo.md
 # Part 1: "Start session" → adds Opening Brief
 # [Work happens...]
@@ -286,24 +271,21 @@ mkdir -p session/{your-name}/archive
 Order is flexible since the system already exists:
 
 ```bash
-# 1.1 Document current architecture
-# Create: docs/design.md (AS-IS state)
-# Include: Current tech stack, patterns, technical debt analysis
-
-# 1.2 Document current project goals  
+# 1.1 Document current project goals and features
 # Create: docs/scope.md
 # Include: Current vision, boundaries, success metrics
+# Include: Existing features (§5) + planned new features
 
-# 1.3 Document existing features
-# Create: docs/requirements.md
-# Include: What system does today, known requirements for new work
+# 1.2 Document current architecture
+# Create: docs/design.md (AS-IS state)
+# Include: Current tech stack, patterns, technical debt analysis
 ```
 
 **Step 2: Generate Tracker for Remaining Work**
 ```bash
-# Use: _setup/prompts/5-tracker.prompt.md
+# Use: _setup/prompts/4-tracker.prompt.md
 # Will generate:
-# - Feature Development tasks (new functionality)
+# - Feature Development tasks (new functionality from Scope §5)
 # - Architecture Improvement tasks (refactoring)
 # - Technical Debt tasks (fixes)
 # - Migration tasks (if proposing architecture changes)
@@ -402,8 +384,8 @@ Each developer reads:
 
 ### 1. Separation of Concerns by Time Horizon
 
-- **Strategy** (months) - Stable, human-owned (Scope, Requirements, Design)
-- **Tactics** (weeks) - Evolving, AI-generated (Tracker)
+- **Strategy** (months) - Stable, human-owned (Scope with features, Design)
+- **Tactics** (weeks) - Evolving, AI-generated (Tracker with detailed criteria)
 - **Execution** (hours) - Bounded by context window (ToDo)
 - **Transfer** (each session) - Verified state only (Handoff)
 
@@ -431,11 +413,11 @@ Each developer reads:
 ### 5. Document Order Matters
 
 **Creation Order (Human Logic):**
-- Scope → Requirements → Design
+- Scope (with features) → Design
 - Cannot decide HOW without knowing WHAT
 
 **Presentation Order (AI Context - The AIris Way):**
-- Design → Scope → Requirements
+- Design → Scope (with features)
 - Technical constraints guide solution space
 
 ### 6. The AIris Vision
@@ -472,39 +454,33 @@ Design.md + Scope.md → Tracker.md → Code
 
 ### Key Innovations by Phoenix Calibration
 
-#### 1. Requirements.md as Separate Strategy Document
+#### 1. Scope.md with Integrated Features Section
 
-**Problem with original approach:**
-- Scope.md mixing boundaries with detailed requirements
-- Document size bloat (40+ pages)
-- Update frequency mismatch (boundaries rarely change, requirements evolve)
-- Context inefficiency for AI
+**Aligned with original framework:**
+- Scope.md contains vision, boundaries, AND high-level features
+- **Tracker.md** expands features into detailed acceptance criteria
+- Follows the original equation: `Design.md + Scope.md → Tracker.md → Code`
 
-**Our solution:**
-- **scope.md** (~8 pages): Vision, boundaries, metrics, constraints
-- **requirements.md** (~30 pages): User stories, business rules, data entities, UI/UX
-- Proper separation of strategic boundaries vs operational specifications
-
-**Updated equation:**
-```
-Design.md + Scope.md + Requirements.md → Tracker.md → Code
-```
+**Our enhancement:**
+- **scope.md** (~10-15 pages): Vision, boundaries, metrics, constraints, **features (high-level)**
+- **tracker.md**: Tasks with **detailed acceptance criteria** (business rules, validation, edge cases)
+- Features are defined at the right level of abstraction for each document
 
 #### 2. Constraint-First Principle (The AIris Way)
 
-**Problem:** AI suggests generic solutions when reading requirements before design.
+**Problem:** AI suggests generic solutions when reading features before design.
 
 **Our solution:** Document TWO orders:
-- Creation order: Scope → Requirements → Design (human logic)
-- Presentation order: Design → Scope → Requirements (AI context)
+- Creation order: Scope (with features) → Design (human logic)
+- Presentation order: Design → Scope (AI context)
 
 Documented in templates and prompts to ensure consistent application.
 
 #### 3. Consolidated Prompts
 
-**Evolution:** Reduced from 13+ prompts to 6 adaptive prompts
-- Phase 1: 4 prompts (discovery, scope, requirements, design)
-- Phase 2: 1 prompt (tracker)
+**Evolution:** Reduced from 13+ prompts to 5 adaptive prompts
+- Phase 1: 3 prompts (discovery, scope with features, design)
+- Phase 2: 1 prompt (tracker - generates detailed criteria)
 - Phase 3: 1 unified prompt (session with 3 parts)
 
 Each prompt adapts to:
@@ -553,13 +529,14 @@ Eliminates need for separate prompts for each session moment.
 **License:** Private - Phoenix Calibration
 
 **Status:** ✅ Production Ready
-- All 7 templates complete
-- All 6 prompts complete
+- All 6 templates complete
+- All 5 prompts complete
 - Documentation complete
 - Multi-developer workflow tested
 - Complete AIris branding
+- Simplified structure (aligned with original framework)
 
-**Version:** 1.0 (January 2026)
+**Version:** 2.0 (February 2026)
 
 ---
 
@@ -567,18 +544,18 @@ Eliminates need for separate prompts for each session moment.
 
 ### Document Flow
 ```
-PRD (optional) → Scope → Requirements → Design → Tracker → ToDo → Handoff
+PRD (optional) → Scope (with features) → Design → Tracker → ToDo → Handoff
 ```
 
 ### AI Context Order (The AIris Way)
 ```
-Design (constraints) → Scope (boundaries) → Requirements (features)
+Design (constraints) → Scope (boundaries + features)
 ```
 
 ### File Locations
 ```
-Templates:     .airis/_setup/templates/*.template.md
-Prompts:       .airis/_setup/prompts/*.prompt.md
+Templates:     .airis/_setup/templates/*.template.md (6 files)
+Prompts:       .airis/_setup/prompts/*.prompt.md (5 files)
 Instructions:  .airis/_setup/instructions/*.instructions.md
 Docs:          .airis/docs/*.md
 Sessions:      .airis/session/{developer}/current/*.md
@@ -587,10 +564,9 @@ Sessions:      .airis/session/{developer}/current/*.md
 ### Time Estimates
 ```
 PRD:          2-4 hours (optional)
-Scope:        4-6 hours
-Requirements: 6-10 hours
+Scope:        4-6 hours (includes features section)
 Design:       6-10 hours
-Tracker:      1-2 hours (AI-generated)
+Tracker:      1-2 hours (AI-generated with detailed criteria)
 Session:      1-6 hours (per session)
 ```
 

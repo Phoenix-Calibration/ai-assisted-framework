@@ -28,7 +28,7 @@ AI: "Let's use Firebase!" ❌
 
 With AIris:
 AI reads: design.md → "FastAPI + PostgreSQL only"
-Then reads: requirements.md → "Need chat feature"
+Then reads: scope.md → "Need chat feature"
 AI suggests: "Server-Sent Events in FastAPI" ✅
 (Respects your constraints)
 ```
@@ -41,23 +41,21 @@ After installation, you'll have:
 
 ```
 .airis/
-├── README.md                      # Complete framework documentation
+├── FRAMEWORK.md                   # Complete framework documentation
 ├── _setup/
-│   ├── templates/                 # 7 document templates
+│   ├── templates/                 # 6 document templates
 │   │   ├── 0-PRD.template.md
-│   │   ├── 1-scope.template.md
-│   │   ├── 2-requirements.template.md
-│   │   ├── 3-design.template.md
-│   │   ├── 4-tracker.template.md
-│   │   ├── 5-todo.template.md
-│   │   └── 6-handoff.template.md
-│   ├── prompts/                   # 6 AI prompts
+│   │   ├── 1-scope.template.md      # Vision, boundaries & features
+│   │   ├── 2-design.template.md
+│   │   ├── 3-tracker.template.md
+│   │   ├── 4-todo.template.md
+│   │   └── 5-handoff.template.md
+│   ├── prompts/                   # 5 AI prompts
 │   │   ├── 1-discovery.prompt.md
-│   │   ├── 2-scope.prompt.md
-│   │   ├── 3-requirements.prompt.md
-│   │   ├── 4-design.prompt.md
-│   │   ├── 5-tracker.prompt.md
-│   │   └── 6-session.prompt.md
+│   │   ├── 2-scope.prompt.md        # Generates scope with features
+│   │   ├── 3-design.prompt.md
+│   │   ├── 4-tracker.prompt.md      # Expands features into detailed tasks
+│   │   └── 5-session.prompt.md
 │   └── instructions/              # Claude Project instructions
 │       ├── airis-integration.instructions.md
 │       └── airis-session.instructions.md
@@ -74,7 +72,7 @@ After installation, you'll have:
 ### **Step 2: Read the Docs**
 ```bash
 # Main documentation
-.airis/README.md
+.airis/FRAMEWORK.md
 
 # Installation guide
 INSTALLATION.md
@@ -83,14 +81,12 @@ INSTALLATION.md
 ### **Step 3: Create Your Strategy Documents**
 
 **For NEW projects:**
-1. Create `docs/scope.md` - Define vision and boundaries
-2. Create `docs/requirements.md` - Detail features and stories  
-3. Create `docs/design.md` - Make technical decisions
+1. Create `docs/scope.md` - Define vision, boundaries, and features (high-level)
+2. Create `docs/design.md` - Make technical decisions
 
 **For EXISTING projects:**
-1. Document current architecture in `docs/design.md`
-2. Document current vision in `docs/scope.md`
-3. Document existing features in `docs/requirements.md`
+1. Document current vision and features in `docs/scope.md`
+2. Document current architecture in `docs/design.md`
 
 ### **Step 4: Use AI Prompts**
 
@@ -103,9 +99,9 @@ Copy prompts from `.airis/_setup/prompts/` into your AI chat to generate your do
 ## Framework Flow
 
 ```
-Human Creates Strategy (Scope → Requirements → Design)
+Human Creates Strategy (Scope with features → Design)
              ↓
-AI Generates Tactics (Tracker with all tasks)
+AI Generates Tactics (Tracker with detailed acceptance criteria)
              ↓
 AI Executes Sessions (ToDo → Work → Handoff)
              ↓
@@ -114,8 +110,7 @@ AI Executes Sessions (ToDo → Work → Handoff)
 
 **The AIris Principle:** AI reads documents in constraint-first order:
 1. **Design** (technical constraints - non-negotiable)
-2. **Scope** (project boundaries)
-3. **Requirements** (features to implement)
+2. **Scope** (project boundaries + features)
 
 This ensures AI suggestions respect your architecture.
 
@@ -129,14 +124,14 @@ This ensures AI suggestions respect your architecture.
 - Maintains architectural coherence across all sessions
 
 ### 📚 Document Hierarchy
-- **Strategy** (months) - Scope, Requirements, Design
-- **Tactics** (weeks) - Task Tracker
+- **Strategy** (months) - Scope (with features), Design
+- **Tactics** (weeks) - Task Tracker (with detailed criteria)
 - **Execution** (hours) - Session ToDo
 - **Transfer** (per session) - Handoff state
 
-### 🤖 6 Consolidated Prompts
-- Phase 1: 4 prompts for strategic documents
-- Phase 2: 1 prompt for tracker generation
+### 🤖 5 Consolidated Prompts
+- Phase 1: 3 prompts for strategic documents
+- Phase 2: 1 prompt for tracker generation (expands features into detailed tasks)
 - Phase 3: 1 unified prompt for session lifecycle
 
 ### 👥 Multi-Developer Support
@@ -162,13 +157,13 @@ This ensures AI suggestions respect your architecture.
 ## Documentation
 
 ### Main Documentation
-- **[AIris Framework Guide](.airis/README.md)** - Complete framework documentation
+- **[AIris Framework Guide](.airis/FRAMEWORK.md)** - Complete framework documentation
 - **[Installation Guide](INSTALLATION.md)** - Detailed setup instructions
-- **[Getting Started](.airis/README.md#getting-started)** - Quick start guide
+- **[Getting Started](.airis/FRAMEWORK.md#getting-started)** - Quick start guide
 
 ### Templates & Prompts
-- **[Templates](.airis/_setup/templates/)** - All 7 document templates
-- **[Prompts](.airis/_setup/prompts/)** - All 6 AI prompts
+- **[Templates](.airis/_setup/templates/)** - All 6 document templates
+- **[Prompts](.airis/_setup/prompts/)** - All 5 AI prompts
 - **[Instructions](.airis/_setup/instructions/)** - Claude Project integration guides
 
 ---
@@ -179,8 +174,8 @@ This ensures AI suggestions respect your architecture.
 
 **The AIris Way:**
 1. **See clearly** - Architecture and constraints first
-2. **Focus precisely** - Boundaries and scope defined
-3. **Build confidently** - Requirements guide implementation
+2. **Focus precisely** - Boundaries and features defined
+3. **Build confidently** - Detailed tasks guide implementation
 
 ---
 
@@ -234,8 +229,9 @@ git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework
 
 **Key Innovations:**
 - ✨ Constraint-first methodology (dual document ordering)
-- ✨ Requirements.md as separate strategic document
-- ✨ Consolidated prompts (6 vs 13+ original)
+- ✨ Scope.md with integrated features section (aligned with original framework)
+- ✨ Tracker generates detailed acceptance criteria from features
+- ✨ Consolidated prompts (5 vs 13+ original)
 - ✨ Multi-developer workspaces
 - ✨ Unified session prompt with 3-part lifecycle
 - ✨ Architecture-first naming and branding (AIris)
@@ -244,21 +240,22 @@ git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework
 
 ## Status
 
-**Version:** 1.0 (January 2026)
+**Version:** 2.0 (February 2026)
 
 **Status:** ✅ Production Ready
-- ✅ All 7 templates complete
-- ✅ All 6 prompts complete  
+- ✅ All 6 templates complete
+- ✅ All 5 prompts complete
 - ✅ Documentation complete
 - ✅ Multi-developer workflow tested
 - ✅ Installation scripts ready
+- ✅ Simplified structure (aligned with original framework)
 
 ---
 
 ## Support
 
 ### Resources
-- **Documentation:** `.airis/README.md`
+- **Documentation:** `.airis/FRAMEWORK.md`
 - **Installation Help:** `INSTALLATION.md`
 - **Templates:** `.airis/_setup/templates/`
 - **Prompts:** `.airis/_setup/prompts/`
@@ -282,8 +279,8 @@ Open an issue on GitHub for:
 ## Get Started
 
 1. **Install:** Use one of the methods above
-2. **Read:** `.airis/README.md` for complete guide
-3. **Create:** Your strategy documents
+2. **Read:** `.airis/FRAMEWORK.md` for complete guide
+3. **Create:** Your strategy documents (Scope with features → Design)
 4. **Build:** With AI-assisted confidence
 
 **Ready to see clearly?** 👁️ Let AIris guide your AI-assisted development.

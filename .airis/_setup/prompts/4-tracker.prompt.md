@@ -5,14 +5,16 @@ Generate and update Tracker.md - the global task registry derived from strategy 
 
 **Single source of truth for tracker.md changes.**
 
+**Key Change:** Tracker.md is now generated from Design.md + Scope.md only (no Requirements.md).
+The Features section (§5) in Scope.md provides high-level capabilities, and this prompt expands them into detailed tasks with comprehensive acceptance criteria.
+
 ---
 
 ## Prerequisites
 
 **For Generation (Initial Creation):**
 - Design.md (complete)
-- Scope.md (complete)
-- Requirements.md (complete)
+- Scope.md (complete) - especially §5 Features section
 
 **For Updates (After Sessions):**
 - Current Tracker.md
@@ -39,7 +41,7 @@ Detect operation mode:
 
 ### Step 1: Read Complete Strategy Layer
 
-**CRITICAL:** Read ALL three documents COMPLETELY in this order:
+**CRITICAL:** Read BOTH documents COMPLETELY in this order:
 
 1. **Design.md** - Read COMPLETE document (all sections)
    - Architecture patterns and layers
@@ -49,18 +51,30 @@ Detect operation mode:
 
 2. **Scope.md** - Read COMPLETE document (all sections)
    - Vision and goals
-   - §4 In-Scope Features (these become tasks)
+   - §4 Scope Boundaries (in/out scope)
+   - **§5 Features (KEY SECTION)** - High-level features become detailed tasks
+     - Feature categories (F-001, F-002, etc.)
+     - Capabilities per feature
+     - High-level business rules
+     - Data Entities
    - Success metrics
    - Constraints
 
-3. **Requirements.md** - Read COMPLETE document (all sections)
-   - §1 Functional Requirements (detailed tasks source)
-   - §2 Business Rules
-   - §3 Data Entities
-   - §7 Integration Requirements
-   - For existing: §8 New Requirements
-
 **Do NOT skip any sections. Full context is essential.**
+
+### Step 1.5: Expand Features into Detailed Acceptance Criteria
+
+For each Feature (F-XXX) in Scope.md §5:
+1. Read the capabilities listed
+2. Read the high-level business rules
+3. **Generate detailed acceptance criteria** including:
+   - Specific validation rules
+   - Error handling scenarios
+   - Edge cases
+   - Success conditions
+   - Performance expectations (from Design.md)
+
+This is where the "requirements detail" lives - in the task acceptance criteria.
 
 ---
 
@@ -109,22 +123,29 @@ T-010: Implement [Layer Name] layer
 ```
 
 **C) Feature Development Tasks**
-From Requirements.md §1 (Functional Requirements):
+From Scope.md §5 (Features):
 
-For EACH functional requirement (FR-XXX):
+For EACH feature category (F-XXX) and its capabilities:
 ```
-T-0XX: Implement [FR-XXX Title]
-- Description: [From FR description]
+T-0XX: Implement [Capability from F-XXX]
+- Description: [Expanded from capability description]
 - Category: Feature Development
-- Priority: [From FR priority]
-- Feature: [Feature category from Requirements]
+- Priority: [From F-XXX priority]
+- Feature: [F-XXX name]
 - Dependencies: [Core architecture tasks]
 - Estimated Effort: [Based on complexity]
 - Acceptance Criteria:
-  - [All criteria from FR-XXX]
+  *** EXPAND HIGH-LEVEL RULES INTO DETAILED CRITERIA ***
+  - [Specific validation: e.g., "Amount must be >= $0.50"]
+  - [Error handling: e.g., "Returns 400 with message if validation fails"]
+  - [Success condition: e.g., "Returns 201 with resource ID"]
+  - [Edge case: e.g., "Handles duplicate submission with idempotency key"]
   - Unit tests with >80% coverage
   - Integration tests pass
 ```
+
+**IMPORTANT:** The acceptance criteria is where detailed business rules live.
+Expand each high-level business rule from Scope.md §5 into specific, testable criteria.
 
 **D) Other Tasks**
 - Testing setup (from Design.md §10)
@@ -150,16 +171,19 @@ Infrastructure → Core Architecture → Features → Deployment
 ### Process:
 
 **A) Feature Development Tasks**
-From Requirements.md §8 (New Requirements):
+From Scope.md §5 (Planned Features):
 ```
-T-001: Implement [NFR-XXX Title]
-- Description: [From NFR description]
+T-001: Implement [Capability from F-XXX]
+- Description: [From capability description]
 - Category: Feature Development
-- Priority: [From NFR priority]
+- Priority: [From F-XXX priority]
 - Dependencies: [May depend on architecture improvements]
 - Estimated Effort: [hours]
 - Acceptance Criteria:
-  - [From NFR-XXX criteria]
+  *** EXPAND INTO DETAILED, TESTABLE CRITERIA ***
+  - [Specific behavior expected]
+  - [Validation rules]
+  - [Error scenarios]
 ```
 
 **B) Architecture Improvement Tasks**
@@ -369,9 +393,9 @@ Check:
 ```markdown
 # Tracker - Global Task Registry
 
-> **Purpose:** Complete roadmap of all development tasks.  
-> **Generated From:** Design.md + Scope.md + Requirements.md  
-> **Updated:** After every session via 5-tracker.prompt.md  
+> **Purpose:** Complete roadmap of all development tasks.
+> **Generated From:** Design.md + Scope.md (Features section provides high-level requirements)
+> **Updated:** After every session via tracker.prompt.md
 > **Used By:** session.prompt.md to plan work
 
 ---
@@ -413,7 +437,7 @@ Check:
 
 ### Feature Development Tasks (10 tasks)
 
-[Tasks from Requirements §8]
+[Tasks from Scope §5 Planned Features]
 
 ### Architecture Improvement Tasks (8 tasks)
 
@@ -539,19 +563,21 @@ AI: Parses as:
 ## Validation Checklist
 
 **For Generation (New Projects):**
-- [ ] Read Design, Scope, Requirements COMPLETELY
-- [ ] All features from Scope §4 have tasks
-- [ ] All FRs from Requirements have tasks
+- [ ] Read Design and Scope COMPLETELY
+- [ ] All features from Scope §5 have tasks
+- [ ] Each capability expanded into detailed acceptance criteria
+- [ ] High-level business rules expanded into specific validation rules
 - [ ] Dependencies are logical
 - [ ] Priorities align with Scope goals
 - [ ] All 7 categories represented
 
 **For Generation (Existing Projects):**
-- [ ] Read Design, Scope, Requirements COMPLETELY
+- [ ] Read Design and Scope COMPLETELY
 - [ ] All 4 task categories present
 - [ ] Tasks aligned with Migration Phases (Design §14.4)
 - [ ] Technical debt rated by priority
 - [ ] Dependencies account for migration order
+- [ ] Planned features from Scope §5 have detailed criteria
 
 **For Updates:**
 - [ ] Command parsed correctly
@@ -628,3 +654,4 @@ Proceed anyway? (Yes/No)
 |---------|------|------------|
 | 1.0 | 2026-01-15 | Initial prompt created |
 | 1.1 | 2026-01-22 | Added UPDATE MODE for session updates |
+| 2.0 | 2026-02-05 | Removed Requirements.md dependency, features from Scope §5 |

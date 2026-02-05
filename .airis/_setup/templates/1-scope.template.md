@@ -1,9 +1,9 @@
 # SCOPE DOCUMENT
 
-> **Purpose:** Define project vision, goals, boundaries, and success criteria.  
-> **Created from:** PRD (if exists) + additional research and stakeholder input  
-> **Time to complete:** 4-6 hours  
-> **Next step:** Create Requirements.md (expands WHAT to build)
+> **Purpose:** Define project vision, goals, boundaries, features, and success criteria.
+> **Created from:** PRD (if exists) + additional research and stakeholder input
+> **Time to complete:** 4-6 hours
+> **Next step:** Create Design.md (defines HOW to build)
 
 ---
 
@@ -107,11 +107,6 @@
 
 ### In Scope
 
-**Features/Capabilities:**
-- [Capability 1]
-- [Capability 2]
-- [Capability 3]
-
 **User Groups:**
 - [User group 1]
 - [User group 2]
@@ -151,7 +146,82 @@
 
 ---
 
-## 5. TARGET USERS
+## 5. FEATURES (High-Level)
+
+> **Note:** This section defines WHAT features the system will have at a high level.
+> Detailed acceptance criteria and business rules will be generated in tracker.md as task criteria.
+> Focus on capabilities, not implementation details.
+
+### Feature Categories
+
+#### F-001: [Feature Category Name]
+**Description:** [1-2 sentences describing this feature area]
+**Priority:** Must Have / Should Have / Could Have
+**Capabilities:**
+- [Capability 1.1]: [Brief description]
+- [Capability 1.2]: [Brief description]
+- [Capability 1.3]: [Brief description]
+
+**Business Rules (High-Level):**
+- [Rule 1]: [Brief description]
+- [Rule 2]: [Brief description]
+
+---
+
+#### F-002: [Feature Category Name]
+**Description:** [1-2 sentences describing this feature area]
+**Priority:** Must Have / Should Have / Could Have
+**Capabilities:**
+- [Capability 2.1]: [Brief description]
+- [Capability 2.2]: [Brief description]
+
+**Business Rules (High-Level):**
+- [Rule 1]: [Brief description]
+
+---
+
+#### F-003: [Feature Category Name]
+**Description:** [1-2 sentences describing this feature area]
+**Priority:** Must Have / Should Have / Could Have
+**Capabilities:**
+- [Capability 3.1]: [Brief description]
+- [Capability 3.2]: [Brief description]
+
+**Business Rules (High-Level):**
+- [Rule 1]: [Brief description]
+
+---
+
+### Feature Summary Table
+
+| ID | Feature | Priority | Capabilities | Phase |
+|----|---------|----------|--------------|-------|
+| F-001 | [Name] | Must Have | [Count] | MVP |
+| F-002 | [Name] | Must Have | [Count] | MVP |
+| F-003 | [Name] | Should Have | [Count] | Phase 2 |
+
+---
+
+### Data Entities (High-Level)
+
+> **Note:** Define the core business entities. Detailed attributes will be defined in Design.md.
+
+| Entity | Description | Key Relationships |
+|--------|-------------|-------------------|
+| [Entity 1] | [What it represents] | [Related to Entity 2, Entity 3] |
+| [Entity 2] | [What it represents] | [Related to Entity 1] |
+| [Entity 3] | [What it represents] | [Related to Entity 1, Entity 2] |
+
+**Example:**
+| Entity | Description | Key Relationships |
+|--------|-------------|-------------------|
+| User | System user with account | Has Orders, has Profile |
+| Order | Customer purchase transaction | Belongs to User, has OrderItems |
+| Product | Item available for sale | In OrderItems, has Categories |
+
+---
+
+## 6. TARGET USERS
 
 ### Primary Users
 
@@ -182,7 +252,7 @@
 
 ---
 
-## 6. STAKEHOLDERS
+## 7. STAKEHOLDERS
 
 ### Stakeholder Map
 
@@ -220,7 +290,7 @@
 
 ---
 
-## 7. CONSTRAINTS
+## 8. CONSTRAINTS
 
 ### Budget
 - **Total project budget:** [$X]
@@ -310,7 +380,7 @@
 
 ---
 
-## 8. RISKS
+## 9. RISKS
 
 ### Risk Register
 
@@ -332,7 +402,7 @@
 
 ---
 
-## 9. ASSUMPTIONS
+## 10. ASSUMPTIONS
 
 ### Critical Assumptions
 
@@ -349,7 +419,7 @@
 
 ---
 
-## 10. DEPENDENCIES
+## 11. DEPENDENCIES
 
 ### External Dependencies
 
@@ -365,7 +435,7 @@
 
 ---
 
-## 11. COMPLIANCE & REGULATIONS
+## 12. COMPLIANCE & REGULATIONS
 
 ### Required Compliance
 
@@ -396,7 +466,7 @@
 
 ---
 
-## 12. OPEN QUESTIONS
+## 13. OPEN QUESTIONS
 
 ### Questions to Resolve
 
@@ -413,7 +483,7 @@
 
 ---
 
-## 13. APPROVAL
+## 14. APPROVAL
 
 ### Sign-Off
 
@@ -430,14 +500,17 @@
 
 Once this Scope document is approved:
 
-1. **Create Requirements.md** (6-10 hours)
+1. **Create Design.md** (6-10 hours)
    - Read this Scope document completely
-   - Expand section 4 (Users) into detailed personas
-   - Expand in-scope features into user stories with acceptance criteria
-   - Define business rules, data entities, and integrations
-   - Document UI/UX requirements
+   - Define technical architecture based on Features (§5)
+   - Document tech stack decisions with ADRs
+   - Define data models from Entity list (§5)
+   - Establish coding standards and patterns
 
-2. **Continue to Design.md** (after Requirements.md is complete)
+2. **Generate Tracker.md** (after Design.md is complete)
+   - AI generates tasks from Scope + Design
+   - Each feature becomes tasks with detailed acceptance criteria
+   - Business rules become validation criteria per task
 
 ---
 
