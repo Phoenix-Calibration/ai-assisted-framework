@@ -1,10 +1,5 @@
 # SCOPE DOCUMENT
 
-> **Purpose:** Define project vision, goals, boundaries, features, and success criteria.
-> **Created from:** PRD (if exists) + additional research and stakeholder input
-> **Time to complete:** 4-6 hours
-> **Next step:** Create Design.md (defines HOW to build)
-
 ---
 
 ## METADATA
@@ -18,15 +13,29 @@
 
 ---
 
-## 1. VISION
+## 1. VISION & STRATEGY
+
+> **Purpose:** Quick reference "north star" for the project. Read this first.
 
 ### Product Vision
-[2-3 paragraphs: What is this product/project? What problem does it solve? What value does it deliver?]
+[2-3 paragraphs: What is this product/project? What we're building and why it matters? What problem does it solve? What value does it deliver?]
 
 **Example format:**
 "[ProjectName] is a [type of solution] that eliminates [primary pain point] in [target industry/domain]. It transforms [current fragmented workflow] into a [desired state]. The result: [quantified benefit 1], [quantified benefit 2], and [key strategic advantage]."
 
----
+### Problem Statement
+**Current State:** [How things work today - the problem]
+**Desired State:** [How things should work - the solution]
+
+### Success Criteria
+- [ ] [Measurable outcome 1]
+- [ ] [Measurable outcome 2]
+- [ ] [Measurable outcome 3]
+
+### Key Constraints
+- **Timeline:** [Hard deadline and why]
+- **Budget:** [Amount or "No dedicated budget"]
+- **Tech Stack:** [Required technologies]
 
 ### Strategic Alignment
 **How this supports company strategy:**
@@ -36,117 +45,63 @@
 
 ---
 
-## 2. GOALS
+## 2. SUCCESS METRICS
 
-### Business Goals
+| Metric | Target | Timeline | Measurement Method |
+|--------|--------|----------|-------------------|
+| [Metric 1] | [Target] | Launch | [How measured] |
+| [Metric 2] | [Target] | 3 months | [How measured] |
+| [Metric 3] | [Target] | 6 months | [How measured] |
+| [User satisfaction] | [Target] | Ongoing | [How measured] |
 
-**Primary Goal:**  
-[One sentence: The main business objective]
+### Leading Indicators (Optional)
+> Metrics that predict future success
 
-**Secondary Goals:**
-1. [Goal 1]
-2. [Goal 2]
-3. [Goal 3]
-
----
-
-### User Goals
-
-**For [User Type 1]:**
-- [Goal 1]
-- [Goal 2]
-
-**For [User Type 2]:**
-- [Goal 1]
-- [Goal 2]
+- [Indicator 1]: [Why it predicts success]
+- [Indicator 2]: [Why it predicts success]
 
 ---
 
-## 3. SUCCESS METRICS
+## 3. ROADMAP
 
-### Key Performance Indicators (KPIs)
+> **Typical progression:** Foundation → Core Features → Enhancement → Deploy
+> Adapt phases to your project. Task details generated in tracker.md.
 
-**Launch Success (Day 1):**
-| Metric | Target | Measurement Method |
-|--------|--------|-------------------|
-| [Metric 1] | [Target] | [How measured] |
-| [Metric 2] | [Target] | [How measured] |
+#### Phase 1: Foundation (Current Scope)
+- **Goal:** [Establish project base - scaffold, infrastructure, basic UI]
+- **Features:** F-001, F-002 (see §4)
+- **Target:** [Date]
 
-**Adoption Success (3 months):**
-| Metric | Target | Measurement Method |
-|--------|--------|-------------------|
-| [Metric 1] | [Target] | [How measured] |
-| [Metric 2] | [Target] | [How measured] |
+#### Phase 2: Core Features
+- **Goal:** [Deliver essential functionality]
+- **Features:** F-003, F-004
+- **Target:** [Date]
 
-**Business Impact (6-12 months):**
-| Metric | Target | Measurement Method |
-|--------|--------|-------------------|
-| [Metric 1] | [Target] | [How measured] |
-| [Metric 2] | [Target] | [How measured] |
+#### Phase 3: Enhancement
+- **Goal:** [Polish, optimizations, secondary features]
+- **Features:** F-005, F-006
+- **Target:** [Date]
 
-**User Satisfaction:**
-| Metric | Target | Measurement Method |
-|--------|--------|-------------------|
-| [Metric 1] | [Target] | [How measured] |
+#### Phase 4: Deploy
+- **Goal:** [Production readiness, launch activities]
+- **Features:** Documentation, monitoring, launch prep
+- **Target:** [Date]
 
----
-
-### Leading vs Lagging Indicators
-
-**Leading Indicators** (predict future success):
-- [Indicator 1]: [Why it matters]
-- [Indicator 2]: [Why it matters]
-
-**Lagging Indicators** (measure past performance):
-- [Indicator 1]: [Why it matters]
-- [Indicator 2]: [Why it matters]
+#### Backlog (Unscheduled)
+- [Ideas without committed timeline]
 
 ---
 
-## 4. SCOPE BOUNDARIES
+### Non-Goals
+> What this project will NOT pursue or build (strategic exclusions)
 
-### In Scope
-
-**User Groups:**
-- [User group 1]
-- [User group 2]
-
-**Processes:**
-- [Process 1]
-- [Process 2]
-
-**Systems/Integrations:**
-- [System 1]
-- [System 2]
+- [Non-goal 1]: [Why we're not pursuing this]
+- [Non-goal 2]: [Why we're not pursuing this]
+- [Non-goal 3]: [Why we're not pursuing this]
 
 ---
 
-### Out of Scope
-
-**Explicitly Excluded (and why):**
-- [Feature X]: [Reason - e.g., "Requires third-party API not available until Q3"]
-- [Feature Y]: [Reason - e.g., "Low user demand based on research"]
-- [Feature Z]: [Reason - e.g., "Technical complexity exceeds budget"]
-
----
-
-### Future Phases
-
-**Phase 2** (Target: [Date/Quarter]):
-- [Feature A]
-- [Feature B]
-
-**Phase 3** (Target: [Date/Quarter]):
-- [Feature C]
-- [Feature D]
-
-**Backlog** (No date set):
-- [Feature E]
-- [Feature F]
-
----
-
-## 5. FEATURES (High-Level)
+## 4. FEATURES (High-Level)
 
 > **Note:** This section defines WHAT features the system will have at a high level.
 > Detailed acceptance criteria and business rules will be generated in tracker.md as task criteria.
@@ -221,7 +176,7 @@
 
 ---
 
-## 6. TARGET USERS
+## 5. TARGET USERS
 
 ### Primary Users
 
@@ -252,135 +207,29 @@
 
 ---
 
-## 7. STAKEHOLDERS
+## 6. CONSTRAINTS
 
-### Stakeholder Map
+| Type | Constraint | Impact/Reason |
+|------|------------|---------------|
+| **Budget** | [$X total] | [Allocation: Dev $Y, Infra $Z] |
+| **Timeline** | [Hard deadline] | [Why immovable] |
+| **Team** | [N developers, N designers] | [Available hours/week] |
+| **Technical** | Must use [Technology] | [Why required] |
+| **Technical** | Cannot use [Technology] | [Why prohibited] |
+| **Integration** | Must integrate with [System] | [Read/Write/Both] |
+| **Business** | Cannot change [Process] | [Why immutable] |
+| **Compliance** | Must comply with [Standard] | [Requirements] |
 
-| Name | Role | Interest | Influence | Engagement Strategy |
-|------|------|----------|-----------|-------------------|
-| [Name] | [Role] | High/Med/Low | High/Med/Low | [How to engage] |
-| [Name] | [Role] | High/Med/Low | High/Med/Low | [How to engage] |
-
----
-
-### RACI Matrix
-
-| Activity | Responsible | Accountable | Consulted | Informed |
-|----------|-------------|-------------|-----------|----------|
-| [Activity 1] | [Name] | [Name] | [Names] | [Names] |
-| [Activity 2] | [Name] | [Name] | [Names] | [Names] |
-
----
-
-### Communication Plan
-
-**Status Updates:**
-- **Frequency:** [Weekly/Biweekly/Monthly]
-- **Format:** [Email/Meeting/Dashboard]
-- **Attendees:** [List]
-- **Content:** [What's covered]
-
-**Decision Points:**
-- [Decision type]: [Who decides] - [Process]
-
-**Escalation Path:**
-1. **Level 1:** [Person/Role] - [Issues handled]
-2. **Level 2:** [Person/Role] - [Issues handled]
-3. **Level 3:** [Person/Role] - [Issues handled]
-
----
-
-## 8. CONSTRAINTS
-
-### Budget
-- **Total project budget:** [$X]
-- **Development:** [$Y]
-- **Infrastructure (Year 1):** [$Z]
-- **Operations (Year 1):** [$A]
-- **Maintenance (Year 1):** [$B]
-
-**Budget allocation breakdown:**
-| Category | Amount | % of Total |
-|----------|--------|------------|
-| Development | [$X] | [Y%] |
-| Infrastructure | [$Z] | [A%] |
-| Operations | [$B] | [C%] |
-
----
-
-### Timeline
-
-**Key Milestones:**
+### Key Milestones (Optional)
 | Milestone | Date | Dependencies |
 |-----------|------|--------------|
-| Kickoff | [YYYY-MM-DD] | [None / List] |
-| Discovery complete | [YYYY-MM-DD] | [List] |
-| Design complete | [YYYY-MM-DD] | [List] |
 | MVP ready | [YYYY-MM-DD] | [List] |
 | Beta launch | [YYYY-MM-DD] | [List] |
 | GA launch | [YYYY-MM-DD] | [List] |
 
-**Hard Deadlines:**
-- [Event/Date]: [Why this is immovable]
-
 ---
 
-### Team & Resources
-
-**Team Composition:**
-| Role | Count | Allocation % | Skills Required |
-|------|-------|--------------|-----------------|
-| Developers | [N] | [X%] | [List] |
-| Designers | [N] | [X%] | [List] |
-| QA | [N] | [X%] | [List] |
-| DevOps | [N] | [X%] | [List] |
-
-**Capacity:**
-- Total team hours/week: [X hours]
-- Adjusted for meetings/overhead: [Y hours] available for development
-
-**Skill Gaps:**
-- [Skill 1]: [Need to hire/train]
-- [Skill 2]: [Need to hire/train]
-
----
-
-### Technical Constraints
-
-**Must Use:**
-- [Technology/Platform]: [Why required]
-- [Technology/Platform]: [Why required]
-
-**Must Integrate With:**
-- [System 1]: [Integration type - Read/Write/Both]
-- [System 2]: [Integration type - Read/Write/Both]
-
-**Cannot Use:**
-- [Technology]: [Why prohibited]
-- [Technology]: [Why prohibited]
-
-**Must Comply With:**
-- [Standard/Regulation]: [Requirements]
-- [Standard/Regulation]: [Requirements]
-
----
-
-### Business Constraints
-
-**Processes We Cannot Change:**
-- [Process 1]: [Why immutable]
-- [Process 2]: [Why immutable]
-
-**Operations We Cannot Disrupt:**
-- [Operation 1]: [Why critical]
-- [Operation 2]: [Why critical]
-
-**Backward Compatibility:**
-- [System/Data]: [Compatibility requirements]
-
----
-
-## 9. RISKS
+## 7. RISKS
 
 ### Risk Register
 
@@ -402,7 +251,7 @@
 
 ---
 
-## 10. ASSUMPTIONS
+## 8. ASSUMPTIONS
 
 ### Critical Assumptions
 
@@ -419,23 +268,7 @@
 
 ---
 
-## 11. DEPENDENCIES
-
-### External Dependencies
-
-| ID | Dependency | Owner | Required By | Status | Risk |
-|----|------------|-------|-------------|--------|------|
-| D-001 | [System/Team/Vendor] | [Name] | [Date] | [Status] | H/M/L |
-| D-002 | [System/Team/Vendor] | [Name] | [Date] | [Status] | H/M/L |
-
-**Dependency Status:**
-- ✅ **Confirmed:** Committed and on track
-- ⚠️ **At Risk:** Potential delays or issues
-- ❌ **Blocked:** Not available, needs escalation
-
----
-
-## 12. COMPLIANCE & REGULATIONS
+## 9. COMPLIANCE & REGULATIONS
 
 ### Required Compliance
 
@@ -466,57 +299,18 @@
 
 ---
 
-## 13. OPEN QUESTIONS
-
-### Questions to Resolve
-
-| ID | Question | Owner | Due Date | Status | Resolution |
-|----|----------|-------|----------|--------|------------|
-| Q-001 | [Question]? | [Name] | [Date] | Open | - |
-| Q-002 | [Question]? | [Name] | [Date] | Resolved | [Answer] |
-
-**Status:**
-- **Open:** Not yet answered
-- **In Progress:** Being investigated
-- **Resolved:** Answer documented
-- **Blocked:** Cannot answer yet (dependency)
-
----
-
-## 14. APPROVAL
-
-### Sign-Off
-
-| Role | Name | Signature | Date | Notes |
-|------|------|-----------|------|-------|
-| Product Manager | | | | |
-| Engineering Lead | | | | |
-| Business Owner | | | | |
-| [Stakeholder] | | | | |
-
----
-
 ## NEXT STEPS
 
-Once this Scope document is approved:
+Once this Scope document is complete:
 
 1. **Create Design.md** (6-10 hours)
    - Read this Scope document completely
-   - Define technical architecture based on Features (§5)
+   - Define technical architecture based on Features (§4)
    - Document tech stack decisions with ADRs
-   - Define data models from Entity list (§5)
+   - Define data models from Entity list (§4)
    - Establish coding standards and patterns
 
 2. **Generate Tracker.md** (after Design.md is complete)
    - AI generates tasks from Scope + Design
    - Each feature becomes tasks with detailed acceptance criteria
    - Business rules become validation criteria per task
-
----
-
-## CHANGE LOG
-
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | [Date] | [Name] | Initial version |
-| 1.1 | [Date] | [Name] | [Description of changes] |
