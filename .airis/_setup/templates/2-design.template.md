@@ -1,23 +1,22 @@
 # Design Document Template
 
-> **Purpose:** Define HOW the system will be built through architecture, technical decisions, and development standards.  
-> **Created After:** Requirements.md (read it completely first)  
-> **Estimated Time:** 6-10 hours  
+> **Purpose:** Define HOW the system will be built through architecture, technical decisions, and development standards.
+> **Created After:** Scope.md (read it completely first)
+> **Estimated Time:** 6-10 hours
 > **Next Document:** Tracker.md (implementation planning based on this design)
 
 ---
 
-## ⚠️ CRITICAL: READ THIS FIRST
+## ⚠️ IMPORTANT: HOW TO USE THIS DOCUMENT
 
 ### AI Presentation Order (When Generating Code)
 
-**IMPORTANT:** When using AI assistants to generate code or plans, always present documents in this order:
+**CRITICAL:** When using AI assistants to generate code or plans, always present documents in this order:
 
 1. **design.md FIRST** ← Technical constraints are non-negotiable
-2. **scope.md SECOND** ← Project boundaries and goals
-3. **requirements.md THIRD** ← Detailed features and user stories
+2. **scope.md SECOND** ← Project boundaries, goals and features at high level
 
-### Why This Matters
+**Why This Matters:**
 
 AI models give more weight to information they read first. If AI reads scope.md before design.md, it will suggest "path of least resistance" solutions that may violate your architectural decisions.
 
@@ -28,9 +27,19 @@ AI models give more weight to information they read first. If AI reads scope.md 
 **Always prompt AI like this:**
 ```
 "FIRST read design.md for non-negotiable technical constraints.
-THEN read scope.md and requirements.md.
+THEN read scope.md
 Generate [code/plan] respecting the architectural decisions in design.md."
 ```
+
+### Using Diagrams
+
+**Diagrams are encouraged throughout this document.** Use Mermaid (embedded), textual descriptions, or external links (draw.io, Lucidchart) to clarify:
+- Architecture & components (§2)
+- Workflows & pipelines (§4)
+- Security & data flows (§7, §8)
+- Integration patterns (§10)
+
+Prefer visual explanation for complex concepts, multi-step processes, and component interactions.
 
 ---
 
@@ -46,6 +55,11 @@ Generate [code/plan] respecting the architectural decisions in design.md."
 8. [PERFORMANCE STANDARDS](#8-performance-standards) [REQUIRED]
 9. [TESTING STRATEGY](#9-testing-strategy) [REQUIRED]
 10. [EXTERNAL INTEGRATIONS](#10-external-integrations) [OPTIONAL]
+    - 10.1 [Third-party APIs](#101-third-party-apis)
+    - 10.2 [External Services](#102-external-services)
+    - 10.3 [Integration Patterns](#103-integration-patterns)
+    - 10.4 [Dependency Constraints](#104-dependency-constraints)
+    - 10.5 [Model Context Protocol (MCP) Servers](#105-model-context-protocol-mcp-servers)
 11. [ARCHITECTURE DECISION RECORDS (ADRs)](#11-architecture-decision-records-adrs) [REQUIRED]
 
 ---
@@ -59,60 +73,28 @@ Generate [code/plan] respecting the architectural decisions in design.md."
 | **Last Updated** | [Date] |
 | **Author(s)** | [Name(s)] |
 | **Status** | Draft / In Review / Approved |
-| **Based On** | Requirements.md v[X.X] |
+| **Based On** | Scope.md v[X.X] |
 
 ---
 
 ## 1. PROJECT OVERVIEW [REQUIRED]
 
-### 1.1 Project Name
+### 1.1 Project Identity
 
-**Official Name:** [Full project name]  
-**Internal Codename:** [Codename if different from official name, or N/A]  
-**Abbreviation:** [Commonly used short form, if applicable]
+**Name:** [Project name]
+**Type:** [e.g., Frontend Only / Backend Only / Fullstack / Mobile / Desktop / CLI / Library / MCP Server / System Integration]
 
-### 1.2 Project Type
+### 1.2 Repository Strategy
 
-Select all that apply:
+**Strategy:** [ ] Monorepo  /  [ ] Polyrepo
 
-- [ ] **Frontend Only** - User interface application (web, mobile, desktop)
-- [ ] **Backend Only** - API, microservices, data processing
-- [ ] **Fullstack** - Integrated frontend + backend
-- [ ] **System Integration** - Connecting multiple existing systems
-- [ ] **Mobile Application** - iOS, Android, or cross-platform
-- [ ] **Desktop Application** - Windows, macOS, Linux
-- [ ] **CLI Tool** - Command-line utility
-- [ ] **Library/SDK** - Reusable component for other systems
-- [ ] **Other:** [Specify]
+**Rationale:**
+[Explain why this strategy was chosen considering: team size, deployment independence, code sharing needs]
 
-### 1.3 Repository Strategy
+**Structure:**
+[Describe folder organization or list repositories with purpose. Link to `/docs/architecture/` for detailed structure]
 
-Select one:
-
-- [ ] **Monorepo** - All code in a single repository
-- [ ] **Polyrepo** - Separate repositories per component/service
-
-**Justification:**  
-[Explain why this strategy was chosen. Consider factors like: team size, deployment independence, code sharing needs, build complexity, version management]
-
-**Repository Structure:**  
-If monorepo, describe folder organization:
-```
-/
-├── apps/
-│   ├── [app1]/
-│   └── [app2]/
-├── packages/
-│   ├── [shared-lib1]/
-│   └── [shared-lib2]/
-└── [other folders]
-```
-
-If polyrepo, list repositories:
-- Repository 1: [Name] - [URL] - [Purpose]
-- Repository 2: [Name] - [URL] - [Purpose]
-
-### 1.4 Brief Description
+### 1.3 Brief Description
 
 **What:** [What the system does in 2-3 sentences]
 
@@ -124,14 +106,19 @@ If polyrepo, list repositories:
 
 ## 2. ARCHITECTURE [REQUIRED]
 
+> **For MCP Server Projects:** If your project type (§1.1) is "MCP Server", use this section to document your MCP architecture:
+> - In §2.1 Pattern Description: Describe tools/resources exposed, protocol transport (stdio/SSE/HTTP), integration with external systems
+> - In §2.2 System Components: Document MCP tools/resources as components (e.g., "GitHub Tool", "Database Query Resource")
+> - In §2.2 Component Interaction: Explain how MCP protocol handler routes requests to tools/resources and handles responses
+
 ### 2.1 Architecture Pattern
 
-**Primary Pattern:** [e.g., Clean Architecture, Microservices, Layered Architecture, Hexagonal Architecture, Event-Driven, CQRS, etc.]
+**Primary Pattern:** [e.g., Clean Architecture, Microservices, Layered Architecture, Hexagonal Architecture, Event-Driven, CQRS, MCP Server Architecture, etc.]
 
-**Why This Pattern:**  
+**Why This Pattern:**
 [Explain the rationale for choosing this architectural pattern. What problems does it solve? What benefits does it provide for this specific project?]
 
-**Pattern Description:**  
+**Pattern Description:**
 [Describe how the pattern is implemented in this project. What are the key characteristics? How does it differ from a standard implementation of this pattern?]
 
 ### 2.2 System Components
@@ -144,7 +131,7 @@ List all major components and their responsibilities:
 | [Component 2] | [What it does] | [What it depends on] |
 | [Component 3] | [What it does] | [What it depends on] |
 
-**Component Interaction:**  
+**Component Interaction:**
 [Describe how components communicate with each other. Synchronous vs asynchronous? APIs? Message queues? Events?]
 
 ### 2.3 Component Diagrams
@@ -210,11 +197,13 @@ Describe architectural layers or boundaries:
 
 ### 3.1 Frontend Stack (if applicable)
 
-**Language & Version:**  
+> **For Mobile Projects:** Use §3.6 Mobile Stack instead of this section.
+
+**Language & Version:**
 - Primary: [e.g., TypeScript 5.3]
 - Secondary: [If applicable]
 
-**Framework & Version:**  
+**Framework & Version:**
 - [e.g., React 18.2, Vue 3.4, Angular 17, etc.]
 
 **UI Library/Framework:**  
@@ -240,17 +229,18 @@ Describe architectural layers or boundaries:
 - [e.g., Python 3.12, Node.js 20 LTS, Java 21, C# .NET 8, Go 1.22]
 
 **Framework & Version:**  
-- [e.g., FastAPI 0.109, Express 4.18, Spring Boot 3.2, ASP.NET Core 8.0]
+- [e.g., FastAPI 0.109, FastMCP, Express 4.18, Spring Boot 3.2, ASP.NET Core 8.0]
 
-**API Type:**  
+**API Type:**
 - [ ] REST API
 - [ ] GraphQL
 - [ ] gRPC
 - [ ] WebSockets
+- [ ] MCP Protocol (stdio/SSE/HTTP)
 - [ ] Other: [Specify]
 
-**Authentication:**  
-- [e.g., JWT, OAuth 2.0, Session-based, API Keys]
+**Authentication:**
+- See §7.1 Authentication & Authorization for detailed authentication/authorization strategy
 
 **Key Dependencies:**
 
@@ -275,32 +265,82 @@ Describe architectural layers or boundaries:
 - Solution: [e.g., AWS S3, Azure Blob Storage, Local filesystem]
 - Purpose: [What types of files are stored]
 
-**Database Design Approach:**  
+**Database Design Approach:**
 - [ ] ORM-first (define models in code)
 - [ ] Database-first (SQL migrations)
 - [ ] Schema versioning: [Tool used, e.g., Alembic, Flyway, EF Migrations]
 
+**Data Migration Strategy:**
+- **Backward Compatibility:** [How many versions back are supported]
+- **Migration Approach:**
+  - [ ] Expand-Contract pattern (add new → migrate data → remove old)
+  - [ ] Dual-write period (write to both old and new schemas)
+  - [ ] Big-bang migration (scheduled downtime)
+- **Rollback Strategy:** [How to revert migrations if deployment fails]
+- **Zero-downtime:** [Yes/No] - [Explain approach if yes]
+- **Data Validation:** [How to verify migration success]
+
 ### 3.4 Infrastructure & Cloud
 
-**Hosting Platform:**  
-- [e.g., AWS, Azure, GCP, Heroku, Vercel, Self-hosted]
+**Hosting Platform:**
+- **Provider:** [e.g., AWS, Azure, GCP, Heroku, Vercel, Self-hosted]
+- **Region(s):** [Primary region + any additional regions for DR/multi-region]
+- **Compute:**
+  - Type: [e.g., VMs, Serverless (Lambda/Functions), Managed containers (ECS/Cloud Run)]
+  - Scaling: [e.g., Auto-scaling based on CPU/memory, Manual, Fixed capacity]
+  - Instance types: [e.g., t3.medium, Standard_D2s_v3]
 
-**Container Strategy:**  
-- [ ] Docker
-- [ ] Kubernetes
+**Container Strategy:**
+- [ ] Docker (containerized application)
+- [ ] Kubernetes (orchestration)
+- [ ] Managed container service (ECS, Cloud Run, App Service)
 - [ ] No containerization
 - [ ] Other: [Specify]
 
-**CI/CD:**  
-- Platform: [e.g., GitHub Actions, GitLab CI, Azure DevOps, Jenkins]
-- Workflow: [Describe automation: tests, builds, deployments]
+**Container Details (if applicable):**
+- Base images: [e.g., node:20-alpine, python:3.12-slim]
+- Registry: [e.g., Docker Hub, ECR, ACR, GCR]
+- Orchestration: [If using K8s: cluster size, node pools, autoscaling config]
 
-**Monitoring & Logging:**  
-- Application monitoring: [e.g., Datadog, New Relic, Application Insights]
-- Log aggregation: [e.g., ELK stack, Splunk, CloudWatch]
-- Error tracking: [e.g., Sentry, Rollbar, Bugsnag]
+**Networking:**
+- **Load Balancer:** [Type and configuration, e.g., Application Load Balancer, SSL termination]
+- **CDN:** [e.g., CloudFront, Azure CDN, Cloudflare] - [Purpose: static assets, API caching]
+- **DNS:** [Provider, e.g., Route 53, Azure DNS, Cloudflare]
+- **VPC/Network:** [Public/private subnets, security groups, firewall rules]
+
+**CI/CD:**
+- **Platform:** [e.g., GitHub Actions, GitLab CI, Azure DevOps, Jenkins]
+- **Build Triggers:**
+  - Development: [e.g., Auto-deploy on push to develop branch]
+  - Staging: [e.g., Auto-deploy on push to staging branch]
+  - Production: [e.g., Manual approval after tag creation]
+- **Pipeline Stages:**
+  1. [e.g., Lint & format check]
+  2. [e.g., Unit tests]
+  3. [e.g., Build container image]
+  4. [e.g., Integration tests]
+  5. [e.g., Security scan]
+  6. [e.g., Deploy to environment]
+  7. [e.g., Smoke tests]
+- **Deployment Strategy:** [e.g., Blue-green, Rolling update, Canary]
+- **Rollback:** [Automated on failure / Manual / Time-based automatic rollback]
+
+**Infrastructure as Code (IaC):**
+- **Tool:** [e.g., Terraform, CloudFormation, Pulumi, ARM templates, none]
+- **State Management:** [e.g., Terraform Cloud, S3 backend, Azure Storage]
+- **Directory:** [e.g., `/infrastructure`, `/terraform`]
+
+**Monitoring & Logging:**
+- **Application Monitoring (APM):** [e.g., Datadog, New Relic, Application Insights]
+- **Log Aggregation:** [e.g., ELK stack, Splunk, CloudWatch Logs]
+- **Error Tracking:** [e.g., Sentry, Rollbar, Bugsnag]
+- **Uptime Monitoring:** [e.g., Pingdom, UptimeRobot, StatusCake]
+- **Dashboards:** [Location of operational dashboards]
+- **Retention:** [Log retention period, e.g., 90 days hot, 1 year archive]
 
 ### 3.5 Key Dependencies
+
+> **Note:** This section is for **code-level dependencies** (npm packages, pip packages, NuGet packages, etc.). For **external service integrations** (APIs, SaaS platforms), see §10 External Integrations.
 
 List critical third-party libraries/services that the project cannot function without:
 
@@ -308,113 +348,97 @@ List critical third-party libraries/services that the project cannot function wi
 |------------|------|---------|---------|----------------------|
 | [Name] | [Library/Service] | [Version] | [Why it's critical] | [What else was considered] |
 
-**Dependency Update Policy:**  
+**Dependency Update Policy:**
 [How and when dependencies are updated. e.g., "Monthly review of security patches, quarterly updates of minor versions"]
+
+### 3.6 Mobile Stack (if applicable)
+
+> **Note:** Only fill this section if Project Type (§1.1) is "Mobile". Otherwise remove this section.
+
+**Platform Strategy:** [ ] Native iOS (Swift/SwiftUI) | [ ] Native Android (Kotlin/Jetpack Compose) | [ ] Cross-platform (React Native/Flutter) | [ ] Hybrid (Ionic/Capacitor)
+
+**Platform Details:**
+
+| Platform | Language/Ver | Min Version | UI Framework | Key Dependencies |
+|----------|-------------|-------------|--------------|------------------|
+| iOS | [Swift 5.9] | [iOS 15+] | [SwiftUI/UIKit] | [Package 1, Package 2] |
+| Android | [Kotlin 1.9] | [API 26+] | [Compose/XML] | [Package 1, Package 2] |
+| Cross-platform | [Framework/Ver] | [Min versions] | [Shared ~85%] | [Bridge modules if any] |
+
+**Mobile Considerations:**
+- **Offline:** Strategy: [Offline-first/Online-only] | Storage: [SQLite/Realm/AsyncStorage] | Sync: [Bi-directional/Push]
+- **Push Notifications:** iOS: [APNs/FCM] | Android: [FCM] | Types: [Transactional/Marketing/In-app]
+- **Distribution:** iOS: [App Store, TestFlight] | Android: [Play Store, Internal track] | Signing: [Cert/keystore mgmt] | CI/CD: [Fastlane/App Center]
+- **Performance:** Startup < [X]s | Interactive < [X]s | FPS ≥ 60 | Memory < [X]MB | Battery: [optimization strategies] | Network: [batching, compression]
+- **Platform Features:** iOS-only: [Widgets, Live Activities, App Clips] | Android-only: [Widgets, Quick Settings] | Shared: [Deep linking, Share extensions, Biometric auth]
 
 ---
 
 ## 4. DEVELOPMENT WORKFLOW [REQUIRED]
 
-### 4.1 Environment Strategy
+### 4.1 Environments & Deployment
 
 **Environments:**
 
-| Environment | Purpose | URL/Access | Auto-Deploy? |
-|-------------|---------|------------|--------------|
-| **Development (dev)** | Local development, rapid testing | localhost:XXXX | No |
-| **Testing (test)** | Automated tests, QA validation | [URL] | Yes (on push to test branch) |
-| **Staging (staging)** | Pre-production, client review | [URL] | Yes (on push to staging branch) |
-| **Production (prod)** | Live system | [URL] | Manual approval required |
+| Environment | Purpose | Deploy Trigger |
+|-------------|---------|----------------|
+| **Development** | Local testing | Manual |
+| **Staging** | Pre-production validation | Auto (on staging branch push) |
+| **Production** | Live system | Manual approval required |
 
-**Environment-Specific Configuration:**  
-[How configuration differs between environments. Database connections, API keys, feature flags, etc.]
+**Environment Configuration:**
+[How configuration differs: database connections, API keys, feature flags, etc.]
 
-**Access Control:**  
-- Development: [Who has access]
-- Testing: [Who has access]
-- Staging: [Who has access]
-- Production: [Who has access]
+### 4.2 Branch & Release Strategy
 
-### 4.2 Branch Strategy
+**Branch Strategy:** [Choose one and document specifics]
 
-**Primary Branches:**
+- **Option A: Git Flow** (feature branches + develop + main)
+  - `main`: Production-ready code
+  - `develop`: Integration branch for features
+  - `feature/[id]-[description]`: Feature development
+  - `hotfix/[id]-[description]`: Production fixes
 
-- **main** (or master): Production-ready code
-- **staging**: Pre-production testing
-- **develop**: Integration branch for features
+- **Option B: GitHub Flow** (feature branches + main only)
+  - `main`: Always deployable
+  - `feature/[id]-[description]`: Short-lived feature branches
 
-**Feature Branches:**  
-- Naming: `feature/[ticket-id]-brief-description`
-- Created from: `develop`
-- Merged into: `develop`
+- **Option C: Trunk-Based Development** (main only + feature flags)
+  - `main`: Single branch, all commits
+  - Feature flags control rollout
 
-**Release Branches:**  
-- Naming: `release/v[X.Y.Z]`
-- Created from: `develop`
-- Merged into: `main` and `develop`
+- **Option D: Custom** - [Describe your approach]
 
-**Hotfix Branches:**  
-- Naming: `hotfix/[ticket-id]-brief-description`
-- Created from: `main`
-- Merged into: `main` and `develop`
+**Chosen Strategy:** [State which option above]
 
-**Branch Protection Rules:**
-- `main`: Requires PR approval, passing tests, no direct commits
-- `staging`: Requires PR approval, passing tests
-- `develop`: Requires passing tests
+**Branch Protection:**
+- `main`: Requires PR approval + passing tests + no direct commits
+- [Other protected branches and rules]
 
-### 4.3 Deployment Pipeline
+**Release Process:**
+[Describe how releases are created, tagged, and deployed. Include versioning strategy (e.g., semver) and rollback procedure]
 
-**Development → Testing:**
-1. Developer pushes to feature branch
-2. Automated tests run (unit, integration)
-3. Developer merges feature branch to develop
-4. Auto-deploy to testing environment
-5. Smoke tests run automatically
-
-**Testing → Staging:**
-1. Create release branch from develop
-2. Deploy to staging environment
-3. Run full regression test suite
-4. QA team performs manual testing
-5. Stakeholder review and approval
-
-**Staging → Production:**
-1. Final approval from [role]
-2. Merge release branch to main
-3. Tag release: `v[X.Y.Z]`
-4. Deploy to production (manual trigger)
-5. Monitor for errors for [timeframe]
-6. Rollback plan: [describe rollback procedure]
-
-**Deployment Checklist:**
-- [ ] All tests passing
-- [ ] Database migrations reviewed
-- [ ] Environment variables verified
-- [ ] Monitoring alerts configured
-- [ ] Rollback plan documented
-
-### 4.4 Quality Gates
+### 4.3 Quality Gates
 
 **Code Quality:**
-- Code review required: [Number] approvals minimum
-- Automated linting: [Tool and rules]
-- Code coverage minimum: [Percentage]
+- Code review: [N] approval(s) required
+- Linting: [Tool + config location]
+- Code coverage: ≥ [X]%
 
 **Testing:**
-- Unit tests: Must pass 100%
-- Integration tests: Must pass 100%
-- E2E tests: Must pass [percentage] (may have flaky tests)
+- Unit tests: 100% passing
+- Integration tests: 100% passing
+- E2E tests: ≥ [X]% passing
 
 **Security:**
-- Dependency vulnerability scanning: [Tool]
-- SAST (Static Application Security Testing): [Tool, if applicable]
-- Maximum critical vulnerabilities: 0
+- Vulnerability scanning: [Tool]
+- SAST: [Tool, if applicable]
+- Critical vulnerabilities: 0 allowed
 
 **Performance:**
-- Build time: < [X] minutes
+- Build time: < [X] min
 - Bundle size (frontend): < [X] MB
-- API response time: < [X] ms (95th percentile)
+- API response (p95): < [X] ms
 
 ---
 
@@ -429,9 +453,6 @@ List critical third-party libraries/services that the project cannot function wi
    Example: "Fail fast, validate at boundaries" - Validate all inputs at API entry points rather than deep in business logic
 
 2. **[Principle 2]**  
-   [Description]
-
-3. **[Principle 3]**  
    [Description]
 
 **Design Priorities (Ranked):**
@@ -457,8 +478,7 @@ Example:
 - **Rationale:** Team size is small (3 developers), and early requirements are unclear. Premature microservices would add complexity without benefit.
 - **Consequences:** May require significant refactoring if system grows to 10+ developers or needs independent scaling of components.
 
-**Trade-off 2: [Name]**
-[Repeat structure]
+> **Note:** Add additional trade-offs as needed. Most projects have 3-5 significant trade-offs. Document all major architectural compromises.
 
 ### 5.3 Non-negotiable Rules
 
@@ -477,144 +497,174 @@ These rules CANNOT be violated without explicit architectural approval:
 2. **[Rule 2]**  
    [Description]
 
-3. **[Rule 3]**  
-   [Description]
-
 ---
 
 ## 6. CODING STANDARDS [REQUIRED]
 
-### 6.1 Naming Conventions
+### 6.1 Code Style
 
-**Files:**
-- Components: [e.g., PascalCase.tsx, kebab-case.component.ts]
-- Utilities: [e.g., camelCase.ts, snake_case.py]
-- Tests: [e.g., ComponentName.test.ts, test_function_name.py]
+**Style Guide:**
+[e.g., "Airbnb JavaScript Style Guide", "PEP 8 for Python", "Google Java Style Guide"]
 
-**Variables:**
-- Constants: [e.g., UPPER_SNAKE_CASE, ALL_CAPS]
-- Local variables: [e.g., camelCase, snake_case]
-- Private members: [e.g., _prefixedCamelCase, __private]
+**Linter & Formatter:**
+- Linter: [Tool + config file location]
+- Formatter: [Tool + config file location]
+- Auto-format on save: [Yes/No]
 
-**Functions/Methods:**
-- Public: [e.g., camelCase, snake_case]
-- Private: [e.g., _prefixedCamelCase]
-- Async functions: [Prefix convention, if any]
+**Project-Specific Naming Exceptions:**
+[Only document deviations from the style guide. If following the guide completely, write "None - following [style guide] conventions"]
 
-**Classes:**
-- [e.g., PascalCase for all languages]
-- Interfaces: [e.g., IPascalCase, PascalCase]
-- Abstract classes: [Prefix/suffix convention]
+### 6.2 File Organization
 
-**Database:**
-- Tables: [e.g., snake_case, PascalCase]
-- Columns: [e.g., snake_case, camelCase]
-- Indexes: [Naming pattern]
-- Foreign keys: [Naming pattern]
+**Structure Principle:**
+[e.g., "Group by feature, not by file type" / "Layer-based architecture"]
 
-### 6.2 File/Folder Structure
+**Organization Rules:**
+- [Rule 1, e.g., "Shared code in common/ or shared/"]
+- [Rule 2, e.g., "Maximum 3 levels of nesting"]
+- [Rule 3]
 
-**Frontend Structure (if applicable):**
+**Folder Structure:**
+
+Example using vertical slice architecture (organized by feature):
+
 ```
-src/
-├── components/
-│   ├── common/
-│   ├── layout/
-│   └── features/
-├── pages/
-├── services/
-├── hooks/
-├── utils/
-├── types/
-└── [other folders]
-```
-
-**Backend Structure (if applicable):**
-```
-src/
-├── api/
-│   ├── routes/
-│   ├── controllers/
-│   └── middleware/
-├── domain/
-│   ├── models/
-│   └── services/
-├── infrastructure/
-│   ├── database/
-│   └── external/
-└── [other folders]
+/
+├── src/
+│   ├── features/
+│   │   ├── authentication/
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.service.ts
+│   │   │   ├── auth.repository.ts
+│   │   │   ├── auth.types.ts
+│   │   │   └── auth.test.ts
+│   │   ├── users/
+│   │   │   ├── user.controller.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── user.repository.ts
+│   │   │   └── user.test.ts
+│   │   └── orders/
+│   │       ├── order.controller.ts
+│   │       ├── order.service.ts
+│   │       └── order.test.ts
+│   ├── shared/
+│   │   ├── config/
+│   │   ├── utils/
+│   │   └── types/
+│   └── infrastructure/
+│       ├── database/
+│       └── http/
+├── tests/
+│   └── integration/
+├── docs/
+└── config/
 ```
 
-**Folder Organization Rules:**
-- [e.g., "Group by feature, not by file type"]
-- [e.g., "Shared code goes in common/ or shared/"]
-- [e.g., "Maximum 3 levels of nesting"]
+**Key Directories:**
+- `src/features/`: Each feature is a self-contained vertical slice with all layers (controller, service, repository, tests)
+- `src/shared/`: Code shared across multiple features (utilities, types, common logic)
+- `src/infrastructure/`: Technical infrastructure (database, HTTP, external integrations)
+- `tests/integration/`: Cross-feature integration and E2E tests
 
-### 6.3 Code Style
+**Alternative:** For horizontal layered architecture, organize by technical layer instead (e.g., `/controllers`, `/services`, `/repositories`). Choose based on your architecture pattern (§2.1).
 
-**Style Guide:**  
-[Reference to official style guide being followed, e.g., "Airbnb JavaScript Style Guide", "PEP 8 for Python", "Google Java Style Guide"]
+### 6.3 Documentation Requirements
 
-**Linter Configuration:**  
-- Tool: [e.g., ESLint, Pylint, RuboCop]
-- Config file: [Path to config file, e.g., .eslintrc.json]
-- Rules enabled/disabled: [Notable customizations]
+**Code:** Comment WHY not WHAT | Explain non-obvious decisions | Clear naming over comments
+**Functions/Methods:** Required for public APIs & complex algorithms | Format: [JSDoc/docstrings/XML comments] | Include: description, params, return, exceptions
+**Modules:** Every module/package needs README (purpose, install, usage examples)
+**Architecture:** Maintained in this design.md + ADRs | Update on significant changes
 
-**Formatter:**  
-- Tool: [e.g., Prettier, Black, Gofmt]
-- Config file: [Path to config file]
-- Auto-format on save: Yes/No
+**API Documentation (if applicable):**
+Format: [OpenAPI/Swagger 3.0/GraphQL schema] | Location: [/docs/api or Swagger UI] | Content: All endpoints (request/response examples, auth, errors, rate limits) | Auto-gen: [Yes/No - Tool] | Versioning: [Method]
 
-**Language-Specific Conventions:**
+**Operational Documentation:**
 
-**JavaScript/TypeScript:**
-- Use semicolons: Yes/No
-- Quote style: Single/Double
-- Trailing commas: Required in multiline
-- Arrow functions: Preferred over function keyword
-- [Other conventions]
+| Type | Location | Content | Update | Owner |
+|------|----------|---------|--------|-------|
+| Runbooks | [/docs/runbooks, Wiki] | Deployment, rollback, DB migration, backup/restore, certs, scaling | [With every change] | [DevOps, Tech Lead] |
+| Troubleshooting | [/docs/troubleshooting] | Error messages/solutions, performance diagnosis, integration failures, workarounds (format: Problem→Symptoms→Diagnosis→Solution) | [As issues discovered] | [Team] |
+| Onboarding | [/docs/onboarding] | Dev setup (prereqs, local setup, tests, deploy, common issues), Architecture overview (link to design.md, optional video, key concepts), Contributing (code review, PRs, standards, testing) | [Quarterly review] | [Tech Lead] |
 
-**Python:**
-- Line length: [e.g., 88 characters (Black default), 79 characters (PEP 8)]
-- Type hints: Required for all public functions
-- Docstrings: [Format - Google, NumPy, reStructuredText]
-- [Other conventions]
+### 6.4 Accessibility Standards (if applicable)
 
-**[Other Language]:**
-[Language-specific conventions]
+> **Note:** Skip this section if project has no user interface. Required for web, mobile, and desktop applications.
 
-### 6.4 Documentation Standards
+**Compliance Level:**
+- [ ] WCAG 2.1 Level A (minimum legal requirement)
+- [ ] WCAG 2.1 Level AA (recommended, required for government/enterprise)
+- [ ] WCAG 2.1 Level AAA (aspirational, rarely required)
+- [ ] ADA compliance (US)
+- [ ] Section 508 (US federal)
+- [ ] EN 301 549 (EU)
 
-**Code Comments:**
-- When to comment: [e.g., "Comment WHY, not WHAT. Explain non-obvious decisions."]
-- When NOT to comment: [e.g., "Don't comment obvious code. Use clear naming instead."]
+**Accessibility Requirements:**
 
-**Function/Method Documentation:**
-- Required for: [e.g., "All public APIs, complex algorithms"]
-- Format: [e.g., JSDoc, Python docstrings, XML comments]
-- Must include: [e.g., "Description, parameters, return value, exceptions"]
+**Keyboard Navigation:**
+- All interactive elements must be keyboard accessible
+- Visible focus indicators on all focusable elements
+- Logical tab order
+- Keyboard shortcuts documented
 
-**Example:**
-```
-/**
- * Calculates the total cost including tax and shipping.
- * 
- * @param subtotal - Base price before tax and shipping
- * @param taxRate - Tax rate as decimal (e.g., 0.08 for 8%)
- * @param shippingCost - Fixed shipping cost
- * @returns Total cost rounded to 2 decimal places
- * @throws Error if subtotal or taxRate is negative
- */
-```
+**Screen Reader Support:**
+- Semantic HTML (headings, landmarks, lists)
+- ARIA labels for interactive elements
+- ARIA live regions for dynamic content
+- Alt text for all images
 
-**README Requirements:**
-- Every module/package must have a README
-- Must include: Purpose, installation, usage examples, API reference
-- Format: Markdown
+**Visual Accessibility:**
+- Color contrast ratio: ≥ 4.5:1 for normal text, ≥ 3:1 for large text
+- Text resizable up to 200% without loss of functionality
+- No information conveyed by color alone
+- Support for high contrast mode
 
-**Architecture Documentation:**
-- Maintained in: [e.g., "This design.md file + ADRs"]
-- Updated when: [e.g., "When making significant architectural changes"]
+**Testing & Validation:**
+- **Tools:** [e.g., axe DevTools, WAVE, Lighthouse accessibility audit]
+- **Screen Readers Tested:** [e.g., NVDA, JAWS, VoiceOver]
+- **Manual Testing:** [Keyboard-only navigation, screen reader walkthroughs]
+- **Frequency:** [e.g., Every PR for critical flows, quarterly full audit]
+
+**Resources:**
+- WCAG Quick Reference: https://www.w3.org/WAI/WCAG21/quickref/
+- Accessibility checklist: [Link to internal checklist]
+
+### 6.5 Internationalization (if applicable)
+
+> **Note:** Skip this section if product supports only one language/locale.
+
+**Supported Locales:**
+- **Launch:** [e.g., en-US, es-ES, fr-FR]
+- **Planned:** [e.g., de-DE, ja-JP, zh-CN]
+
+**Translation Management:**
+- **Approach:** [e.g., Key-based (i18next), ICU MessageFormat, gettext]
+- **Storage:** [e.g., JSON files, PO files, Translation Management System]
+- **Fallback Language:** [e.g., en-US]
+- **Who translates:** [Professional translators / Community / Machine translation + review]
+
+**Localization Requirements:**
+
+**Text:**
+- All user-facing strings externalized (no hardcoded text)
+- Support for pluralization rules (1 item vs 2 items)
+- Support for gendered text (if applicable to target languages)
+- Right-to-left (RTL) languages: [Supported/Not supported]
+
+**Formats:**
+- **Dates:** [Library + format, e.g., date-fns with locale-specific formats]
+- **Numbers:** [e.g., 1,234.56 (US) vs 1.234,56 (EU)]
+- **Currency:** [e.g., $1,234.56 vs 1.234,56 €]
+- **Time zones:** [How time zones are handled]
+
+**Content:**
+- Images with text: [Strategy - separate images per locale / text overlays]
+- Legal/terms of service: [Per-country versions required]
+- Dynamic content length: [UI designed to handle text expansion (German ~30% longer than English)]
+
+**Testing:**
+- **Pseudo-localization:** [Yes/No] - Test with pseudo-translated strings (e.g., [Ṗśéûðö Ṫéẋţ])
+- **Translation testing:** [Process for validating translations]
+- **RTL testing:** [If applicable]
 
 ---
 
@@ -622,161 +672,117 @@ src/
 
 ### 7.1 Authentication & Authorization
 
-**Authentication Method:**  
-- [e.g., JWT with RS256, OAuth 2.0, SAML, Session-based]
+**Authentication Method:**
+[e.g., JWT with RS256, OAuth 2.0, SAML, Session-based]
 
 **Token/Session Management:**
-- Token expiration: [e.g., Access tokens: 15 minutes, Refresh tokens: 7 days]
-- Storage: [e.g., "Access tokens in memory, refresh tokens in httpOnly cookies"]
-- Rotation: [Policy for rotating secrets/keys]
+- Expiration: [e.g., Access: 15 min, Refresh: 7 days]
+- Storage: [e.g., "Access in memory, refresh in httpOnly cookies"]
+- Rotation: [Key rotation policy]
 
-**Authorization Model:**  
-- [e.g., RBAC (Role-Based Access Control), ABAC (Attribute-Based), Claims-based]
+**Authorization Model:**
+[e.g., RBAC / ABAC / Claims-based]
 
 **Roles & Permissions:**
 
 | Role | Permissions | Description |
 |------|-------------|-------------|
-| [Role 1] | [List of permissions] | [Who has this role] |
-| [Role 2] | [List of permissions] | [Who has this role] |
-
-**Enforcement:**
-- API level: [How authorization is enforced]
-- UI level: [How features are hidden/disabled]
-- Database level: [Row-level security, if applicable]
+| [Role 1] | [Key permissions] | [Who has this role] |
+| [Role 2] | [Key permissions] | [Who has this role] |
 
 ### 7.2 Data Protection
 
-**Data Classification:**
-
-| Classification | Examples | Protection Required |
-|----------------|----------|---------------------|
-| **Public** | Marketing content, public docs | None |
-| **Internal** | Employee directory, internal docs | Authentication required |
-| **Confidential** | Customer data, financial records | Encryption + access control |
-| **Restricted** | Passwords, payment details, PII | Encryption + strict access + audit logging |
-
 **Encryption:**
-- **At Rest:** [Algorithm, key management]
-  - Database: [Encryption method]
-  - File storage: [Encryption method]
-  - Backups: [Encryption method]
-
-- **In Transit:** [TLS version, cipher suites]
-  - API calls: TLS 1.3 minimum
-  - Database connections: [Encrypted? Certificate validation?]
-  - Internal service communication: [Encrypted?]
+- **In Transit:** TLS 1.3 minimum for all external communication
+- **At Rest:** [Algorithm + key management solution, e.g., "AES-256 with Azure Key Vault"]
 
 **Sensitive Data Handling:**
-- PII (Personally Identifiable Information): [Storage policy, retention, deletion]
-- Payment information: [Never stored / Tokenized / Encrypted]
-- Passwords: [Hashing algorithm, e.g., bcrypt with cost factor 12]
-- API keys/secrets: [Storage method, rotation policy]
+- **PII:** [Storage policy, retention, deletion requirements]
+- **Passwords:** [Hashing algorithm, e.g., "bcrypt cost factor 12"]
+- **Payment Info:** [Never stored / Tokenized / Encrypted]
+- **API Keys/Secrets:** [Storage method, rotation frequency]
 
 ### 7.3 API Security
 
-**Rate Limiting:**
-- Authenticated users: [X] requests per [timeframe]
-- Unauthenticated users: [X] requests per [timeframe]
-- By IP: [X] requests per [timeframe]
-
 **Input Validation:**
-- Validate all inputs against strict schemas
+- Validate all inputs against strict schemas (allowlists only)
 - Reject requests with unexpected fields
-- Sanitize all user input before processing
-- Use allowlists, not denylists
+- Sanitize user input before processing
 
-**CORS (Cross-Origin Resource Sharing):**
-- Allowed origins: [List of allowed domains]
-- Credentials: Allowed/Not allowed
-- Exposed headers: [List]
+**Rate Limiting:**
+- Authenticated: [X] requests per [timeframe]
+- Unauthenticated: [X] requests per [timeframe]
 
-**API Versioning:**
-- Strategy: [e.g., URL versioning /api/v1/, header-based]
-- Deprecation policy: [How old versions are sunset]
+**CORS Policy:**
+[List allowed origins or state policy]
 
 **Security Headers:**
-- Content-Security-Policy: [Policy]
-- X-Frame-Options: DENY
-- X-Content-Type-Options: nosniff
-- Strict-Transport-Security: [Policy]
-- [Other headers]
+- Content-Security-Policy, X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Strict-Transport-Security
+- [Additional headers]
 
 ### 7.4 Secrets Management
 
-**Secrets Storage:**
-- Development: [e.g., .env file (gitignored), local vault]
-- Testing/Staging/Production: [e.g., Azure Key Vault, AWS Secrets Manager, HashiCorp Vault]
+**Storage:**
+- Development: [e.g., .env (gitignored)]
+- Production: [e.g., Azure Key Vault, AWS Secrets Manager]
 
-**Secret Rotation:**
-- Frequency: [e.g., Every 90 days for production, annually for dev]
-- Process: [How secrets are rotated]
-
-**Access Control:**
-- Who can view secrets: [Roles/individuals]
-- Who can modify secrets: [Roles/individuals]
-- Audit logging: Required/Not required
-
-**Never Commit:**
-- Secrets, API keys, passwords
-- Private keys, certificates
-- Database connection strings with credentials
-- OAuth client secrets
+**Rotation:**
+[Frequency and process]
 
 **Detection:**
-- Tool: [e.g., git-secrets, truffleHog, GitHub secret scanning]
-- Pre-commit hook: Yes/No
+- Tool: [e.g., git-secrets, truffleHog]
+- Pre-commit hook: [Yes/No]
+
+**Never commit:** Secrets, API keys, passwords, private keys, credentials
 
 ---
 
 ## 8. PERFORMANCE STANDARDS [REQUIRED]
 
-### 8.1 Performance Targets (SLIs/SLOs)
+### 8.1 Performance Targets (SLOs)
 
-**Service Level Indicators (SLIs):**
+| Metric | Target | Priority |
+|--------|--------|----------|
+| **Uptime** | 99.9% | Critical |
+| **API Response (p95)** | < 500ms | Critical |
+| **Page Load (FCP)** | < 2s | High |
+| **Error Rate** | < 0.1% | Critical |
+| [Metric] | [Target] | [Priority] |
 
-| Metric | Target (SLO) | Measurement Method | Priority |
-|--------|--------------|-------------------|----------|
-| **Uptime** | 99.9% | Uptime monitoring service | Critical |
-| **API Response Time** | < 500ms (p95) | APM tool | Critical |
-| **Page Load Time** | < 2s (First Contentful Paint) | Real User Monitoring | High |
-| **Database Query Time** | < 100ms (avg) | Query performance logs | High |
-| **Error Rate** | < 0.1% of requests | Error tracking service | Critical |
-| [Metric] | [Target] | [Method] | [Priority] |
+**Measurement:**
+[APM tool, uptime monitoring service, RUM tool]
 
-**Latency Budget:**
-- Frontend rendering: < [X] ms
-- API processing: < [X] ms
-- Database queries: < [X] ms
-- External API calls: < [X] ms
-- Total end-to-end: < [X] ms
+### 8.2 Required Optimizations
 
-### 8.2 Optimization Requirements
+**Database:**
+- All queries must have appropriate indexes
+- N+1 pattern prohibited (use joins/batch loading)
+- Connection pooling required
+- Caching for expensive read operations
 
-**Required Optimizations:**
+**Frontend (if applicable):**
+- Code splitting for routes/large components
+- Lazy loading for images
+- CDN for static assets
+- Minification and compression
 
-1. **Database:**
-   - All queries must have appropriate indexes
-   - N+1 query pattern is prohibited (use joins or batch loading)
-   - Connection pooling required
-   - Query result caching for expensive read operations
+**Mobile (if applicable):**
+- App bundle size: < [X] MB (download size)
+- Image optimization: WebP format, appropriate resolutions for device
+- Code minification and tree shaking
+- Lazy loading of non-critical modules
+- Network request minimization (batching, caching)
+- Background task optimization (battery efficiency)
 
-2. **Frontend:**
-   - Code splitting for routes/large components
-   - Lazy loading for images and below-the-fold content
-   - Minification and compression enabled
-   - CDN for static assets
+**API:**
+- Response compression (gzip/brotli)
+- Pagination for list endpoints (max [X] items per page)
+- Server-side filtering/sorting
+- Field selection
 
-3. **API:**
-   - Response compression (gzip/brotli)
-   - Pagination required for list endpoints (max [X] items per page)
-   - Filtering and sorting on server-side, not client-side
-   - Field selection (return only requested fields)
-
-4. **Background Jobs:**
-   - Long-running operations (> [X] seconds) must be asynchronous
-   - Progress tracking for jobs > [X] minutes
-   - Job retry mechanism with exponential backoff
+**Background Jobs:**
+- Operations > [X]s must be asynchronous
+- Retry mechanism with exponential backoff
 
 ### 8.3 Caching Strategy
 
@@ -784,53 +790,65 @@ src/
 
 | Layer | Technology | TTL | Use Cases |
 |-------|-----------|-----|-----------|
-| **Browser Cache** | HTTP headers | [Time] | Static assets, images |
-| **CDN** | [e.g., CloudFront] | [Time] | Static files, API responses |
-| **Application Cache** | [e.g., Redis] | [Time] | Session data, computed results |
-| **Database Cache** | [DB-specific] | [Time] | Query results |
+| Browser/CDN | [e.g., CloudFront, Service Worker] | [1-24h] | Static assets, public API responses |
+| Application | [e.g., Redis, Memcached] | [5-60min] | Session data, API responses, computed results |
+| Database | [e.g., Query cache, materialized views] | [Varies] | Frequently queried data, aggregations |
 
-**Cache Invalidation Strategy:**
-- [e.g., "Time-based expiration", "Event-based invalidation", "Manual purge"]
+**Patterns:** Cache-Aside (read-through), Write-Through, Write-Behind, Refresh-Ahead
+**Invalidation:** TTL-based (< 5min / 5-60min / > 1h), Event-based (on data updates), Manual (admin tools)
+**Key Design:** Namespace format `{service}:{entity}:{id}`, include schema version, parameterize queries
 
-**What to Cache:**
-- [e.g., "Reference data (rarely changes)"]
-- [e.g., "Expensive computations"]
-- [e.g., "Aggregated data"]
+**Cache Guidelines:**
+- ✅ **Do cache:** Reference data, expensive computations, external API responses, rendered content
+- ❌ **Don't cache:** PII/passwords, rapidly changing data, strict consistency requirements
 
-**What NOT to Cache:**
-- [e.g., "User-specific sensitive data"]
-- [e.g., "Rapidly changing data"]
-- [e.g., "Large binary files"]
+**Metrics:** Hit rate ≥ [X]%, latency < [X]ms, monitor eviction rate & memory usage
 
 ### 8.4 Monitoring & Alerting
 
-**Monitoring Tools:**
-- Application Performance Monitoring (APM): [Tool name]
-- Infrastructure monitoring: [Tool name]
-- Log aggregation: [Tool name]
-- Uptime monitoring: [Tool name]
-- Real User Monitoring (RUM): [Tool name]
-
-**Key Metrics to Track:**
-- Request rate (requests per second)
-- Error rate (percentage)
-- Response time (p50, p95, p99)
-- CPU usage
-- Memory usage
-- Database connection pool utilization
-- Queue depth (if applicable)
+**Tools:**
+- APM: [Tool]
+- Logs: [Tool]
+- Uptime: [Tool]
 
 **Alerting Rules:**
 
 | Alert | Condition | Severity | Action |
 |-------|-----------|----------|--------|
-| **High Error Rate** | Error rate > 1% for 5 minutes | Critical | Page on-call engineer |
-| **Slow Response Time** | p95 > 2s for 10 minutes | High | Slack notification |
-| **Service Down** | Uptime check fails 3 times | Critical | Page on-call engineer |
-| [Alert] | [Condition] | [Severity] | [Action] |
+| [Alert name] | [Threshold + duration] | [Critical/High/Medium] | [Response action] |
 
-**On-Call Rotation:**
-- [Describe on-call schedule and escalation policy]
+### 8.5 Disaster Recovery & Business Continuity
+
+**Recovery Objectives:**
+
+| Metric | Target | Notes |
+|--------|--------|-------|
+| **RTO** (Recovery Time Objective) | [X hours/minutes] | Max time to restore service |
+| **RPO** (Recovery Point Objective) | [X hours/minutes] | Max acceptable data loss |
+| **MTTR** (Mean Time To Recovery) | [X hours] | Average recovery time |
+
+**Backup Strategy:**
+
+| Component | Frequency | Retention | Storage | Encryption | Test Frequency |
+|-----------|-----------|-----------|---------|------------|----------------|
+| Database | [Full daily, incremental 6h] | [30d hot, 1y cold] | [AWS S3 cross-region] | [Yes/Method] | [Monthly restore] |
+| Config files | [On change] | [90 days] | [Git + backup service] | [Yes/Method] | [Quarterly] |
+| User files/media | [Continuous/Daily] | [Per compliance req] | [Cloud storage] | [Yes/Method] | [Quarterly] |
+| Logs | [Real-time] | [30-90 days] | [Log aggregation service] | [Yes/Method] | [N/A] |
+
+**Disaster Scenarios & Response:**
+
+| Scenario | Detection | Response | Recovery Time |
+|----------|-----------|----------|---------------|
+| Database failure | [Health checks, alerts] | [Failover to replica, restore from backup] | [RTO target] |
+| Region/DC outage | [Multi-region health checks] | [DNS failover to secondary region] | [X minutes/hours] |
+| Data corruption/Ransomware | [Integrity checks, anomaly detection] | [Isolate, restore from clean backup] | [RPO + restore time] |
+
+**Failover & High Availability:**
+Multi-region: [Yes/No - active-active or active-passive] | Load Balancer: [Tool + health checks] | DB Replication: [Sync/Async, X replicas] | Auto-failover: [Enabled/conditions]
+
+**Business Continuity Plan:**
+Communication: [User notification method] | Escalation: [On-call → Manager → Executive] | Runbooks: [Location of detailed procedures]
 
 ---
 
@@ -838,40 +856,14 @@ src/
 
 ### 9.1 Testing Levels
 
-**Test Pyramid:**
+**Test Pyramid:** More unit tests (fast, isolated) → Fewer integration tests (slower, integrated) → Minimal E2E tests (slowest, full system). Ratios vary by project type.
 
-```
-      /\
-     /  \    E2E Tests (5-10%)
-    /____\   
-   /      \  Integration Tests (20-30%)
-  /________\ 
- /          \ Unit Tests (60-70%)
-/____________\
-```
-
-**Unit Tests:**
-- **Scope:** Individual functions, methods, classes
-- **Isolation:** Mocked dependencies
-- **Coverage Target:** ≥ [X]% of code
-- **Run Frequency:** On every commit
-
-**Integration Tests:**
-- **Scope:** Multiple components working together
-- **Isolation:** Real dependencies (database, external APIs may be mocked)
-- **Coverage Target:** All critical workflows
-- **Run Frequency:** On PR, before merge
-
-**End-to-End (E2E) Tests:**
-- **Scope:** Complete user workflows through UI
-- **Isolation:** Full system (staging environment)
-- **Coverage Target:** Critical user journeys only
-- **Run Frequency:** Nightly, before production deployment
-
-**Performance Tests:**
-- **Scope:** Load testing, stress testing, spike testing
-- **Tool:** [e.g., k6, JMeter, Gatling]
-- **Frequency:** [e.g., Weekly on staging, before major releases]
+| Test Level | Scope | Isolation | Coverage Target | Run Frequency | Characteristics |
+|------------|-------|-----------|-----------------|---------------|-----------------|
+| **Unit** | Individual functions, methods, classes | Mocked dependencies | ≥ [X]% (typically 70-90%) | On every commit | Fast (<1s), isolated, deterministic |
+| **Integration** | Multiple components together | Real dependencies (APIs may be mocked) | All critical workflows | On PR, before merge | Slower (seconds), test boundaries |
+| **E2E** | Complete user workflows through UI | Full system (staging env) | Critical user journeys only | Nightly, before prod deploy | Slowest (minutes), brittle |
+| **Performance** | Load, stress, spike testing | Production-like environment | [Tool: k6/JMeter/Gatling] | [Weekly on staging, before releases] | Long-running, resource-intensive |
 
 ### 9.2 Coverage Requirements
 
@@ -914,6 +906,23 @@ src/
 - DAST: [e.g., OWASP ZAP, Burp Suite]
 - Dependency scanning: [e.g., Snyk, Dependabot, npm audit]
 
+**MCP Testing (if applicable):**
+
+> **Note:** Only applicable if project is an MCP Server (§1.1) or consumes MCPs (§10.5).
+
+**For MCP Servers (if this project IS an MCP Server):**
+- **Tool Testing:** Unit tests for each MCP tool implementation
+- **Resource Testing:** Tests for resource providers
+- **Protocol Testing:** MCP protocol compliance tests
+- **Integration Testing:** Test tools against real external systems (APIs, DBs)
+- **Mock Client:** Test MCP server with mock MCP client
+
+**For MCP Consumers (if this project USES MCPs):**
+- **Mock MCP Servers:** Mock/stub MCP servers for unit tests
+- **Integration Tests:** Test against real MCP servers in test environment
+- **Failure Scenarios:** Test behavior when MCP unavailable
+- **Tool:** [e.g., MCP test utilities, custom mocks]
+
 ### 9.4 CI/CD Integration
 
 **Automated Test Execution:**
@@ -955,6 +964,8 @@ src/
 ## 10. EXTERNAL INTEGRATIONS [OPTIONAL]
 
 > **Note:** This section is optional. Include it if your system integrates with external APIs, services, or systems. Remove this section if not applicable.
+>
+> **Scope:** This section covers **external service integrations** (third-party APIs, SaaS platforms, cloud services). For **code-level dependencies** (libraries/packages), see §3.5 Key Dependencies.
 
 ### 10.1 Third-party APIs
 
@@ -1028,6 +1039,41 @@ src/
 - Primary: [Service 1]
 - Backup: [Service 2] (if primary fails)
 - Switching criteria: [When to switch]
+
+### 10.5 Model Context Protocol (MCP) Servers
+
+> **Purpose:** Document MCP servers that **this project consumes** to provide AI assistants with access to external tools, data sources, and capabilities.
+>
+> **Note:** If **this project IS an MCP Server** (see §1.1 Project Type), document the tools/resources it exposes in §2 Architecture instead. This section (§10.5) is specifically for MCPs that your project integrates with as a client/consumer.
+
+**MCP Configuration:**
+Protocol: [2024-11-05] | Connection: [stdio/SSE/HTTP] | Config File: [path/to/config.json] | Runtime: [Claude Desktop/Custom Client/VS Code]
+
+**MCP Servers in Use:**
+
+| Server | Provider | Purpose | Protocol | Key Tools | Auth Method | Critical | Fallback Strategy |
+|--------|----------|---------|----------|-----------|-------------|----------|-------------------|
+| [Name 1] | [Official/Community/Internal] | [Capabilities provided] | [stdio/SSE/HTTP] | [tool_1, tool_2] | [API key/.env/OAuth] | [Yes/No] | [Graceful degradation/Error handling] |
+| [Name 2] | [Provider] | [Purpose] | [Protocol] | [Tools] | [Auth] | [Yes/No] | [Fallback] |
+
+**Configuration Example:**
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "command": "[start command]",
+      "args": ["[arg1]"],
+      "env": {"API_KEY": "[source]"}
+    }
+  }
+}
+```
+
+**Common MCP Examples:** Filesystem (read/write files), GitHub (PRs/issues), PostgreSQL (queries/schema), Slack (messages), Google Drive (docs)
+
+**Security & Reliability:**
+- **Security:** Least privilege | Credential isolation | Audit logging | Rate limiting | Response validation
+- **Failure Handling:** Timeout: [X]s | Retries: [N attempts with backoff] | Degraded mode: [behavior when unavailable] | Monitoring: [availability/performance tracking]
 
 ---
 
@@ -1119,9 +1165,11 @@ Example: "We will use PostgreSQL as our primary database instead of MongoDB."
 
 ---
 
-## Example ADRs
+### Example ADRs
 
-### ADR-001: Use JWT with RS256 for Authentication
+> **Note:** This is a complete example showing the ADR format in action. Remove or replace this subsection in your actual design.md once you've created your own ADRs.
+
+#### ADR-001: Use JWT with RS256 for Authentication
 
 **Date:** 2024-01-15  
 **Status:** Accepted  
@@ -1213,21 +1261,94 @@ Once this Design document is approved:
 
 ---
 
-## APPROVAL
+## DOCUMENT EVOLUTION STRATEGY
 
-| Role | Name | Signature | Date | Notes |
-|------|------|-----------|------|-------|
-| Technical Lead | | | | |
-| Software Architect | | | | |
-| Security Lead | | | | |
-| Engineering Manager | | | | |
-| [Stakeholder] | | | | |
+> **Philosophy:** Design.md is a living document that evolves with your system, but changes should be deliberate and rare. Most day-to-day decisions don't require updates.
+
+### When to Update This Document
+
+**✅ UPDATE for these changes:**
+- **Major architectural decisions** → Add new ADR in §11
+- **Tech stack changes** → Update §3 (language, framework, database version upgrades)
+- **New architectural patterns** → Update §2.1 Architecture Pattern
+- **Security policy changes** → Update §7 Security Guidelines
+- **New non-negotiable rules** → Add to §5.3
+- **Infrastructure changes** → Update §3.4 (cloud provider, CI/CD platform)
+- **New external integrations** → Add to §10
+
+**❌ DON'T UPDATE for these changes:**
+- Individual bug fixes or features (those go in commit messages)
+- Temporary workarounds (document in code comments)
+- Team member changes (not relevant to architecture)
+- Minor dependency version bumps (unless they change approach)
+
+### How to Update
+
+**1. Increment Version:**
+- Update "Version" in Document Information metadata
+- Use semantic versioning: Major.Minor (e.g., 1.0 → 1.1 for minor, 1.0 → 2.0 for major)
+
+**2. Update "Last Updated" Date**
+
+**3. Document Changes:**
+- **For ADRs:** Add new ADR with sequential number (never edit existing ADRs)
+- **For other sections:** Edit in place, use git history to track changes
+- **For deprecations:** Mark as "Deprecated" and reference superseding ADR
+
+**4. Communicate Changes:**
+- Share update in team channel/meeting
+- Review changes in next architecture review
+- Ensure all team members read updated sections
+
+### Deprecating Decisions
+
+**When an architectural decision changes:**
+1. Create new ADR superseding old one
+2. Update old ADR status: "Status: Superseded by ADR-XXX"
+3. Update relevant sections (§2, §3, etc.) to reflect new decision
+4. Document migration plan if needed
+
+**Example:**
+```markdown
+### ADR-005: Use PostgreSQL instead of MongoDB
+
+**Status:** Superseded by ADR-012
+**Date:** 2024-01-15
+
+[Original ADR content...]
 
 ---
 
-## CHANGE LOG
+### ADR-012: Migrate from PostgreSQL to distributed SQL (CockroachDB)
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | [Date] | [Name] | Initial version |
-| 1.1 | [Date] | [Name] | [Description of changes] |
+**Status:** Accepted
+**Date:** 2024-06-20
+**Supersedes:** ADR-005
+
+#### Context
+System has grown to require multi-region deployment...
+```
+
+### Version Control Best Practices
+
+- **Commit message format:** `docs(design): [brief description of change]`
+- **PR reviews:** Architecture changes require approval from tech lead
+- **Git tags:** Tag major versions (e.g., `design-v2.0`)
+- **Changelog:** Not needed (git history serves as changelog)
+
+### Annual Architecture Review
+
+**Schedule:** [e.g., Quarterly, Semi-annually]
+
+**Review checklist:**
+- [ ] Are all ADRs still relevant?
+- [ ] Have tech stack versions been updated?
+- [ ] Do trade-offs (§5.2) still make sense?
+- [ ] Are non-negotiable rules (§5.3) still enforced?
+- [ ] Do performance targets (§8.1) still align with business needs?
+- [ ] Are disaster recovery procedures (§8.5) tested and up-to-date?
+
+---
+
+
+
