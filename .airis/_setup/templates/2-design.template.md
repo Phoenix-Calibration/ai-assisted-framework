@@ -7,6 +7,19 @@
 
 ---
 
+## Document Information
+
+| Field | Value |
+|-------|-------|
+| **Project Name** | [Project name from Scope.md] |
+| **Version** | 1.0 |
+| **Last Updated** | [Date] |
+| **Author(s)** | [Name(s)] |
+| **Status** | Draft / In Review / Approved |
+| **Based On** | Scope.md v[X.X] |
+
+---
+
 ## ⚠️ IMPORTANT: HOW TO USE THIS DOCUMENT
 
 ### AI Presentation Order (When Generating Code)
@@ -56,19 +69,6 @@ Prefer visual explanation for complex concepts, multi-step processes, and compon
 9. [TESTING STRATEGY](#9-testing-strategy) [REQUIRED]
 10. [EXTERNAL INTEGRATIONS](#10-external-integrations) [OPTIONAL]
 11. [ARCHITECTURE DECISION RECORDS (ADRs)](#11-architecture-decision-records-adrs) [REQUIRED]
-
----
-
-## Document Information
-
-| Field | Value |
-|-------|-------|
-| **Project Name** | [Project name from Scope.md] |
-| **Version** | 1.0 |
-| **Last Updated** | [Date] |
-| **Author(s)** | [Name(s)] |
-| **Status** | Draft / In Review / Approved |
-| **Based On** | Scope.md v[X.X] |
 
 ---
 
