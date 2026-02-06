@@ -55,11 +55,6 @@ Prefer visual explanation for complex concepts, multi-step processes, and compon
 8. [PERFORMANCE STANDARDS](#8-performance-standards) [REQUIRED]
 9. [TESTING STRATEGY](#9-testing-strategy) [REQUIRED]
 10. [EXTERNAL INTEGRATIONS](#10-external-integrations) [OPTIONAL]
-    - 10.1 [Third-party APIs](#101-third-party-apis)
-    - 10.2 [External Services](#102-external-services)
-    - 10.3 [Integration Patterns](#103-integration-patterns)
-    - 10.4 [Dependency Constraints](#104-dependency-constraints)
-    - 10.5 [Model Context Protocol (MCP) Servers](#105-model-context-protocol-mcp-servers)
 11. [ARCHITECTURE DECISION RECORDS (ADRs)](#11-architecture-decision-records-adrs) [REQUIRED]
 
 ---
