@@ -7,7 +7,7 @@ This file will contain all development tasks derived from the strategy documents
 
 ## How to Create
 
-1. First complete: design.md, scope.md, and requirements.md
+1. First complete: design.md and scope.md (features in §4)
 2. Use the prompt: Load `_setup/prompts/5-tracker.prompt.md` and ask Claude to generate Tracker.md
 
 ## What Goes Here

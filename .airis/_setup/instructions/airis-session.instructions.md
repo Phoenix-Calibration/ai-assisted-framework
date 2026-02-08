@@ -3,7 +3,7 @@
 **Version:** 1.0  
 **Last Updated:** January 2026  
 **Purpose:** Guide for session-based development with AIris  
-**Prerequisites:** Strategic docs created (scope.md, requirements.md, design.md), tool integration complete
+**Prerequisites:** Strategic docs created (scope.md, design.md), tool integration complete
 
 ---
 
@@ -34,7 +34,7 @@ You are guiding the user through session-based development. Your role changes ac
 - Remind user about archiving completed TODO.md
 
 **Reference these files:**
-- Strategic docs: design.md (constraints), scope.md (boundaries), requirements.md (features)
+- Strategic docs: design.md (constraints), scope.md (boundaries + features §4)
 - Session state: handoff.md (previous session context)
 - Task registry: tracker.md (current task status)
 - This guide: For session process questions
@@ -44,7 +44,7 @@ You are guiding the user through session-based development. Your role changes ac
 ## Overview
 
 ### You're Here If...
-- ✅ You have scope.md, requirements.md, design.md created
+- ✅ You have scope.md and design.md created
 - ✅ You have CLAUDE.md or AGENTS.md set up for your AI tool
 - ✅ You're ready to start development
 - ✅ You want to understand the session workflow
@@ -169,7 +169,7 @@ AI reads documents progressively based on need:
 2. **design.md** (technical constraints - non-negotiable)
 
 **Read Selectively:**
-3. **requirements.md** (only features in session tasks)
+3. **Scope.md §4 Features** (only features related to session tasks)
 4. **tracker.md** (only session tasks + dependencies)
 
 **Reference If Needed:**
@@ -189,7 +189,7 @@ The Opening Brief is added to TODO.md and contains:
 **1. Context Summary**
 - Current project state from handoff.md
 - Relevant decisions from design.md
-- Feature requirements from requirements.md
+- Feature requirements from Scope.md §4
 
 **2. Implementation Plan** ⭐
 - **Technical subtasks:** Break each task into concrete implementation steps
@@ -349,12 +349,12 @@ Strategy: pytest fixtures for test database and test users
 **Ask AI for:**
 - Code suggestions respecting design.md constraints
 - Debugging assistance
-- Clarification on requirements.md
+- Clarification on Scope.md §4 features
 - Best practices within chosen stack
 
 **AI should reference:**
 - design.md for technical constraints
-- requirements.md for feature specs
+- Scope.md §4 for feature specs
 - Opening Brief for implementation plan
 
 ### Staying Aligned
@@ -999,7 +999,7 @@ ls session/{your-name}/archive/
 
 **How to refresh:**
 1. Skim design.md (constraints still current?)
-2. Review requirements.md (feature specs)
+2. Review Scope.md §4 (feature specs)
 3. Check scope.md (project boundaries)
 4. Proceed with session
 
@@ -1137,7 +1137,7 @@ session/
 - Independent archive/ (their history)
 
 **Developers share:**
-- Strategic docs (design.md, scope.md, requirements.md)
+- Strategic docs (design.md, scope.md)
 - Tracker.md (all tasks)
 - Project-status.md (team status)
 
@@ -1226,7 +1226,7 @@ Alice and Bob both update tracker.md on feature branches:
 **Solution:**
 1. Read handoff.md (start here)
 2. Read last 3 session archives
-3. Skim design.md, requirements.md
+3. Skim design.md, scope.md §4
 4. Review tracker.md
 5. Start simple session (1 easy task)
 
@@ -1283,8 +1283,7 @@ Alice and Bob both update tracker.md on feature branches:
 ```
 Strategic Documents:
 docs/design.md          # Constraints (read with handoff.md)
-docs/scope.md           # Boundaries (reference if needed)
-docs/requirements.md    # Features (read selectively)
+docs/scope.md           # Boundaries + features §4 (read selectively)
 docs/tracker.md         # Task registry (read selectively)
 
 Session Files:

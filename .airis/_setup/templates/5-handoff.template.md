@@ -303,7 +303,7 @@ Every handoff.md follows this exact structure:
 
 **Reviews:**
 - ERD diagram: ✅ Approved by Alice, Bob, and Product Manager
-- Schema design: ✅ Reviewed against Requirements.md §3 data entities
+- Schema design: ✅ Reviewed against Scope.md §4 data entities
 
 **Evidence Links:**
 - ERD: `docs/database/erd.png` (committed)
@@ -343,7 +343,7 @@ Every handoff.md follows this exact structure:
    - Token refresh logic
    - Password hashing with bcrypt
 2. Follow Design.md §7.2 security guidelines for JWT implementation
-3. Reference Requirements.md §2.1 for authentication business rules
+3. Reference Scope.md §4 for authentication feature business rules
 
 **Follow-up:**
 - Consider adding database ER diagram to Design.md §3.3
@@ -386,9 +386,8 @@ When creating/updating handoff.md at the end of a session:
 
 Before writing the handoff, read in this order:
 1. **Design.md** — Technical constraints and ADRs
-2. **Scope.md** — Project goals and boundaries
-3. **Requirements.md** — Functional requirements
-4. **Tracker.md** — Task status and history
+2. **Scope.md** — Project goals, boundaries, and features (§4)
+3. **Tracker.md** — Task status and history
 5. **Current ToDo.md** — What was planned for this session
 6. **Previous Handoff.md** — Last session's state
 

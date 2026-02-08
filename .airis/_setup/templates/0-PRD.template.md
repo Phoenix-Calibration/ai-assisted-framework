@@ -2,7 +2,7 @@
 
 > **Purpose:** Lightweight discovery document to kickstart framework strategy documents.  
 > **Time to complete:** 2-4 hours  
-> **Next step:** Create Scope.md → Requirements.md → Design.md (in that order)
+> **Next step:** Create Scope.md → Design.md (in that order)
 
 ---
 
@@ -157,9 +157,8 @@ Must use: [List] | Must integrate: [Systems] | Cannot use: [List] | Must comply:
 
 ### Create Strategy Documents
 
-1. **Scope.md** (4-6h): Read PRD → Expand with metrics, stakeholders, risks, boundaries
-2. **Requirements.md** (6-10h): Read Scope → Expand features into stories, rules, data, integrations
-3. **Design.md** (6-10h): Read Requirements → Add architecture, tech stack, ADRs, non-functionals
+1. **Scope.md** (4-6h): Read PRD → Expand with metrics, stakeholders, risks, boundaries, features
+2. **Design.md** (6-10h): Read Scope → Add architecture, tech stack, ADRs, non-functionals
 
 ---
 

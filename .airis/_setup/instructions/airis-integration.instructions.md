@@ -66,7 +66,7 @@ Then read or reference: `.airis/README.md` (20KB, comprehensive framework guide)
 ❌ **Don't:**
 - Skip ahead without user confirmation
 - Create files without showing content first
-- Ignore constraint-first ordering (Design → Scope → Requirements)
+- Ignore constraint-first ordering (Design → Scope (with features))
 - Mix different integration approaches
 - Overwhelm user with all options at once
 - Assume user has read this guide
@@ -75,11 +75,10 @@ Then read or reference: `.airis/README.md` (20KB, comprehensive framework guide)
 **Progress Tracking Template:**
 ```
 Phase 1: Strategic Documents
-├── ⚪ scope.md (4-6 hours)
-├── ⚪ requirements.md (6-10 hours)
+├── ⚪ scope.md with features §4 (4-6 hours)
 └── ⚪ design.md (6-10 hours)
 
-Phase 2: Tool Integration  
+Phase 2: Tool Integration
 └── ⚪ CLAUDE.md / AGENTS.md extraction
 
 Phase 3: Ready for Development
@@ -165,8 +164,7 @@ Step 1: Copy AIris to Your Project
 
 Step 2: Use AIris to CREATE Documents
 ├─ Use AIris prompts to generate:
-│   ├─ scope.md (project vision & boundaries)
-│   ├─ requirements.md (features & user stories)
+│   ├─ scope.md (project vision, boundaries & features §4)
 │   └─ design.md (architecture & constraints)
 └─ These go in .airis/docs/
 
@@ -200,14 +198,14 @@ When AI reads requirements before understanding technical constraints, it sugges
 ```
 ❌ Traditional Approach:
 User: "I need real-time chat"
-AI reads: requirements.md first
+AI reads: features first (no constraints)
 AI suggests: "Let's use Firebase!" (easiest)
 Reality: Your architecture is FastAPI + PostgreSQL (conflict!)
 
 ✅ The AIris Way:
 AI reads: design.md FIRST
 AI learns: "Must use FastAPI + PostgreSQL"
-Then reads: requirements.md
+Then reads: Scope.md §4 (features)
 AI suggests: "Server-Sent Events in FastAPI" (respects constraints)
 ```
 
@@ -215,13 +213,13 @@ AI suggests: "Server-Sent Events in FastAPI" (respects constraints)
 
 **Creation Order (Logical for Humans):**
 ```
-Scope → Requirements → Design
+Scope (with features) → Design
 ```
 Why? You can't decide HOW without knowing WHAT.
 
 **Presentation Order (For AI - The AIris Way):**
 ```
-Design → Scope → Requirements
+Design → Scope (with features)
 ```
 Why? AI prioritizes information it reads first. Constraints must be non-negotiable.
 
@@ -238,8 +236,8 @@ This section MUST come first
 ## Project Context
 <!-- From scope.md -->
 
-## Features & Requirements  
-<!-- From requirements.md -->
+## Features & Requirements
+<!-- From Scope.md §4 -->
 ```
 
 **Agent Instruction:**
@@ -255,17 +253,16 @@ When creating CLAUDE.md or AGENTS.md, ALWAYS put Technical Constraints first.
 ```
 User Profile: Solo developer, new project, has Claude Code installed
 Goal: Create complete AIris documentation using Claude Code
-Time: 3 sessions (16-26 hours total)
+Time: 2-3 sessions (10-16 hours total)
 Your Role: Guide through all 3 phases
 
 Phase 1: Document Generation (Sessions 1-2)
 - Load prompts from .airis/_setup/prompts/
-- Guide user through scope.md creation (4-6h)
-- Guide user through requirements.md creation (6-10h)  
+- Guide user through scope.md creation with features §4 (4-6h)
 - Guide user through design.md creation (6-10h)
 - Create files in .airis/docs/
 
-Phase 2: CLAUDE.md Extraction (Session 3)
+Phase 2: CLAUDE.md Extraction (Session 2-3)
 - Read user's generated docs
 - Extract key sections
 - Create CLAUDE.md following constraint-first template
@@ -324,49 +321,12 @@ Phase 3: Validation
 
 **Agent Checkpoint:**
 ```
-✅ Phase 1.1 Complete: scope.md created
-📋 Next: requirements.md (6-10 hours)
+✅ Phase 1.1 Complete: scope.md created (with features in §4)
+📋 Next: design.md (6-10 hours)
 💡 Tip: Take a break. Review scope.md fresh tomorrow.
 ```
 
-**Phase 2: Create requirements.md**
-
-**Time:** 6-10 hours (one or two work sessions)
-
-1. **Resume Claude Code:**
-   ```bash
-   claude
-   ```
-
-2. **Load requirements prompt:**
-   ```
-   Tell Claude: "Read .airis/_setup/prompts/3-requirements.prompt.md
-   and .airis/docs/scope.md, then help me create requirements.md"
-   ```
-
-3. **Work through features:**
-   Claude will guide you through:
-   - Feature identification
-   - User stories with acceptance criteria
-   - Business rules
-   - Data entities
-   - Integration requirements
-
-4. **Save the file:**
-   ```
-   Claude creates: .airis/docs/requirements.md
-   Commit: git add .airis/docs/requirements.md
-           git commit -m "docs: Add requirements specification"
-   ```
-
-**Agent Checkpoint:**
-```
-✅ Phase 1.2 Complete: requirements.md created  
-📋 Next: design.md (6-10 hours)
-💡 Tip: This is the longest document. Consider breaking into 2 sessions.
-```
-
-**Phase 3: Create design.md**
+**Phase 2: Create design.md**
 
 **Time:** 6-10 hours (one or two work sessions)
 
@@ -377,9 +337,8 @@ Phase 3: Validation
 
 2. **Load design prompt:**
    ```
-   Tell Claude: "Read .airis/_setup/prompts/4-design.prompt.md,
-   .airis/docs/scope.md, and .airis/docs/requirements.md,
-   then help me create design.md"
+   Tell Claude: "Read .airis/_setup/prompts/3-design.prompt.md
+   and .airis/docs/scope.md, then help me create design.md"
    ```
 
 3. **Work through architecture:**
@@ -404,13 +363,13 @@ Phase 3: Validation
 💡 Celebrate! You have comprehensive project documentation.
 ```
 
-**Phase 4: Extract CLAUDE.md**
+**Phase 3: Extract CLAUDE.md**
 
 **Time:** 1-2 hours
 
 1. **Request extraction:**
    ```
-   Tell Claude: "Read my three AIris documents (.airis/docs/*.md)
+   Tell Claude: "Read my AIris documents (.airis/docs/*.md)
    and help me create a CLAUDE.md file following the constraint-first
    principle. Extract the key sections that Claude Code needs."
    ```
@@ -427,7 +386,7 @@ Phase 3: Validation
    [From scope.md: Vision + Success Metrics + Boundaries]
    
    ## Features & Requirements
-   [From requirements.md: Feature summaries]
+   [From Scope.md §4: Feature summaries]
    
    ## Development Workflow
    [From session templates]
@@ -450,8 +409,7 @@ Phase 3: Validation
 🎉 Setup Complete!
 
 What you now have:
-✅ .airis/docs/scope.md (comprehensive)
-✅ .airis/docs/requirements.md (comprehensive)
+✅ .airis/docs/scope.md (comprehensive, with features in §4)
 ✅ .airis/docs/design.md (comprehensive)
 ✅ CLAUDE.md (extracted essentials)
 
@@ -461,13 +419,12 @@ How Claude Code will use this:
 - References full docs when needed
 
 Next steps:
-1. Generate tracker.md (use prompt 5-tracker.prompt.md)
-2. Start first development session (use prompt 6-session.prompt.md)
+1. Generate tracker.md (use prompt 4-tracker.prompt.md)
+2. Start first development session (use prompt 5-session.prompt.md)
 3. Begin implementation with constraint-first guidance
 
 Your project now has:
-🎯 Clear vision (scope.md)
-🎯 Detailed requirements (requirements.md)  
+🎯 Clear vision and features (scope.md)
 🎯 Solid architecture (design.md)
 🎯 AI tool ready (CLAUDE.md)
 ```
@@ -480,11 +437,11 @@ Your project now has:
 ```
 User Profile: Solo developer, new project, uses GitHub ecosystem
 Goal: Create AIris docs + GitHub Copilot integration
-Time: 3-4 sessions (18-28 hours)
+Time: 2-3 sessions (12-18 hours)
 Your Role: Guide through docs + custom agents setup
 
 Phase 1: Document Generation (Same as Scenario 1)
-- Use AIris prompts to create scope/requirements/design
+- Use AIris prompts to create scope (with features §4) and design
 
 Phase 2: AGENTS.md + Custom Agents
 - Create AGENTS.md (similar to CLAUDE.md)
@@ -505,11 +462,10 @@ Phase 3: Team Integration
 
 **Phase 1: Create Strategic Documents**
 
-**Time:** 16-26 hours (same as Scenario 1)
+**Time:** 10-16 hours (same as Scenario 1)
 
 Follow the same process as Scenario 1 to create:
-- ✅ .airis/docs/scope.md
-- ✅ .airis/docs/requirements.md
+- ✅ .airis/docs/scope.md (with features in §4)
 - ✅ .airis/docs/design.md
 
 **You can use ANY AI tool for this phase** (Claude.ai, ChatGPT, etc.)
@@ -534,9 +490,9 @@ Just copy/paste the prompts from `.airis/_setup/prompts/`
    
    ## Project Overview
    [From scope.md]
-   
+
    ## Feature Requirements
-   [From requirements.md]
+   [From Scope.md §4]
    
    ## Build & Test Commands
    [Project-specific]
@@ -585,33 +541,20 @@ Custom agents make AIris prompts easily reusable in GitHub Copilot.
    Create .airis/docs/scope.md with all required sections.
    ```
 
-3. **Create airis-requirements.agent.md:**
-   ```yaml
-   ---
-   name: airis-requirements  
-   description: Create requirements.md following AIris methodology
-   tools: ['read', 'search', 'edit']
-   ---
-   
-   # AIris Requirements Generation Agent
-   
-   [Similar structure, adapted from 3-requirements.prompt.md]
-   ```
-
-4. **Create airis-design.agent.md:**
+3. **Create airis-design.agent.md:**
    ```yaml
    ---
    name: airis-design
    description: Create design.md following AIris constraint-first approach
    tools: ['read', 'search', 'edit']
    ---
-   
+
    # AIris Design Generation Agent
-   
-   [Similar structure, adapted from 4-design.prompt.md]
+
+   [Similar structure, adapted from 3-design.prompt.md]
    ```
 
-5. **Commit agents:**
+4. **Commit agents:**
    ```bash
    git add .github/agents/
    git commit -m "feat: Add AIris custom agents for Copilot"
@@ -663,7 +606,7 @@ Sharing with team:
 ```
 User Profile: Using ChatGPT, Claude.ai, or other non-code-integrated tool
 Goal: Create AIris docs manually
-Time: 3-4 sessions (16-26 hours)
+Time: 2-3 sessions (10-16 hours)
 Your Role: Guide through manual prompt loading
 
 Key Differences:
@@ -725,8 +668,7 @@ Process:
    ```
 
 **Repeat this process for:**
-- ✅ requirements.md (load `3-requirements.prompt.md`)
-- ✅ design.md (load `4-design.prompt.md`)
+- ✅ design.md (load `3-design.prompt.md`)
 
 **Phase 2: Create Instructions File (Optional for Future)**
 
@@ -751,8 +693,7 @@ These files will be ready if you switch tools later.
 ✅ Documentation Complete (Manual Method)
 
 What you have:
-✅ .airis/docs/scope.md
-✅ .airis/docs/requirements.md  
+✅ .airis/docs/scope.md (with features in §4)
 ✅ .airis/docs/design.md
 ✅ CLAUDE.md (prepared for future)
 ✅ AGENTS.md (prepared for future)
@@ -764,7 +705,7 @@ Benefits:
 - Constraint-first methodology applied
 
 Next steps:
-1. Generate tracker.md (use 5-tracker.prompt.md)
+1. Generate tracker.md (use 4-tracker.prompt.md)
 2. Consider adopting Claude Code or Copilot CLI
 3. If you switch tools, your CLAUDE.md/AGENTS.md are ready
 4. Use docs as reference during development
@@ -794,10 +735,9 @@ Key Differences from New Project:
 Process:
 1. Analyze existing codebase
 2. Document current architecture (design.md AS-IS)
-3. Document current features (requirements.md AS-IS)
-4. Document current goals (scope.md)
-5. Add TO-BE sections to each
-6. Create migration plan
+3. Document current goals and features (scope.md with §4)
+4. Add TO-BE sections to each
+5. Create migration plan
 ```
 
 #### Step-by-Step Process
@@ -845,7 +785,7 @@ Process:
 **Time:** 10-14 hours
 
 **Note:** For existing projects, you can create docs in any order.
-Recommended: design.md → requirements.md → scope.md
+Recommended: design.md → scope.md (with features in §4)
 
 **2.1 Create design.md (AS-IS + TO-BE)**
 
@@ -869,29 +809,9 @@ Tell your AI: "Based on our analysis, create design.md with:
 
 Create file: `.airis/docs/design.md`
 
-**2.2 Create requirements.md (Current + Future)**
+**2.2 Create scope.md (Current + Vision + Features §4)**
 
 **Time:** 4-6 hours
-
-```
-Tell your AI: "Document our requirements.md with:
-
-1. Existing Features section:
-   - What the system does today
-   - Current user workflows
-   - Current business rules
-   
-2. Planned Features section:
-   - New features to build
-   - Improvements to existing features
-   - User stories with acceptance criteria"
-```
-
-Create file: `.airis/docs/requirements.md`
-
-**2.3 Create scope.md (Current + Vision)**
-
-**Time:** 3-4 hours
 
 ```
 Tell your AI: "Create scope.md documenting:
@@ -900,11 +820,17 @@ Tell your AI: "Create scope.md documenting:
    - What we have today
    - Current success metrics
    - Current constraints
-   
+
 2. Vision:
    - Where we want to go
    - Future success metrics
-   - Strategic goals"
+   - Strategic goals
+
+3. Features (§4):
+   - Existing features (what the system does today)
+   - Planned features (new features to build)
+   - User stories with acceptance criteria
+   - Business rules"
 ```
 
 Create file: `.airis/docs/scope.md`
@@ -938,8 +864,7 @@ Tell your AI: "Create CLAUDE.md / AGENTS.md that includes:
 
 What you have:
 ✅ design.md (AS-IS + TO-BE + Technical Debt)
-✅ requirements.md (Current + Planned)
-✅ scope.md (Current + Vision)
+✅ scope.md (Current + Vision + Features §4)
 ✅ CLAUDE.md / AGENTS.md (extracted guidelines)
 
 How this helps:
@@ -1002,8 +927,7 @@ Process:
    your-repo/
    ├── .airis/
    │   ├── docs/
-   │   │   ├── scope.md          # ✅ Team-shared
-   │   │   ├── requirements.md   # ✅ Team-shared
+   │   │   ├── scope.md          # ✅ Team-shared (with features §4)
    │   │   └── design.md         # ✅ Team-shared
    │   └── session/
    │       └── shared/
@@ -1036,8 +960,7 @@ Process:
    
    ## When to Update AIris Docs
    - design.md: Architecture decisions, new ADRs
-   - requirements.md: New features, changed user stories
-   - scope.md: Project goals or boundaries change
+   - scope.md: Project goals, boundaries, or features (§4) change
    
    ## How to Update
    1. Create feature branch
@@ -1123,8 +1046,7 @@ Our project uses the AIris framework for documentation and AI-assisted developme
 ## What You Need to Know
 
 ### 1. The Documentation (30 min read)
-- Read: `.airis/docs/scope.md` - Project vision
-- Read: `.airis/docs/requirements.md` - Features
+- Read: `.airis/docs/scope.md` - Project vision and features (§4)
 - Read: `.airis/docs/design.md` - Architecture (MOST IMPORTANT)
 
 ### 2. AI Tool Setup (30 min)
@@ -1269,8 +1191,7 @@ Process:
 
 ```
 Week 1-2: Use Claude Code + AIris prompts
-├── Create scope.md
-├── Create requirements.md
+├── Create scope.md (with features §4)
 └── Create design.md
 
 Week 3: Extract to both tools
@@ -1336,10 +1257,9 @@ as the source of truth. When you make architectural changes:
 ```
 When user requests CLAUDE.md extraction:
 
-1. Read all three AIris docs:
+1. Read both AIris docs:
    - .airis/docs/design.md
-   - .airis/docs/scope.md
-   - .airis/docs/requirements.md
+   - .airis/docs/scope.md (includes features in §4)
 
 2. Extract following template (constraint-first order!)
 
@@ -1423,18 +1343,18 @@ When user requests CLAUDE.md extraction:
 ## Features & Requirements
 
 ### MVP Features
-<!-- Extract from requirements.md: Feature list -->
+<!-- Extract from Scope.md §4: Features -->
 1. **F-001:** [Feature name] - [One line description]
 2. **F-002:** [Feature name] - [One line description]
 3. **F-003:** [Feature name] - [One line description]
 
 ### Key Business Rules
-<!-- Extract from requirements.md: Business Rules (only most critical) -->
+<!-- Extract from Scope.md §4: Business Rules -->
 - [Rule 1]
 - [Rule 2]
 
 ### Data Entities
-<!-- Extract from requirements.md: Data entities (only core ones) -->
+<!-- Extract from Scope.md §4: Data Entities -->
 - **Entity1:** [Brief description]
 - **Entity2:** [Brief description]
 
@@ -1450,7 +1370,7 @@ We use AIris session-based workflow:
 4. State captured in handoff.md
 
 ### Before Implementing Features
-1. Read relevant section of requirements.md
+1. Read relevant feature in Scope.md §4
 2. Check design.md for constraints
 3. Propose approach respecting constraints
 4. Implement with tests
@@ -1592,7 +1512,7 @@ Same principles:
 
 ### Adding a New Feature
 1. Create feature branch
-2. Check requirements.md for acceptance criteria
+2. Check Tracker.md for acceptance criteria
 3. Implement following design.md patterns
 4. Write tests (80%+ coverage)
 5. Update relevant docs if architecture changed
@@ -1654,11 +1574,11 @@ This ordering implements the constraint-first principle.
 **The Golden Rule:**
 
 ```
-Design (constraints) → Scope (boundaries) → Requirements (features)
+Design (constraints) → Scope (boundaries + features)
 
 NOT:
 
-Requirements (features) → Scope (boundaries) → Design (constraints)
+Scope (features) → Design (constraints)
 ```
 
 **Why This Matters:**
@@ -1707,10 +1627,9 @@ A Claude Code Skill is a directory containing:
 ├── SKILL.md              # Main skill file
 ├── prompts/
 │   ├── scope.md
-│   ├── requirements.md
 │   └── design.md
 └── templates/
-    └── [7 templates]
+    └── [6 templates]
 ```
 
 **SKILL.md Example:**
@@ -1729,28 +1648,26 @@ Help developers create well-structured project documentation following the AIris
 ## When to Use This Skill
 Claude should invoke this skill when:
 - User mentions "project documentation"
-- User asks about "scope", "requirements", or "design" docs
+- User asks about "scope", "features", or "design" docs
 - User mentions "AIris" or "constraint-first"
 - User wants to "document project architecture"
 
 ## What This Skill Provides
 
 ### Strategic Document Generation
-1. **scope.md** - Project vision, boundaries, and success metrics
-2. **requirements.md** - Features, user stories, and business rules  
-3. **design.md** - Architecture, tech stack, and constraints
+1. **scope.md** - Project vision, boundaries, success metrics, and features (§4)
+2. **design.md** - Architecture, tech stack, and constraints
 
 ### The Constraint-First Principle
 Always present architecture constraints BEFORE features to AI tools.
-Order: Design → Scope → Requirements
+Order: Design → Scope (with features)
 
 ## How to Use
 
 ### For New Projects
-1. Start with scope.md (vision and boundaries)
-2. Then requirements.md (features and stories)
-3. Then design.md (architecture and constraints)
-4. Extract essentials to CLAUDE.md
+1. Start with scope.md (vision, boundaries, and features §4)
+2. Then design.md (architecture and constraints)
+3. Extract essentials to CLAUDE.md
 
 ### For Existing Projects
 1. Document current state (AS-IS)
@@ -1770,11 +1687,6 @@ Load: `prompts/scope.md`
 Time: 4-6 hours
 Output: `.airis/docs/scope.md`
 
-### requirements.md Generation  
-Load: `prompts/requirements.md`
-Time: 6-10 hours
-Output: `.airis/docs/requirements.md`
-
 ### design.md Generation
 Load: `prompts/design.md`
 Time: 6-10 hours  
@@ -1782,14 +1694,13 @@ Output: `.airis/docs/design.md`
 
 ## Templates
 
-All 7 AIris templates available in `templates/` directory:
+All 6 AIris templates available in `templates/` directory:
 - 0-PRD.template.md
 - 1-scope.template.md
-- 2-requirements.template.md
-- 3-design.template.md
-- 4-tracker.template.md
-- 5-todo.template.md
-- 6-handoff.template.md
+- 2-design.template.md
+- 3-tracker.template.md
+- 4-todo.template.md
+- 5-handoff.template.md
 
 ## Verification
 
@@ -1798,7 +1709,7 @@ After generating docs, verify:
 - ✅ All required sections present
 - ✅ ADRs documented in design.md
 - ✅ Success metrics in scope.md
-- ✅ Acceptance criteria in requirements.md
+- ✅ Acceptance criteria in Tracker.md
 ```
 
 **Installation:**
@@ -1848,14 +1759,12 @@ Saved prompts you invoke by typing `/command-name` in Claude Code.
 ```bash
 ~/.claude/commands/        # User-level (all projects)
 ├── airis-scope.md
-├── airis-requirements.md
 └── airis-design.md
 
 # OR
 
 .claude/commands/          # Project-level (this project only)
 ├── airis-scope.md
-├── airis-requirements.md
 └── airis-design.md
 ```
 
@@ -1892,8 +1801,7 @@ Claude: [Loads command and starts scope generation]
 # User-level (available in all projects)
 mkdir -p ~/.claude/commands
 cp .airis/_setup/prompts/2-scope.prompt.md ~/.claude/commands/airis-scope.md
-cp .airis/_setup/prompts/3-requirements.prompt.md ~/.claude/commands/airis-requirements.md
-cp .airis/_setup/prompts/4-design.prompt.md ~/.claude/commands/airis-design.md
+cp .airis/_setup/prompts/3-design.prompt.md ~/.claude/commands/airis-design.md
 
 # Project-level (only this project)
 mkdir -p .claude/commands
@@ -1919,7 +1827,6 @@ Specialized agent profiles for GitHub Copilot with specific instructions and too
 ```bash
 .github/agents/
 ├── airis-scope.agent.md
-├── airis-requirements.agent.md
 ├── airis-design.agent.md
 ├── airis-tracker.agent.md
 └── airis-session.agent.md
@@ -2061,7 +1968,6 @@ When user exhibits these patterns, gently correct:
 # CLAUDE.md (50 KB)
 
 [Entire scope.md pasted]
-[Entire requirements.md pasted]
 [Entire design.md pasted]
 ```
 
@@ -2076,7 +1982,7 @@ When user exhibits these patterns, gently correct:
 [Summary from scope.md]
 
 ## Features
-[List from requirements.md]
+[List from Scope.md §4]
 
 Full details: See .airis/docs/
 ```
@@ -2095,7 +2001,7 @@ Full details: See .airis/docs/
 [From scope.md]
 
 ## Features
-[From requirements.md]
+[From Scope.md §4]
 
 ## Technical Stack
 [From design.md]
@@ -2112,7 +2018,7 @@ Full details: See .airis/docs/
 [From scope.md]
 
 ## Features
-[From requirements.md]
+[From Scope.md §4]
 ```
 
 **Why:** AI prioritizes information it reads first. Constraints must come first.
@@ -2211,7 +2117,7 @@ Week 10: Update design.md with new architecture
 
 **Solution:**
 1. Focus on AS-IS architecture first (design.md)
-2. Document current features at high level (requirements.md)
+2. Document current features at high level (Scope.md §4)
 3. Add detail incrementally as you work on areas
 4. Prioritize constraint documentation (critical paths)
 5. It's OK to have incomplete docs initially
@@ -2225,7 +2131,7 @@ Week 10: Update design.md with new architecture
 **Solution:**
 1. Make docs part of PR process:
    - Architecture change → Update design.md
-   - New feature → Update requirements.md
+   - New feature → Update Scope.md §4
    - Goals shift → Update scope.md
 2. Add to definition of done: "Docs updated"
 3. Quarterly doc review sessions
@@ -2262,7 +2168,7 @@ Complete examples available in `.airis/examples/`:
 - [ ] Read "Conceptual Foundation" section above (10 min)
 - [ ] Identify your scenario (use Quick Scenario Selector)
 - [ ] Follow step-by-step for your scenario
-- [ ] Create scope.md, requirements.md, design.md
+- [ ] Create scope.md (with features §4) and design.md
 - [ ] Extract to CLAUDE.md or AGENTS.md
 - [ ] Start development with constraint-first principle
 
@@ -2270,7 +2176,7 @@ Complete examples available in `.airis/examples/`:
 
 - [ ] Copy `.airis/` to project
 - [ ] Use discovery prompt to analyze codebase
-- [ ] Document AS-IS state (design.md, requirements.md, scope.md)
+- [ ] Document AS-IS state (design.md, scope.md with features §4)
 - [ ] Add TO-BE sections to each doc
 - [ ] Extract to CLAUDE.md or AGENTS.md
 - [ ] Start new development following TO-BE constraints
@@ -2328,22 +2234,20 @@ Complete examples available in `.airis/examples/`:
   - Philosophy and status
 
 ### Templates & Prompts
-- **[Templates](./_setup/templates/)** - All 7 document templates
+- **[Templates](./_setup/templates/)** - All 6 document templates
   - 0-PRD.template.md
   - 1-scope.template.md
-  - 2-requirements.template.md
-  - 3-design.template.md
-  - 4-tracker.template.md
-  - 5-todo.template.md
-  - 6-handoff.template.md
+  - 2-design.template.md
+  - 3-tracker.template.md
+  - 4-todo.template.md
+  - 5-handoff.template.md
 
-- **[Prompts](./_setup/prompts/)** - All 6 AI prompts
+- **[Prompts](./_setup/prompts/)** - All 5 AI prompts
   - 1-discovery.prompt.md
   - 2-scope.prompt.md
-  - 3-requirements.prompt.md
-  - 4-design.prompt.md
-  - 5-tracker.prompt.md
-  - 6-session.prompt.md
+  - 3-design.prompt.md
+  - 4-tracker.prompt.md
+  - 5-session.prompt.md
 
 ### Agent Note
 When answering questions about:

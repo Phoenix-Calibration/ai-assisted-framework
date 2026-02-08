@@ -110,10 +110,10 @@ User says: "Start session" OR provides existing ToDo.md Phase 1
 
 **STAGE 2 - SELECTIVE READ (As Needed):**
 
-3. **Requirements.md** (THIRD - features relevant to session tasks)
-   - Read ONLY sections related to tasks in ToDo
+3. **Scope.md §4 Features** (THIRD - features relevant to session tasks)
+   - Read ONLY feature categories related to tasks in ToDo
    - Skip unrelated features
-   
+
 4. **Tracker.md** (FOURTH - session tasks + dependencies)
    - Read ONLY tasks mentioned in ToDo
    - Read their dependencies
@@ -148,7 +148,7 @@ Add this section to ToDo.md:
 **Plan:**
 1. [Step from Tracker acceptance criteria]
 2. [Step referencing Design.md §X.Y]
-3. [Step referencing Requirements.md §Z]
+3. [Step referencing Scope.md §4 feature]
 4. [Validation step]
 5. [Review step]
 
@@ -161,14 +161,14 @@ Add this section to ToDo.md:
 
 **References:**
 - Design.md §X.Y - [Relevant section]
-- Requirements.md §Z - [Relevant section]
+- Scope.md §4 - [Relevant feature]
 - Tracker.md T-XXX - [Full criteria]
 ```
 
 ### Step 3: Validation
 - [ ] Read context using progressive loading
 - [ ] Always read Handoff + Design (Stage 1)
-- [ ] Selectively read Requirements + Tracker (Stage 2)
+- [ ] Selectively read Scope §4 + Tracker (Stage 2)
 - [ ] Opening Brief references specific sections
 - [ ] Plan is concrete and actionable
 
@@ -388,7 +388,7 @@ Created. Say "Start session" when ready.
 Reading context (progressive loading)...
 ✓ Handoff.md (Stage 1 - Always)
 ✓ Design.md (Stage 1 - Always)
-✓ Requirements.md §3 (Stage 2 - Selective, T-003 related)
+✓ Scope.md §4 (Stage 2 - Selective, T-003 related features)
 ✓ Tracker.md T-003 (Stage 2 - Selective)
 
 Adding Opening Brief...
@@ -411,8 +411,8 @@ Output:
 **Active Task:** T-003 — Design database schema
 
 **Plan:**
-1. Review entity relationships from Requirements.md §3.3
-2. Create ERD with entities from Requirements.md §3.1
+1. Review data entities from Scope.md §4
+2. Create ERD with entities from Scope.md §4 Data Entities
 3. Define indexes per Design.md §8.2
 4. Create migrations per Design.md §3.3
 5. Peer review
@@ -427,7 +427,7 @@ Output:
 
 **References:**
 - Design.md §3.3 - Database strategy
-- Requirements.md §3 - Data entities
+- Scope.md §4 - Data entities
 - Tracker.md T-003 - Full criteria
 
 Ready to begin!
@@ -493,7 +493,7 @@ To update tracker.md, invoke:
 
 **Part 1 - Start Session:**
 - [ ] Stage 1: Read Handoff + Design (always)
-- [ ] Stage 2: Read Requirements + Tracker (selectively, task-related only)
+- [ ] Stage 2: Read Scope §4 + Tracker (selectively, task-related only)
 - [ ] Stage 3: Read Scope (only if needed)
 - [ ] Opening Brief added to ToDo
 - [ ] References specific sections
@@ -510,7 +510,7 @@ To update tracker.md, invoke:
 
 ## CRITICAL REMINDERS
 
-1. **Progressive Loading:** Read Handoff + Design always, others selectively
+1. **Progressive Loading:** Read Handoff + Design always, Scope §4 + Tracker selectively
 2. **Single Responsibility:** Session prompt handles sessions, tracker prompt handles tracker.md
 3. **Propose Only:** Never apply tracker updates, only propose with command
 4. **User Control:** User explicitly invokes 5-tracker.prompt.md to apply

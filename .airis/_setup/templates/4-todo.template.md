@@ -17,7 +17,7 @@ This document evolves through three phases during a work session:
 - Mark optional tasks with "(if time permits)"
 
 **Phase 2: AI Adds Opening Brief** (after reading context)
-- AI reads: Design.md → Scope.md → Requirements.md → Tracker.md → Handoff.md → This ToDo
+- AI reads: Handoff.md → Design.md → Scope.md §4 → Tracker.md → This ToDo
 - AI generates plan, success criteria, and time estimate
 
 **Phase 3: AI Adds Closing Report** (at end of session)
@@ -86,7 +86,7 @@ After reading all context documents, AI adds this section to the file:
 **Active Task:** T-XXX — [Task title]
 
 **Plan:**
-1. [Specific step 1 with references to Design.md/Requirements.md]
+1. [Specific step 1 with references to Design.md/Scope.md]
 2. [Specific step 2]
 3. [Specific step 3]
 4. [Specific step 4]
@@ -100,7 +100,7 @@ After reading all context documents, AI adds this section to the file:
 
 **References:**
 - Design.md §X.Y - [Relevant constraint or decision]
-- Requirements.md §Z - [Relevant requirement]
+- Scope.md §4 - [Relevant feature]
 - Tracker.md T-XXX - [Acceptance criteria]
 ```
 
@@ -115,14 +115,14 @@ After reading all context documents, AI adds this section to the file:
 **Active Task:** T-003 — Design database schema
 
 **Plan:**
-1. Review entity relationships from Requirements.md §3.3
-2. Create ERD diagram with all entities from Requirements.md §3.1
+1. Review data entities from Scope.md §4
+2. Create ERD diagram with all entities from Scope.md §4 Data Entities
 3. Define indexes for frequently queried fields per Design.md §8.2
 4. Create migration scripts following Design.md §3.3 database strategy
 5. Peer review with team
 
 **Success Criteria:**
-- All entities from Requirements.md §3.1 included in schema
+- All entities from Scope.md §4 included in schema
 - Relationships properly defined with foreign keys
 - Indexes created for performance per Design.md §8.2
 - Migration scripts tested locally
@@ -132,7 +132,7 @@ After reading all context documents, AI adds this section to the file:
 
 **References:**
 - Design.md §3.3 - PostgreSQL 15, migration strategy
-- Requirements.md §3 - Complete data entities specification
+- Scope.md §4 - Data entities specification
 - Tracker.md T-003 - Full acceptance criteria
 ```
 
@@ -193,7 +193,7 @@ At the end of the session, AI adds this final section:
 ## Closing Report
 
 **What Changed:**
-- `migrations/001_create_schema.sql` created with all tables from Requirements.md §3
+- `migrations/001_create_schema.sql` created with all tables from Scope.md §4
 - `docs/erd.png` created showing entity relationships
 - `README.md` updated with database setup instructions
 - Added pg-migrate dependency for migration management
@@ -259,7 +259,7 @@ At the end of the session, AI adds this final section:
 **Active Task:** T-003 — Design database schema
 
 **Plan:**
-1. Review entity relationships from Requirements.md §3.3
+1. Review data entities from Scope.md §4
 2. Create ERD diagram with all entities
 3. Define indexes for performance
 4. Create migration scripts
@@ -275,7 +275,7 @@ At the end of the session, AI adds this final section:
 
 **References:**
 - Design.md §3.3 - Database specs
-- Requirements.md §3 - Data entities
+- Scope.md §4 - Data entities
 - Tracker.md T-003 - Acceptance criteria
 ```
 

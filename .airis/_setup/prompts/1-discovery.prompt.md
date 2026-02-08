@@ -247,9 +247,8 @@ Based on the discovery conversation, generate a PRD with this structure:
 ## 10. Next Steps
 
 Once this PRD is approved:
-1. Create Scope.md using scope.prompt.md
-2. Create Requirements.md using requirements.prompt.md
-3. Create Design.md using design.prompt.md
+1. Create Scope.md using scope.prompt.md (includes features §4)
+2. Create Design.md using design.prompt.md
 ```
 
 ---
@@ -467,9 +466,8 @@ Generate a PRD that documents the current state AS IF it were written originally
 ## 10. Next Steps
 
 Now that we've documented the current state:
-1. Create Scope.md (documenting current boundaries and goals)
-2. Create Requirements.md (documenting current + new functionality)
-3. Create Design.md (AS-IS architecture + TO-BE improvements)
+1. Create Scope.md (documenting current boundaries, goals, and features §4)
+2. Create Design.md (AS-IS architecture + TO-BE improvements)
 ```
 
 ---
@@ -611,9 +609,8 @@ EXECUTIVE SUMMARY:
 
 Next steps:
 1. Review and approve this PRD
-2. Use scope.prompt.md to create Scope.md
-3. Use requirements.prompt.md to create detailed Requirements.md
-4. Use design.prompt.md to create technical Design.md
+2. Use scope.prompt.md to create Scope.md (includes features §4)
+3. Use design.prompt.md to create technical Design.md
 
 Would you like to proceed with creating Scope.md?
 ```
