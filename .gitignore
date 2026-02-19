@@ -1,0 +1,10 @@
+# AIris Framework - development artifacts not distributed to users
+.airis/references/
+.claude/dist/
+
+# Python
+__pycache__/
+*.pyc
+
+# Temp install folder (safety net)
+temp-airis-install/

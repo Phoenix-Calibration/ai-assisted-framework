@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 # AIris Framework - Installation Script for Windows
-# Version: 1.1
+# Version: 1.2
 # Usage: .\install-airis.ps1
 
 Write-Host "🎯 AIris Framework Installer" -ForegroundColor Cyan
@@ -20,12 +20,16 @@ try {
 # Track whether this is a fresh install or an update
 $isUpdate = $false
 
+$airisSkills = @("airis-session", "airis-tracker", "airis-amendment", "airis-issue")
+
 # Check if .airis already exists
 if (Test-Path ".airis") {
     $isUpdate = $true
     Write-Host ""
     Write-Host "⚠️  AIris is already installed in this project." -ForegroundColor Yellow
-    Write-Host "   This will UPDATE .airis/ (framework files only)." -ForegroundColor Yellow
+    Write-Host "   This will UPDATE:" -ForegroundColor Yellow
+    Write-Host "     - .airis/                    (framework files)" -ForegroundColor Gray
+    Write-Host "     - .claude/skills/airis-*     (Claude Code skills)" -ForegroundColor Gray
     Write-Host "   Your .ai-docs/ and .ai-session/ will NOT be affected." -ForegroundColor Gray
     Write-Host ""
     $response = Read-Host "Update AIris framework? (yes/no)"
@@ -35,6 +39,13 @@ if (Test-Path ".airis") {
     }
     Write-Host "Updating .airis/ folder..." -ForegroundColor Yellow
     Remove-Item -Path ".airis" -Recurse -Force
+    Write-Host "Updating Claude Code skills..." -ForegroundColor Yellow
+    foreach ($skill in $airisSkills) {
+        $skillPath = ".claude\skills\$skill"
+        if (Test-Path $skillPath) {
+            Remove-Item -Path $skillPath -Recurse -Force
+        }
+    }
 }
 
 Write-Host ""
@@ -53,11 +64,25 @@ try {
 Write-Host "📂 Installing AIris to your project..." -ForegroundColor Cyan
 try {
     Copy-Item -Path "temp-airis-install\.airis" -Destination "." -Recurse -Force
-    Write-Host "✅ AIris installed" -ForegroundColor Green
+    Write-Host "✅ .airis/ installed" -ForegroundColor Green
 } catch {
-    Write-Host "❌ Failed to copy files" -ForegroundColor Red
+    Write-Host "❌ Failed to copy .airis/" -ForegroundColor Red
     Remove-Item -Path "temp-airis-install" -Recurse -Force -ErrorAction SilentlyContinue
     exit 1
+}
+
+# Copy Claude Code skills
+Write-Host "⚙️  Installing Claude Code skills..." -ForegroundColor Cyan
+if (-not (Test-Path ".claude\skills")) {
+    New-Item -ItemType Directory -Path ".claude\skills" -Force | Out-Null
+}
+foreach ($skill in $airisSkills) {
+    try {
+        Copy-Item -Path "temp-airis-install\.claude\skills\$skill" -Destination ".claude\skills\" -Recurse -Force
+        Write-Host "   ✅ $skill" -ForegroundColor Green
+    } catch {
+        Write-Host "   ⚠️  Failed to copy $skill (skipping)" -ForegroundColor Yellow
+    }
 }
 
 # Clean up
@@ -94,6 +119,7 @@ if ($isUpdate) {
     Write-Host "   1. Read: .airis/FRAMEWORK.md for complete documentation" -ForegroundColor White
     Write-Host "   2. Create: .ai-docs/scope.md and .ai-docs/design.md" -ForegroundColor White
     Write-Host "      Use prompts: .airis/prompts/2-scope.prompt.md and 3-design.prompt.md" -ForegroundColor White
+    Write-Host "      Or with Claude Code: /airis-session, /airis-tracker, /airis-amendment, /airis-issue" -ForegroundColor White
     Write-Host "   3. Create your dev workspace: .ai-session/{your-name}/current/" -ForegroundColor White
 }
 

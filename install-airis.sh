@@ -1,6 +1,6 @@
 #!/bin/bash
 # AIris Framework - Installation Script for Linux/Mac
-# Version: 1.1
+# Version: 1.2
 # Usage: ./install-airis.sh
 
 echo "🎯 AIris Framework Installer"
@@ -22,12 +22,16 @@ echo "✅ Git detected: $GIT_VERSION"
 # Track whether this is a fresh install or an update
 IS_UPDATE=false
 
+AIRIS_SKILLS=("airis-session" "airis-tracker" "airis-amendment" "airis-issue")
+
 # Check if .airis already exists
 if [ -d ".airis" ]; then
     IS_UPDATE=true
     echo ""
     echo "⚠️  AIris is already installed in this project."
-    echo "   This will UPDATE .airis/ (framework files only)."
+    echo "   This will UPDATE:"
+    echo "     - .airis/                    (framework files)"
+    echo "     - .claude/skills/airis-*     (Claude Code skills)"
     echo "   Your .ai-docs/ and .ai-session/ will NOT be affected."
     echo ""
     read -p "Update AIris framework? (yes/no): " response
@@ -37,6 +41,10 @@ if [ -d ".airis" ]; then
     fi
     echo "Updating .airis/ folder..."
     rm -rf .airis
+    echo "Updating Claude Code skills..."
+    for skill in "${AIRIS_SKILLS[@]}"; do
+        rm -rf ".claude/skills/$skill"
+    done
 fi
 
 echo ""
@@ -53,12 +61,23 @@ fi
 # Copy .airis folder
 echo "📂 Installing AIris to your project..."
 if cp -r temp-airis-install/.airis .; then
-    echo "✅ AIris installed"
+    echo "✅ .airis/ installed"
 else
-    echo "❌ Failed to copy files"
+    echo "❌ Failed to copy .airis/"
     rm -rf temp-airis-install
     exit 1
 fi
+
+# Copy Claude Code skills
+echo "⚙️  Installing Claude Code skills..."
+mkdir -p ".claude/skills"
+for skill in "${AIRIS_SKILLS[@]}"; do
+    if cp -r "temp-airis-install/.claude/skills/$skill" ".claude/skills/"; then
+        echo "   ✅ $skill"
+    else
+        echo "   ⚠️  Failed to copy $skill (skipping)"
+    fi
+done
 
 # Clean up
 echo "🧹 Cleaning up..."
@@ -94,6 +113,7 @@ else
     echo "   1. Read: .airis/FRAMEWORK.md for complete documentation"
     echo "   2. Create: .ai-docs/scope.md and .ai-docs/design.md"
     echo "      Use prompts: .airis/prompts/2-scope.prompt.md and 3-design.prompt.md"
+    echo "      Or with Claude Code: /airis-session, /airis-tracker, /airis-amendment, /airis-issue"
     echo "   3. Create your dev workspace: .ai-session/{your-name}/current/"
 fi
 

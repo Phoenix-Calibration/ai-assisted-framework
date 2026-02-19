@@ -40,75 +40,95 @@ AI suggests: "Server-Sent Events in FastAPI" ✅
 After installation, you'll have:
 
 ```
-.airis/
-├── FRAMEWORK.md                   # Complete framework documentation
-├── _setup/
-│   ├── templates/                 # 6 document templates
+your-project/
+├── .airis/                            # Framework files (updated by installer)
+│   ├── FRAMEWORK.md                   # Complete framework documentation
+│   ├── prompts/                       # 6 AI prompts (tool-agnostic)
+│   │   ├── 1-discovery.prompt.md      # Existing project discovery
+│   │   ├── 2-scope.prompt.md          # Generate scope.md
+│   │   ├── 3-design.prompt.md         # Generate design.md
+│   │   ├── 4-tracker.prompt.md        # Generate & manage tracker.md
+│   │   ├── 5-session.prompt.md        # Dev session lifecycle
+│   │   └── 6-amendment.prompt.md      # Scope & design change management
+│   ├── templates/                     # Document templates
 │   │   ├── 0-PRD.template.md
-│   │   ├── 1-scope.template.md      # Vision, boundaries & features
+│   │   ├── 1-scope.template.md
 │   │   ├── 2-design.template.md
 │   │   ├── 3-tracker.template.md
 │   │   ├── 4-todo.template.md
-│   │   └── 5-handoff.template.md
-│   ├── prompts/                   # 5 AI prompts
-│   │   ├── 1-discovery.prompt.md
-│   │   ├── 2-scope.prompt.md        # Generates scope with features
-│   │   ├── 3-design.prompt.md
-│   │   ├── 4-tracker.prompt.md      # Expands features into detailed tasks
-│   │   └── 5-session.prompt.md
-│   └── instructions/              # Claude Project instructions
+│   │   ├── 5-handoff.template.md
+│   │   └── 6-extraction.template.md   # Generate CLAUDE.md / AGENTS.md
+│   └── instructions/
 │       └── airis-integration.instructions.md
-├── docs/                          # Placeholder examples
-└── session/                       # Session workspace
+├── .claude/                           # Claude Code specific
+│   └── skills/                        # Auto-triggered skills
+│       ├── airis-session              # Session lifecycle (/airis-session)
+│       ├── airis-tracker              # Tracker management (/airis-tracker)
+│       ├── airis-amendment            # Scope & design changes (/airis-amendment)
+│       └── airis-issue                # Bug & issue triage (/airis-issue)
+├── .ai-docs/                          # Your strategy documents (you own this)
+│   ├── scope.md
+│   ├── design.md
+│   └── tracker.md
+└── .ai-session/                       # Developer workspaces (you own this)
+    └── {developer-name}/current/
+        ├── todo.md
+        └── handoff.md
 ```
 
 ---
 
 ## Quick Start
 
-### **Step 1: Install AIris** (see above)
+### Step 1: Install AIris
 
-### **Step 2: Read the Docs**
-```bash
-# Main documentation
-.airis/FRAMEWORK.md
+See [Installation](#installation) below.
 
-# Installation guide
-INSTALLATION.md
-```
-
-### **Step 3: Create Your Strategy Documents**
+### Step 2: Create Your Strategy Documents
 
 **For NEW projects:**
-1. Create `docs/scope.md` - Define vision, boundaries, and features (high-level)
-2. Create `docs/design.md` - Make technical decisions
+1. Load `.airis/prompts/2-scope.prompt.md` → generate `.ai-docs/scope.md`
+2. Load `.airis/prompts/3-design.prompt.md` → generate `.ai-docs/design.md`
 
 **For EXISTING projects:**
-1. Document current vision and features in `docs/scope.md`
-2. Document current architecture in `docs/design.md`
+1. Load `.airis/prompts/1-discovery.prompt.md` → extract current state
+2. Load `.airis/prompts/2-scope.prompt.md` → generate `.ai-docs/scope.md`
+3. Load `.airis/prompts/3-design.prompt.md` → generate `.ai-docs/design.md`
 
-### **Step 4: Use AI Prompts**
+### Step 3: Generate Your Task Tracker
 
-Copy prompts from `.airis/_setup/prompts/` into your AI chat to generate your documents.
+Load `.airis/prompts/4-tracker.prompt.md` → generates `.ai-docs/tracker.md` with all tasks derived from scope + design.
 
-📖 **[Complete Guide](.airis/README.md)**
+### Step 4: Run Development Sessions
+
+Each session follows: **Todo → Work → Handoff**
+
+Load `.airis/prompts/5-session.prompt.md` for the complete session lifecycle.
+
+**If using Claude Code**, just use the skills instead:
+```
+/airis-session     → manage session lifecycle (start, close, hotfix)
+/airis-tracker     → generate or update tracker.md
+/airis-amendment   → handle scope or design changes
+/airis-issue       → triage bugs, hotfixes, maintenance tasks
+```
 
 ---
 
 ## Framework Flow
 
 ```
-Human Creates Strategy (Scope with features → Design)
+Human Creates Strategy (Scope + Design)
              ↓
-AI Generates Tactics (Tracker with detailed acceptance criteria)
+AI Generates Tactics (Tracker → detailed tasks with acceptance criteria)
              ↓
-AI Executes Sessions (ToDo → Work → Handoff)
+AI Executes Sessions (Todo → Work → Handoff)
              ↓
           Repeat
 ```
 
 **The AIris Principle:** AI reads documents in constraint-first order:
-1. **Design** (technical constraints - non-negotiable)
+1. **Design** (technical constraints — non-negotiable)
 2. **Scope** (project boundaries + features)
 
 This ensures AI suggestions respect your architecture.
@@ -117,72 +137,48 @@ This ensures AI suggestions respect your architecture.
 
 ## Key Features
 
-### 👁️ Constraint-First Methodology
+### Constraint-First Methodology
 - Technical decisions guide AI suggestions
 - Prevents generic "path of least resistance" solutions
 - Maintains architectural coherence across all sessions
 
-### 📚 Document Hierarchy
-- **Strategy** (months) - Scope (with features), Design
-- **Tactics** (weeks) - Task Tracker (with detailed criteria)
-- **Execution** (hours) - Session ToDo
-- **Transfer** (per session) - Handoff state
+### Document Hierarchy
+- **Strategy** (months) — Scope, Design
+- **Tactics** (weeks) — Task Tracker with acceptance criteria
+- **Execution** (hours) — Session Todo
+- **Transfer** (per session) — Handoff state
 
-### 🤖 5 Consolidated Prompts
-- Phase 1: 3 prompts for strategic documents
-- Phase 2: 1 prompt for tracker generation (expands features into detailed tasks)
-- Phase 3: 1 unified prompt for session lifecycle
+### 6 Prompts + 4 Claude Code Skills
+- Tool-agnostic prompts work with any AI (Claude, GPT-4, Gemini, Cursor, Copilot)
+- Claude Code skills provide auto-triggered, context-aware commands
+- Full session lifecycle: start, work, close, hotfix, onboarding
+- Integrated bug & issue management with triage and routing
 
-### 👥 Multi-Developer Support
-- Per-developer workspaces
+### Multi-Developer Support
+- Per-developer workspaces in `.ai-session/{developer-name}/`
 - Parallel development workflows
-- Shared team coordination
+- Shared team coordination via tracker + handoff
 
 ---
 
 ## Benefits
 
-- ✅ **Architectural Coherence** - Technical constraints enforced across all sessions
-- ✅ **Clear Vision** - Like an iris focuses light, AIris focuses AI on what matters
-- ✅ **Scope Control** - Clear boundaries prevent feature creep
-- ✅ **Auditable Trail** - ADRs document all technical decisions
-- ✅ **Fast Onboarding** - New team members read strategy docs
-- ✅ **AI-Agnostic** - Works with Claude, GPT-4, Gemini, any LLM
-- ✅ **Multi-Developer** - Parallel workflows with conflict resolution
-- ✅ **Adaptable** - Works for new projects and existing codebases
+- ✅ **Architectural Coherence** — Technical constraints enforced across all sessions
+- ✅ **Clear Vision** — Like an iris focuses light, AIris focuses AI on what matters
+- ✅ **Scope Control** — Clear boundaries prevent feature creep
+- ✅ **Bug Management** — Integrated issue triage with severity routing
+- ✅ **Auditable Trail** — ADRs document all technical decisions
+- ✅ **Fast Onboarding** — New developers read strategy docs + handoff
+- ✅ **AI-Agnostic** — Prompts work with any LLM
+- ✅ **Claude Code Native** — Skills provide seamless integration
+- ✅ **Multi-Developer** — Parallel workflows with conflict resolution
+- ✅ **Adaptable** — Works for new projects and existing codebases
 
 ---
 
-## Documentation
+## Installation
 
-### Main Documentation
-- **[AIris Framework Guide](.airis/FRAMEWORK.md)** - Complete framework documentation
-- **[Installation Guide](INSTALLATION.md)** - Detailed setup instructions
-- **[Getting Started](.airis/FRAMEWORK.md#getting-started)** - Quick start guide
-
-### Templates & Prompts
-- **[Templates](.airis/_setup/templates/)** - All 6 document templates
-- **[Prompts](.airis/_setup/prompts/)** - All 5 AI prompts
-- **[Instructions](.airis/_setup/instructions/)** - Claude Project integration guides
-
----
-
-## Philosophy
-
-> "Like the human iris controls how much light enters the eye to create clear vision, AIris controls how AI reads your project documents to create clear, coherent software."
-
-**The AIris Way:**
-1. **See clearly** - Architecture and constraints first
-2. **Focus precisely** - Boundaries and features defined
-3. **Build confidently** - Detailed tasks guide implementation
-
----
-
-## 🚀 Quick Install
-
-Choose your preferred method:
-
-### **Option 1: Installation Script (Recommended)**
+### Option 1: Installation Script (Recommended)
 
 **Windows (PowerShell):**
 ```powershell
@@ -197,26 +193,56 @@ chmod +x install-airis.sh
 ./install-airis.sh
 ```
 
-### **Option 2: One-Line Command**
+**Node.js:**
+```bash
+curl -O https://raw.githubusercontent.com/Phoenix-Calibration/ai-assisted-framework/main/install-airis-npm.js
+node install-airis-npm.js
+```
+
+The installer handles everything:
+- Copies `.airis/` (framework files + prompts + templates)
+- Copies `.claude/skills/airis-*` (Claude Code skills)
+- Creates `.ai-docs/` and `.ai-session/` if they don't exist
+- On update: replaces framework files only — your `.ai-docs/` and `.ai-session/` are never touched
+
+### Option 2: Manual (Git)
 
 **Windows:**
 ```powershell
-git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework.git temp-airis; Copy-Item -Path "temp-airis\.airis" -Destination "." -Recurse; Remove-Item -Path "temp-airis" -Recurse -Force
+git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework.git temp-airis
+Copy-Item -Path "temp-airis\.airis" -Destination "." -Recurse
+Copy-Item -Path "temp-airis\.claude\skills\airis-*" -Destination ".claude\skills\" -Recurse
+Remove-Item -Path "temp-airis" -Recurse -Force
 ```
 
 **Linux/Mac:**
 ```bash
-git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework.git temp-airis && cp -r temp-airis/.airis . && rm -rf temp-airis
+git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework.git temp-airis
+cp -r temp-airis/.airis .
+mkdir -p .claude/skills
+cp -r temp-airis/.claude/skills/airis-* .claude/skills/
+rm -rf temp-airis
 ```
 
-### **Option 3: NPM/Node.js Projects**
+---
 
-```bash
-# Coming soon - will be available as NPM package
-# npx install-airis
-```
+## Documentation
 
-📖 **[Full Installation Guide](INSTALLATION.md)**
+- **[Framework Guide](.airis/FRAMEWORK.md)** — Complete framework documentation
+- **[Prompts](.airis/prompts/)** — All 6 AI prompts
+- **[Templates](.airis/templates/)** — All document templates
+- **[Claude Code Integration](.airis/instructions/airis-integration.instructions.md)** — Setup guide
+
+---
+
+## Philosophy
+
+> "Like the human iris controls how much light enters the eye to create clear vision, AIris controls how AI reads your project documents to create clear, coherent software."
+
+**The AIris Way:**
+1. **See clearly** — Architecture and constraints first
+2. **Focus precisely** — Boundaries and features defined
+3. **Build confidently** — Detailed tasks guide implementation
 
 ---
 
@@ -228,61 +254,33 @@ git clone --depth 1 https://github.com/Phoenix-Calibration/ai-assisted-framework
 
 **Key Innovations:**
 - ✨ Constraint-first methodology (dual document ordering)
-- ✨ Scope.md with integrated features section (aligned with original framework)
+- ✨ Scope.md with integrated features section
 - ✨ Tracker generates detailed acceptance criteria from features
-- ✨ Consolidated prompts (5 vs 13+ original)
+- ✨ 6 consolidated prompts (vs 13+ original)
 - ✨ Multi-developer workspaces
-- ✨ Unified session prompt with 3-part lifecycle
-- ✨ Architecture-first naming and branding (AIris)
+- ✨ Unified session prompt with full lifecycle (start, close, hotfix, onboarding)
+- ✨ Integrated bug & issue management
+- ✨ Claude Code native skills
 
 ---
 
 ## Status
 
-**Version:** 2.0 (February 2026)
+**Version:** 2.1 (February 2026)
 
 **Status:** ✅ Production Ready
-- ✅ All 6 templates complete
-- ✅ All 5 prompts complete
-- ✅ Documentation complete
-- ✅ Multi-developer workflow tested
-- ✅ Installation scripts ready
-- ✅ Simplified structure (aligned with original framework)
-
----
-
-## Support
-
-### Resources
-- **Documentation:** `.airis/FRAMEWORK.md`
-- **Installation Help:** `INSTALLATION.md`
-- **Templates:** `.airis/_setup/templates/`
-- **Prompts:** `.airis/_setup/prompts/`
-- **Instructions:** `.airis/_setup/instructions/`
-
-### Issues
-Open an issue on GitHub for:
-- Bug reports
-- Feature requests
-- Installation problems
-- Documentation improvements
+- ✅ 6 prompts (discovery, scope, design, tracker, session, amendment)
+- ✅ 7 templates complete
+- ✅ 4 Claude Code skills (session, tracker, amendment, issue)
+- ✅ Bug & hotfix management integrated
+- ✅ Multi-developer workflow supported
+- ✅ Installation scripts for Windows, Linux/Mac, Node.js
 
 ---
 
 ## License
 
-**Private** - Phoenix Calibration
-
----
-
-## Get Started
-
-1. **Install:** Use one of the methods above
-2. **Read:** `.airis/FRAMEWORK.md` for complete guide
-3. **Create:** Your strategy documents (Scope with features → Design)
-4. **Build:** With AI-assisted confidence
-
-**Ready to see clearly?** 👁️ Let AIris guide your AI-assisted development.
+**Private** — Phoenix Calibration
 
 ---
 
