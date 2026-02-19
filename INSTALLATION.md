@@ -12,17 +12,12 @@ Quick guide to add AIris Framework to your project.
 
 **For Windows (PowerShell):**
 ```powershell
-# Download and run the installer
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Phoenix-Calibration/ai-assisted-framework/main/install-airis.ps1" -OutFile "install-airis.ps1"
-.\install-airis.ps1
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Phoenix-Calibration/ai-assisted-framework/main/install-airis.ps1" -OutFile "install-airis.ps1"; .\install-airis.ps1
 ```
 
 **For Linux/Mac (Bash):**
 ```bash
-# Download and run the installer
-curl -O https://raw.githubusercontent.com/Phoenix-Calibration/ai-assisted-framework/main/install-airis.sh
-chmod +x install-airis.sh
-./install-airis.sh
+curl -O https://raw.githubusercontent.com/Phoenix-Calibration/ai-assisted-framework/main/install-airis.sh && chmod +x install-airis.sh && ./install-airis.sh
 ```
 
 **What it does:**
