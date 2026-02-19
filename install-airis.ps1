@@ -64,6 +64,7 @@ try {
 Write-Host "📂 Installing AIris to your project..." -ForegroundColor Cyan
 try {
     Copy-Item -Path "temp-airis-install\.airis" -Destination "." -Recurse -Force
+    Remove-Item -Path ".airis\references" -Recurse -Force -ErrorAction SilentlyContinue
     Write-Host "✅ .airis/ installed" -ForegroundColor Green
 } catch {
     Write-Host "❌ Failed to copy .airis/" -ForegroundColor Red
@@ -126,3 +127,6 @@ if ($isUpdate) {
 Write-Host ""
 Write-Host "👁️  See clearly. Build confidently." -ForegroundColor Magenta
 Write-Host ""
+
+# Self-cleanup: remove this installer script
+Remove-Item -Path $MyInvocation.MyCommand.Path -Force -ErrorAction SilentlyContinue

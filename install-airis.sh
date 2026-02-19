@@ -61,6 +61,7 @@ fi
 # Copy .airis folder
 echo "📂 Installing AIris to your project..."
 if cp -r temp-airis-install/.airis .; then
+    rm -rf .airis/references
     echo "✅ .airis/ installed"
 else
     echo "❌ Failed to copy .airis/"
@@ -120,3 +121,6 @@ fi
 echo ""
 echo "👁️  See clearly. Build confidently."
 echo ""
+
+# Self-cleanup: remove this installer script
+rm -f "$0"
