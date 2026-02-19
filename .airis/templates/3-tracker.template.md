@@ -34,6 +34,21 @@
 
 ---
 
+## Task Type Legend
+
+| Type | Tag | Description |
+|------|-----|-------------|
+| Feature | `FEAT` | New functionality from scope.md |
+| Bug | `BUG` | Defect in existing implementation |
+| Hotfix | `HOT` | Critical bug requiring immediate fix |
+| Maintenance | `MAINT` | Dependency updates, security patches, routine upkeep |
+| Technical Debt | `DEBT` | Accumulated design/code shortcuts to be resolved |
+| Architecture | `ARCH` | Infrastructure, scaffolding, non-feature technical work |
+
+> **Hotfix vs Bug:** Use `HOT` only when the issue is production-critical and cannot wait for a standard session. Hotfixes use an expedited session flow — see `prompts/5-session.prompt.md` Hotfix Mode.
+
+---
+
 ## Progress by Phase
 
 | Phase | Total | ⚪ | 🟡 | ✅ | 🚫 |
@@ -55,7 +70,8 @@
 
 ### T-XXX: [Task Title]
 
-**Story:** As a [role], I want to [action], so that [benefit] *(only for feature tasks from Scope §4 — omit for technical/infrastructure tasks)*
+**Type:** `FEAT` | `BUG` | `HOT` | `MAINT` | `DEBT` | `ARCH`
+**Story:** As a [role], I want to [action], so that [benefit] *(only for FEAT tasks from Scope §4 — omit for BUG, HOT, MAINT, DEBT, ARCH)*
 **Status:** ⚪ Not Started | **Priority:** Critical / High / Medium / Low
 **Estimated Effort:** [e.g., 0.5 day, 2 days] | **Actual Effort:** [filled when complete]
 **Dependencies:** [T-YYY, T-ZZZ] or None
@@ -117,6 +133,24 @@
 
 ---
 
+## Bugs & Hotfixes
+
+> **Entry point:** Use `prompts/4-tracker.prompt.md` Register Issue Mode to add bugs here.
+> BUG tasks follow standard session flow. HOT tasks use expedited Hotfix Mode in `prompts/5-session.prompt.md`.
+
+> *(Populated as issues are reported — not generated upfront)*
+
+---
+
+## Maintenance
+
+> Dependency updates, security patches, and routine upkeep tasks.
+> Entry point: `prompts/4-tracker.prompt.md` Register Issue Mode with type MAINT.
+
+> *(Populated as maintenance needs are identified — not generated upfront)*
+
+---
+
 ## Dependencies Graph
 
 ```mermaid
@@ -155,6 +189,7 @@ graph TD
 
 ## VALIDATION CHECKLIST
 
+- [ ] Each task has a Type tag (`FEAT`, `BUG`, `HOT`, `MAINT`, `DEBT`, `ARCH`)
 - [ ] All features from Scope.md §4 have corresponding tasks
 - [ ] Tasks grouped by Scope.md §3 Roadmap phases
 - [ ] Each task has: status, priority, effort estimate, dependencies, acceptance criteria

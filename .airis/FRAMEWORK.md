@@ -19,6 +19,7 @@ A constraint-first framework for maintaining architectural coherence across AI-a
 **Existing project:** Same steps — document AS-IS state in scope.md and design.md, then generate tracker. See [For EXISTING Projects](#for-existing-projects) below.
 
 **Scope or design changed mid-project?** → use `prompts/6-amendment.prompt.md`
+**Bug, hotfix, or maintenance task?** → use `prompts/4-tracker.prompt.md` Register Issue Mode (see [Handling Bugs, Hotfixes & Improvements](#handling-bugs-hotfixes--improvements))
 
 Optional: `prompts/1-discovery.prompt.md` helps you think through a new idea before writing scope.md.
 Optional: `templates/6-extraction.template.md` generates a CLAUDE.md or AGENTS.md for your AI tool.
@@ -57,8 +58,7 @@ your-project/
 │   │   ├── 5-session.prompt.md             # Session lifecycle (3 parts)
 │   │   └── 6-amendment.prompt.md           # Scope/design change management
 │   └── instructions/                     # Claude Project instructions
-│       ├── airis-integration.instructions.md  # Framework integration guide
-│       └── airis-session.instructions.md      # Session management guide
+│       └── airis-integration.instructions.md  # Framework integration guide (setup assistant)
 │
 ├── .ai-docs/                          # Strategic documents (your project)
 │   ├── scope.md                          # Project vision, boundaries & features
@@ -303,6 +303,36 @@ Each session follows this loop. Each developer maintains an independent workspac
    - Each task crosses all necessary layers (API, service, data) + includes its own tests
    - One task = one session = one PR — atomic, deployable, reviewable
    - Anti-pattern: horizontal decomposition (model task → service task → endpoint task → tests task). Instead: one task that delivers a complete capability end-to-end.
+
+---
+
+## Handling Bugs, Hotfixes & Improvements
+
+Not all work comes from the planned roadmap. Use this decision tree when something unexpected arrives:
+
+```
+Issue reported (bug / improvement / maintenance need)
+        ↓
+Is it production-critical (users blocked right now)?
+  Yes → Register as HOT in tracker (prompts/4-tracker.prompt.md Register Issue Mode)
+        → Use Hotfix Mode in session prompt: "Hotfix for T-XXX"
+  No  ↓
+Does fixing it change behavior documented in design.md or scope.md?
+  Yes → Route to prompts/6-amendment.prompt.md first
+        → Amendment updates strategy docs + proposes tracker task
+        → Then use standard session flow
+  No  ↓
+Classify:
+  Broken implementation    → BUG task → standard session
+  Dependency update/patch  → MAINT task → standard session
+  Design shortcut to repay → DEBT task → standard session
+  New small capability     → FEAT task → standard session (if within existing scope)
+                                       → amendment.prompt.md (if scope change needed)
+```
+
+**Entry point:** Always start with `prompts/4-tracker.prompt.md` Register Issue Mode — it runs the triage, assigns the type, and routes you to the right prompt.
+
+**Key rule:** A bug that exposes a design flaw is two things — fix the symptom in a BUG session, document the design gap as a DEBT task (or amendment if it changes documented behavior).
 
 ---
 

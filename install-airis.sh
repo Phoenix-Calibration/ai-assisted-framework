@@ -1,6 +1,6 @@
 #!/bin/bash
 # AIris Framework - Installation Script for Linux/Mac
-# Version: 1.0
+# Version: 1.1
 # Usage: ./install-airis.sh
 
 echo "🎯 AIris Framework Installer"
@@ -19,15 +19,23 @@ fi
 GIT_VERSION=$(git --version)
 echo "✅ Git detected: $GIT_VERSION"
 
+# Track whether this is a fresh install or an update
+IS_UPDATE=false
+
 # Check if .airis already exists
 if [ -d ".airis" ]; then
-    echo "⚠️  .airis folder already exists in this project."
-    read -p "Do you want to overwrite it? (yes/no): " response
+    IS_UPDATE=true
+    echo ""
+    echo "⚠️  AIris is already installed in this project."
+    echo "   This will UPDATE .airis/ (framework files only)."
+    echo "   Your .ai-docs/ and .ai-session/ will NOT be affected."
+    echo ""
+    read -p "Update AIris framework? (yes/no): " response
     if [ "$response" != "yes" ]; then
-        echo "Installation cancelled."
+        echo "Update cancelled."
         exit 0
     fi
-    echo "Removing existing .airis folder..."
+    echo "Updating .airis/ folder..."
     rm -rf .airis
 fi
 
@@ -57,13 +65,38 @@ echo "🧹 Cleaning up..."
 rm -rf temp-airis-install
 echo "✅ Cleanup complete"
 
+# Create .ai-docs if not exists
+if [ ! -d ".ai-docs" ]; then
+    echo "📁 Creating .ai-docs/ folder..."
+    mkdir -p .ai-docs
+    echo "✅ .ai-docs/ created"
+fi
+
+# Create .ai-session if not exists
+if [ ! -d ".ai-session" ]; then
+    echo "📁 Creating .ai-session/ folder..."
+    mkdir -p .ai-session
+    echo "✅ .ai-session/ created"
+fi
+
 echo ""
-echo "🎉 AIris Framework installed successfully!"
-echo ""
-echo "📖 Next steps:"
-echo "   1. Read: .airis/FRAMEWORK.md for complete documentation"
-echo "   2. Create: .ai-docs/scope.md and .ai-docs/design.md (prompts in .airis/prompts/)"
-echo "   3. Create your dev workspace: .ai-session/{your-name}/current/"
+if [ "$IS_UPDATE" = true ]; then
+    echo "🔄 AIris Framework updated successfully!"
+    echo ""
+    echo "⚠️  Post-update checklist:"
+    echo "   1. If you use CLAUDE.md or AGENTS.md, re-extract them:"
+    echo "      Load: .airis/templates/6-extraction.template.md"
+    echo "   2. Your .ai-docs/ and .ai-session/ are untouched — no action needed"
+else
+    echo "🎉 AIris Framework installed successfully!"
+    echo ""
+    echo "📖 Next steps:"
+    echo "   1. Read: .airis/FRAMEWORK.md for complete documentation"
+    echo "   2. Create: .ai-docs/scope.md and .ai-docs/design.md"
+    echo "      Use prompts: .airis/prompts/2-scope.prompt.md and 3-design.prompt.md"
+    echo "   3. Create your dev workspace: .ai-session/{your-name}/current/"
+fi
+
 echo ""
 echo "👁️  See clearly. Build confidently."
 echo ""

@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 # AIris Framework - Installation Script for Windows
-# Version: 1.0
+# Version: 1.1
 # Usage: .\install-airis.ps1
 
 Write-Host "🎯 AIris Framework Installer" -ForegroundColor Cyan
@@ -17,15 +17,23 @@ try {
     exit 1
 }
 
+# Track whether this is a fresh install or an update
+$isUpdate = $false
+
 # Check if .airis already exists
 if (Test-Path ".airis") {
-    Write-Host "⚠️  .airis folder already exists in this project." -ForegroundColor Yellow
-    $response = Read-Host "Do you want to overwrite it? (yes/no)"
+    $isUpdate = $true
+    Write-Host ""
+    Write-Host "⚠️  AIris is already installed in this project." -ForegroundColor Yellow
+    Write-Host "   This will UPDATE .airis/ (framework files only)." -ForegroundColor Yellow
+    Write-Host "   Your .ai-docs/ and .ai-session/ will NOT be affected." -ForegroundColor Gray
+    Write-Host ""
+    $response = Read-Host "Update AIris framework? (yes/no)"
     if ($response -ne "yes") {
-        Write-Host "Installation cancelled." -ForegroundColor Gray
+        Write-Host "Update cancelled." -ForegroundColor Gray
         exit 0
     }
-    Write-Host "Removing existing .airis folder..." -ForegroundColor Yellow
+    Write-Host "Updating .airis/ folder..." -ForegroundColor Yellow
     Remove-Item -Path ".airis" -Recurse -Force
 }
 
@@ -57,13 +65,38 @@ Write-Host "🧹 Cleaning up..." -ForegroundColor Cyan
 Remove-Item -Path "temp-airis-install" -Recurse -Force
 Write-Host "✅ Cleanup complete" -ForegroundColor Green
 
+# Create .ai-docs if not exists
+if (-not (Test-Path ".ai-docs")) {
+    Write-Host "📁 Creating .ai-docs/ folder..." -ForegroundColor Cyan
+    New-Item -ItemType Directory -Path ".ai-docs" | Out-Null
+    Write-Host "✅ .ai-docs/ created" -ForegroundColor Green
+}
+
+# Create .ai-session if not exists
+if (-not (Test-Path ".ai-session")) {
+    Write-Host "📁 Creating .ai-session/ folder..." -ForegroundColor Cyan
+    New-Item -ItemType Directory -Path ".ai-session" | Out-Null
+    Write-Host "✅ .ai-session/ created" -ForegroundColor Green
+}
+
 Write-Host ""
-Write-Host "🎉 AIris Framework installed successfully!" -ForegroundColor Green
-Write-Host ""
-Write-Host "📖 Next steps:" -ForegroundColor Cyan
-Write-Host "   1. Read: .airis/FRAMEWORK.md for complete documentation" -ForegroundColor White
-Write-Host "   2. Create: .ai-docs/scope.md and .ai-docs/design.md (prompts in .airis/prompts/)" -ForegroundColor White
-Write-Host "   3. Create your dev workspace: .ai-session/{your-name}/current/" -ForegroundColor White
+if ($isUpdate) {
+    Write-Host "🔄 AIris Framework updated successfully!" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "⚠️  Post-update checklist:" -ForegroundColor Yellow
+    Write-Host "   1. If you use CLAUDE.md or AGENTS.md, re-extract them:" -ForegroundColor White
+    Write-Host "      Load: .airis/templates/6-extraction.template.md" -ForegroundColor White
+    Write-Host "   2. Your .ai-docs/ and .ai-session/ are untouched — no action needed" -ForegroundColor White
+} else {
+    Write-Host "🎉 AIris Framework installed successfully!" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "📖 Next steps:" -ForegroundColor Cyan
+    Write-Host "   1. Read: .airis/FRAMEWORK.md for complete documentation" -ForegroundColor White
+    Write-Host "   2. Create: .ai-docs/scope.md and .ai-docs/design.md" -ForegroundColor White
+    Write-Host "      Use prompts: .airis/prompts/2-scope.prompt.md and 3-design.prompt.md" -ForegroundColor White
+    Write-Host "   3. Create your dev workspace: .ai-session/{your-name}/current/" -ForegroundColor White
+}
+
 Write-Host ""
 Write-Host "👁️  See clearly. Build confidently." -ForegroundColor Magenta
 Write-Host ""

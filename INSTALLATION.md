@@ -81,8 +81,7 @@ your-project/
     │   ├── 5-session.prompt.md          # Session lifecycle (Parts 0/1/2)
     │   └── 6-amendment.prompt.md        # Scope/design change management
     └── instructions/                  # Claude Project instructions
-        ├── airis-integration.instructions.md
-        └── airis-session.instructions.md
+        └── airis-integration.instructions.md
 ```
 
 Then create these folders in your project root:

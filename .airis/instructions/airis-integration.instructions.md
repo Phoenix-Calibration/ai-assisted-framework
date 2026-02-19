@@ -91,6 +91,9 @@ your-project/
 **When scope or design changes (any phase):**
 → Use `prompts/6-amendment.prompt.md` — analyzes impact, updates scope.md + design.md in order, proposes tracker changes. Re-extract CLAUDE.md/AGENTS.md after amendment.
 
+**When bugs, hotfixes, or maintenance tasks arise:**
+→ Use `prompts/4-tracker.prompt.md` Register Issue Mode — triage, classify (BUG/HOT/MAINT/DEBT), and route to the correct flow. See FRAMEWORK.md §Handling Bugs, Hotfixes & Improvements for the decision tree.
+
 ### For Existing Projects (Additional Steps)
 
 - Document AS-IS architecture in design.md (current tech stack, patterns, technical debt)

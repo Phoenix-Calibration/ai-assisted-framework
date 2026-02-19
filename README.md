@@ -57,8 +57,7 @@ After installation, you'll have:
 │   │   ├── 4-tracker.prompt.md      # Expands features into detailed tasks
 │   │   └── 5-session.prompt.md
 │   └── instructions/              # Claude Project instructions
-│       ├── airis-integration.instructions.md
-│       └── airis-session.instructions.md
+│       └── airis-integration.instructions.md
 ├── docs/                          # Placeholder examples
 └── session/                       # Session workspace
 ```
