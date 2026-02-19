@@ -1,0 +1,352 @@
+# Getting Started with Specflow
+## Your step-by-step guide to structured agent-first software development
+
+## Welcome to Specflow
+
+This guide will walk you through your first Specflow project. By the end, you'll understand how to transform a vague idea into a well-executed software project using AI assistance.
+
+## Prerequisites
+
+Before starting, you'll need:
+
+- Access to an AI coding assistant (ChatGPT, Claude, GitHub Copilot, etc.)
+- A development environment for your chosen language
+- 30-60 minutes for your first project
+- An open mind about planning before coding
+
+## The Five Phases of Specflow
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor': '#f9f9f9'}}}%%
+graph LR
+    A[Intent<br/>Capture] --> B[Roadmap<br/>Creation]
+    B --> C[Task<br/>Decomposition]
+    C --> D[Collaborative<br/>Execution]
+    D --> E[Continuous<br/>Refinement]
+    E --> |Iterate| D
+    
+    style A fill:#e0f2fe
+    style B fill:#e0f2fe
+    style C fill:#e0f2fe
+    style D fill:#e0f2fe
+    style E fill:#d1fae5
+```
+
+## Phase 1: Intent - Define Your Goal (10-15 minutes)
+
+**What & Why** - Start with clarity about what you're building and why it matters.
+
+### Step 1.1: Define Your Vision
+
+Start by answering these questions:
+
+1. **What do I want to build?**
+   - Be specific but not overly technical
+   - Focus on outcomes, not implementation
+
+2. **Why does this need to exist?**
+   - What problem does it solve?
+   - Who will benefit?
+
+3. **What does success look like?**
+   - How will you know it's working?
+   - What are the key features?
+
+### Step 1.2: Document Your Intent
+
+Create an intent document. Here's a template:
+
+```markdown
+# Project Intent: [Your Project Name]
+
+## Vision
+[1-2 sentences describing what you're building]
+
+## Problem Statement
+[What problem are you solving?]
+
+## Success Criteria
+- [ ] [Criterion 1]
+- [ ] [Criterion 2]
+- [ ] [Criterion 3]
+
+## Constraints
+- Technical: [Any technical limitations]
+- Time: [Deadline or time budget]
+- Resources: [Available tools/people]
+
+## Non-Goals
+[What this project will NOT do]
+```
+
+### Example: Weather Dashboard
+
+```markdown
+# Project Intent: Personal Weather Dashboard
+
+## Vision
+A clean, minimalist web dashboard that shows weather 
+information for multiple cities I care about.
+
+## Problem Statement
+I check weather for multiple cities daily (home, 
+office, parents' city) across different apps. 
+I want one unified view.
+
+## Success Criteria
+- [ ] Shows current weather for 3+ cities
+- [ ] Updates automatically every 30 minutes
+- [ ] Works on desktop and mobile
+- [ ] Loads in under 2 seconds
+
+## Constraints
+- Technical: Use free weather APIs only
+- Time: Complete in one weekend
+- Resources: Solo developer, modern web stack
+
+## Non-Goals
+- No user accounts or personalization
+- No weather history or predictions beyond 5 days
+- No native mobile apps
+```
+
+## Phase 2: Roadmap - Plan Your Phases (10-15 minutes)
+
+**Milestones** - Break your vision into manageable phases with clear goals.
+
+### Step 2.1: Identify Major Phases
+
+Break your project into 3-5 major phases:
+
+1. **Foundation**: Core setup and structure
+2. **Core Features**: Essential functionality
+3. **Enhancement**: Polish and improvements
+4. **Deployment**: Making it available
+
+### Step 2.2: Create Your Roadmap
+
+For each phase, define:
+- **Goal**: What this phase accomplishes
+- **Deliverables**: Concrete outputs
+- **Dependencies**: What must come first
+
+### Example Roadmap: Weather Dashboard
+
+```markdown
+# Weather Dashboard Roadmap
+
+## Phase 1: Foundation (2 hours)
+**Goal**: Set up project structure and basic UI
+**Deliverables**:
+- Project scaffold (React/Next.js)
+- Basic component structure
+- Simple styling system
+**Dependencies**: None
+
+## Phase 2: Weather Integration (3 hours)
+**Goal**: Connect to weather API and display data
+**Deliverables**:
+- Weather API integration
+- City weather components
+- Auto-refresh mechanism
+**Dependencies**: Phase 1 complete
+
+## Phase 3: Multi-City Support (2 hours)
+**Goal**: Support multiple cities elegantly
+**Deliverables**:
+- City management system
+- Responsive grid layout
+- Local storage for preferences
+**Dependencies**: Phase 2 complete
+
+## Phase 4: Polish & Deploy (1 hour)
+**Goal**: Refine UI and deploy to production
+**Deliverables**:
+- Loading states and error handling
+- Final UI polish
+- Deployed to Vercel/Netlify
+**Dependencies**: Phase 3 complete
+```
+
+## Phase 3: Tasks - Break It Down (5-10 minutes per phase)
+
+**Human + AI** - Convert roadmap items into specific tasks, optimally distributed between you and AI.
+
+### Step 3.1: Break Down Each Phase
+
+For each roadmap phase, create specific tasks:
+
+1. **Make tasks atomic** (completable in one session)
+2. **Define clear outputs** (what "done" looks like)
+3. **Assign to human or AI** (based on strengths)
+
+### Step 3.2: Create Task Lists
+
+Use this format:
+
+```markdown
+## Phase 1 Tasks: Foundation
+
+### Task 1.1: Project Setup [AI-Assisted]
+- Initialize Next.js project with TypeScript
+- Set up ESLint and Prettier
+- Create folder structure
+- Output: Working development environment
+
+### Task 1.2: Component Architecture [Human]
+- Design component hierarchy
+- Create component interfaces
+- Set up props types
+- Output: Component structure diagram
+
+### Task 1.3: Base Components [AI-Assisted]
+- Create Layout component
+- Create WeatherCard component shell
+- Create CityGrid component
+- Output: Basic component files
+```
+
+## Phase 4: Execute - Build Together
+
+**Systematic** - Work through tasks methodically with your AI partner.
+
+### Step 4.1: Prepare Your AI Assistant
+
+Start each AI session with context:
+
+```
+I'm building a weather dashboard using Specflow methodology.
+
+Current Status:
+- Phase: 1 (Foundation)
+- Task: 1.1 (Project Setup)
+
+Intent Summary:
+[Paste your intent document summary]
+
+Task Details:
+[Paste specific task details]
+
+Please help me complete this task.
+```
+
+### Step 4.2: Execute Systematically
+
+1. **Complete tasks in order** (respect dependencies)
+2. **Verify each output** (matches task definition?)
+3. **Document decisions** (for context preservation)
+4. **Commit frequently** (maintain progress)
+
+### Step 4.3: Effective AI Prompting
+
+Good Specflow prompts include:
+
+- **Context**: Where you are in the project
+- **Specific ask**: What you need right now
+- **Constraints**: Any limitations or preferences
+- **Output format**: How you want the response
+
+Example:
+
+```
+I'm in Phase 2, Task 2.1 of my weather dashboard project.
+I need to integrate the OpenWeatherMap API.
+
+Requirements:
+- Use fetch API (no axios)
+- Handle errors gracefully
+- Return normalized data structure
+- Include TypeScript types
+
+Please create a weather service module.
+```
+
+## Phase 5: Refine - Iterate & Learn
+
+**Improve** - Review outputs against intent and continuously improve.
+
+### Step 5.1: Regular Check-ins
+
+After each phase, ask:
+
+1. **Does output match intent?** (Refer to original vision)
+2. **What did we learn?** (New constraints or opportunities)
+3. **Should we adjust the roadmap?** (Based on learnings)
+
+### Step 5.2: Iterate Intelligently
+
+- **Small adjustments**: Update task details
+- **Medium changes**: Revise phase goals
+- **Large pivots**: Revisit intent document
+
+## Your First Specflow Project
+
+### Suggested Starter Projects
+
+Choose based on your experience level:
+
+**Beginner**: Personal Todo CLI
+- 4-6 hours total
+- Clear requirements
+- Limited scope
+
+**Intermediate**: Markdown Blog Generator
+- 8-12 hours total
+- File processing
+- Template system
+
+**Advanced**: API Integration Dashboard
+- 16-24 hours total
+- Multiple data sources
+- Real-time updates
+
+### Success Tips
+
+1. **Start small** - Your first project should be completable in a day
+2. **Document everything** - Future you will thank present you
+3. **Embrace the process** - Planning feels slow but saves time
+4. **Iterate freely** - Plans can and should evolve
+5. **Celebrate milestones** - Acknowledge each completed phase
+
+## Common Pitfalls to Avoid
+
+### 🚫 Skipping Intent
+**Symptom**: Changing requirements  
+**Fix**: Invest in Phase 1
+
+### ⚠️ Over-Planning
+**Symptom**: Analysis paralysis  
+**Fix**: Time-box planning
+
+### 🔀 Ignoring Dependencies
+**Symptom**: Pieces don't fit  
+**Fix**: Follow task order
+
+### 💭 Context Loss
+**Symptom**: AI confusion  
+**Fix**: Always give context
+
+## Next Steps
+
+Ready to go deeper?
+
+1. [Explore Examples](examples/index.md) - See Specflow in action
+2. [Read the Reference](reference/index.md) - Detailed methodology guide
+3. [Join the Community](#) - Share your experience
+
+## Quick Reference Card
+
+Keep this handy during your first project:
+
+```
+Specflow Quick Reference
+========================
+
+1. INTENT: What + Why + Success
+2. ROADMAP: Phases with goals
+3. TASKS: Specific, atomic actions
+4. EXECUTE: Systematic completion
+5. REFINE: Learn and adjust
+
+Remember: Plan First, Act Second!
+```

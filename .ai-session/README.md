@@ -25,12 +25,12 @@ Create a folder with your developer ID (e.g., `john-doe/`, `dev-01/`) to maintai
 Contains active session files:
 
 - **todo.md**: Session plan with Opening Brief and Closing Report
-  - Created using: `_setup/prompts/6-session.prompt.md` (Part 0 & 1)
+  - Created using: `.airis/prompts/5-session.prompt.md` (Part 0 & 1)
   - Updated during: Session work
   - Finalized with: Closing Report (Part 2)
 
 - **handoff.md**: Personal state for next session
-  - Generated using: `_setup/prompts/6-session.prompt.md` (Part 2)
+  - Generated using: `.airis/prompts/5-session.prompt.md` (Part 2)
   - Read at: Start of next session
   - Always contains: Current snapshot (not accumulated history)
 
